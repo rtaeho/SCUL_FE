@@ -5,7 +5,10 @@ import { ReactComponent as Soccer } from '../../assets/Soccer.svg';
 const Header = () => {
   return (
     <div className="head-container ">
-      <div>S-Cul </div> <Soccer />
+      <div className="head-border-container ">
+        <div className="head-border-title">S-Cul</div>
+        <Soccer />
+      </div>
     </div>
   );
 };

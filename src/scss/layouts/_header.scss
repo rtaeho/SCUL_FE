@@ -1,8 +1,18 @@
 .head-container {
   color: white;
-  @include inline-flexbox(s, center);
-  width: 90%;
-  margin: 10px 50px 50px 50px;
-  background-color: #000000;
-  border-radius: 10px;
+  @include inline-flexbox(center, center);
+  width: 100%;
+  margin-top: 10px;
+
+  .head-border-container {
+    @include inline-flexbox(start, center);
+    height: 50px;
+    border-radius: 10px;
+    width: 90%;
+    background-color: #000000;
+    .head-border-title {
+      margin-left: 10px;
+    }
+    gap: 10px;
+  }
 }
