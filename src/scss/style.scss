@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+@import 'setting/common';
+@import 'setting/reset';
+
+@import './mixins/flexbox';
+
+@import './components/header';
+// @import "./page/";

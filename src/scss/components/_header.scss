@@ -1,0 +1,8 @@
+.head-container {
+  color: white;
+  @include inline-flexbox(s, center);
+  width: 90%;
+  margin: 10px 50px 50px 50px;
+  background-color: #000000;
+  border-radius: 10px;
+}
