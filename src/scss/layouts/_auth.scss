@@ -1,0 +1,56 @@
+.Auth {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #F1F1F5;
+}
+
+.wrap {
+    margin: 16px auto;
+    @include inline-flexbox(center);
+}
+
+.h2_wrap {
+    margin: 16px auto;
+    @include inline-flexbox(center);
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 57px;
+}
+
+.kakaoLogin,
+.googleLogin {
+    display: flex;
+    @include inline-flexbox(center);
+    width: 360px;
+    height: 54px;
+    border-radius: 6px;
+}
+
+.kakaoLogin {
+    background-color: #FEE500;
+}
+
+.googleLogin {
+    background-color: #FFF;
+}
+
+.kLogo,
+.gLogo {
+    margin-right: 12px;
+}
+
+.nonMem_p {
+    color: #777;
+    background-color: #F1F1F5;
+    margin-top: 32px;
+    margin-right: 8px;
+}
+
+.nonMem {
+    color: #111;
+    text-decoration: underline;
+    font-weight: 600;
+    background-color: #F1F1F5;
+    margin-top: 32px;
+}

@@ -1,25 +1,27 @@
+
+//마진 80
 .Footer {
-  width: 90%;
-  margin: 80px auto;
+    width: 90%;
+    margin: 80px auto;
 }
 
 .footer_btn_wrap {
-  display: flex;
-  margin-bottom: 4px;
-  @include inline-flexbox(center, center);
+    display: flex;
+    margin-bottom: 4px;
+    @include inline-flexbox(center);
 }
 
 button {
-  background-color: white;
-  margin: 0;
-  border: none;
-  padding: 3px;
-  font-size: 16px;
-  font-weight: 400;
+    background-color: #F1F1F5;
+    margin: 0;
+    border: none;
+    padding: 3px;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .copyright {
-  @include inline-flexbox(center, center);
-  font-size: 16px;
-  font-weight: 600;
+    @include inline-flexbox(center);
+    font-size: 16px;
+    font-weight: 600;
 }
