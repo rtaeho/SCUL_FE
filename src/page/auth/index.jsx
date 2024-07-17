@@ -16,7 +16,7 @@ const Auth = () => {
 
   return (
     <div className='Auth'>
-      <h2 className='h2_wrap'>로그jk인</h2>
+      <h2 className='h2_wrap'>로그인</h2>
       <div className='wrap'>
         <button className='kakaoLogin'/*onClick={loginHandler}*/><Kakao className='kLogo' />카카오로 시작하기</button>
       </div>
