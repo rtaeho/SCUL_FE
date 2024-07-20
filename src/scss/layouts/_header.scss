@@ -1,11 +1,17 @@
+.layout-header-container {
+  @include column-flexbox(center, center);
+}
+
 .header-container {
-  @include inline-flexbox(center, center);
+  @include inline-flexbox(between, center);
   background-color: #111111;
   padding: 0 24px;
-  width: 960px;
-  height: 65px;
-  margin: 60px 240px 0 240px;
+  width: 66.7%;
+  height: 6.5%;
   border-radius: 32px;
+  margin-top: 40px;
+  margin-bottom: 150px;
+  box-sizing: border-box;
 
   .header-logo {
     color: #fdfdfd;
@@ -23,13 +29,11 @@
     position: relative;
     margin: 10px auto 10px 24px;
     @include inline-flexbox(center, center);
-    // display: inline-flex;
-    // align-items: center;
     padding: 8px 16px;
     gap: 8px;
     border-radius: 32px;
     border: 1px solid #e5e5e5;
-    box-sizing: border-box;
+    height: 38px;
 
     .header-sports-dropdown-container {
       @include inline-flexbox(start, center);
@@ -41,15 +45,11 @@
         @include inline-flexbox(end, center);
         margin-left: auto;
         .header-sports-dropdown-icon {
-          margin-right: 0px;
           background-color: #111111;
           font-size: 1rem;
           font-weight: 700;
           border: none;
           cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
         }
       }
     }
@@ -57,7 +57,7 @@
     .header-sports-dropdown-contents-container {
       @include column-flexbox(start, start);
       position: absolute;
-      top: 40px;
+      top: 38px;
       background-color: #111;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 1;
@@ -65,19 +65,21 @@
       border: 1px solid #e5e5e5;
       width: 184px;
       height: 150px;
-
       .header-sports-dropdown-contents-sport {
         @include inline-flexbox(start, center);
         width: 100%;
         gap: 8px;
         padding: 6px 16px;
-
         &:first-child {
           margin-top: 10px;
         }
 
         &:nth-child(3) {
           margin-bottom: 6px;
+        }
+
+        .header-sports-dropdown-contents-sport-name:hover {
+          cursor: pointer;
         }
       }
 
@@ -90,125 +92,106 @@
     }
   }
 
-  nav {
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 1rem;
+  .header-nav-container {
+    .header-nav-list-container {
+      @include inline-flexbox(start, center);
+      gap: 16px;
 
-      li {
+      .header-nav-list {
+        display: flex;
+        padding: 8px 16px;
+        align-items: center;
+        border-radius: 32px;
+        border: 1px solid #e5e5e5;
+        color: white;
         position: relative;
-
-        a {
-          color: #fdfdfd;
-          text-decoration: none;
-          padding: 0.5rem 1rem;
-          border: 1px solid #e5e5e5;
-          border-radius: 32px;
-          display: block;
-
-          &:hover {
-            background-color: #333333;
-          }
+        height: 38px;
+        div:hover {
+          color: #65ffff;
+        }
+        &:hover .header-nav-list-dropdown-container {
+          display: flex;
         }
 
-        .dropdown-content {
+        .header-nav-list-dropdown-container {
+          @include column-flexbox(center, start);
           display: none;
           position: absolute;
-          background-color: #333333;
-          min-width: 10rem;
+          top: 38px;
+          background-color: #111;
           box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
           z-index: 1;
-          border-radius: 8px;
-          padding: 0.5rem 0;
+          border-radius: 16px;
+          border: 1px solid #e5e5e5;
+          width: 149px;
+          height: 136px;
+          left: 0;
 
-          li {
-            a {
-              padding: 0.75rem 1rem;
+          .header-nav-list-dropdown-list {
+            @include inline-flexbox(start, center);
+            gap: 8px;
+            width: 100%;
+            padding: 6px 16px;
 
-              &:hover {
-                background-color: #575757;
-              }
+            &:hover {
+              cursor: pointer;
             }
           }
         }
-
-        &:hover .dropdown-content {
-          display: block;
-        }
       }
 
-      .profile-dropdown {
+      .header-nav-profile {
         position: relative;
+        width: 38px;
+        height: 38px;
 
-        .profile-wrapper {
-          position: relative;
+        &:hover .header-nav-profile-dropdown-list-container {
           display: flex;
-          align-items: center;
+        }
 
-          img,
-          svg {
-            width: 2.375rem;
-            height: 2.375rem;
-            border-radius: 50%;
-            cursor: pointer;
-          }
-
-          .notification {
+        .header-nav-profile-image {
+          @include inline-flexbox(center, center);
+          .header-nav-profile-notification {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            width: 0.875rem;
-            height: 0.875rem;
+            top: -0.5px;
+            right: -7px;
+            width: 18px;
+            height: 18px;
             background-color: red;
             border-radius: 50%;
             color: white;
-            font-size: 0.625rem;
+            font-size: 14px;
             display: flex;
             justify-content: center;
-            align-items: center;
             z-index: 1;
           }
         }
 
-        .dropdown-content {
+        .header-nav-profile-dropdown-list-container {
+          @include column-flexbox(center, start);
           display: none;
           position: absolute;
-          background-color: #333333;
-          min-width: 10rem;
+          top: 40px;
+          right: 0;
+          background-color: #111;
           box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
           z-index: 1;
-          border-radius: 8px;
-          padding: 0.5rem 0;
+          border-radius: 16px;
+          border: 1px solid #e5e5e5;
+          width: 151px;
+          height: 136px;
 
-          li {
-            a {
-              padding: 0.75rem 1rem;
-
-              &:hover {
-                background-color: #575757;
-              }
+          .header-nav-profile-dropdown-list {
+            div {
+              @include inline-flexbox(start, center);
+              width: 100%;
+              gap: 8px;
+              padding: 6px 16px;
+              color: white;
             }
-          }
-        }
-
-        &:hover .dropdown-content {
-          display: block;
-        }
-      }
-
-      .auth-links {
-        display: flex;
-        gap: 0.5rem;
-
-        a {
-          color: #fdfdfd;
-          text-decoration: none;
-
-          &:hover {
-            text-decoration: underline;
+            &:hover {
+              cursor: pointer;
+            }
           }
         }
       }

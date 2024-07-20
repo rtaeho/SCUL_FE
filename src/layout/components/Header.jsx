@@ -43,7 +43,7 @@ const Header = () => {
 
   useEffect(() => {
     // 여기서 로그인 상태를 확인하고 필요한 정보를 설정합니다.
-    setLoggedIn(true); // 임시로 true로 설정
+    setLoggedIn(false); // 임시로 true로 설정
     setProfileImage(null); // 프로필 이미지 설정
     setNotifications(true); // 알림 설정
 
@@ -112,7 +112,9 @@ const Header = () => {
                   onClick={() => handleSportSelect(sport)}
                 >
                   {renderSportIcon(sport)}
-                  {sport.name}
+                  <div className="header-sports-dropdown-contents-sport-name">
+                    {sport.name}
+                  </div>
                 </div>
               ))}
             <hr style={{ backgroundColor: '#FFF', width: '100%', margin: 0 }} />
@@ -123,74 +125,74 @@ const Header = () => {
           </div>
         )}
       </div>
-      <nav>
-        <ul>
-          <li className="hover-dropdown">
-            <a onClick={() => navigate('/community')}>커뮤니티</a>
-            <ul className="dropdown-content">
-              <li>
-                <a onClick={() => navigate('/community/free')}>
-                  <Free />
+      <nav className="header-nav-container">
+        <ul className="header-nav-list-container">
+          <li className="header-nav-list">
+            <div>커뮤니티</div>
+            <ul className="header-nav-list-dropdown-container">
+              <li className="header-nav-list-dropdown-list">
+                <Free />
+                <div onClick={() => navigate('/community/free')}>
                   자유 게시판
-                </a>
+                </div>
               </li>
-              <li>
-                <a onClick={() => navigate('/community/review')}>
-                  <Review />
+              <li className="header-nav-list-dropdown-list">
+                <Review />
+                <div onClick={() => navigate('/community/review')}>
                   후기 게시판
-                </a>
+                </div>
               </li>
-              <li>
-                <a onClick={() => navigate('/community/info')}>
-                  <Information />
+              <li className="header-nav-list-dropdown-list">
+                <Information />
+                <div onClick={() => navigate('/community/info')}>
                   정보 게시판
-                </a>
+                </div>
               </li>
             </ul>
           </li>
-          <li>
-            <a onClick={() => navigate('/club')}>소모임</a>
+          <li className="header-nav-list">
+            <div onClick={() => navigate('/club')}>소모임</div>
           </li>
-          <li>
-            <a onClick={() => navigate('/inquiry')}>문의/신고</a>
+          <li className="header-nav-list">
+            <div onClick={() => navigate('/inquiry')}>문의/신고</div>
           </li>
           {loggedIn ? (
-            <li className="profile-dropdown">
-              <div className="profile-wrapper">
+            <li className="header-nav-profile">
+              <div className="header-nav-profile-image">
                 {profileImage ? (
                   <img src={profileImage} alt="Profile" id="profileImage" />
                 ) : (
                   <Default_Profile />
                 )}
-                {notifications && <div className="notification">N</div>}
+                {notifications && (
+                  <div className="header-nav-profile-notification">N</div>
+                )}
               </div>
-              <ul className="dropdown-content">
-                <li>
-                  <a onClick={() => navigate('/my-page')}>
+              <ul className="header-nav-profile-dropdown-list-container">
+                <li className="header-nav-profile-dropdown-list">
+                  <div onClick={() => navigate('/my-page')}>
                     <Mypage />
                     마이 페이지
-                  </a>
+                  </div>
                 </li>
-                <li>
-                  <a onClick={() => navigate('/notifications')}>
+                <li className="header-nav-profile-dropdown-list">
+                  <div onClick={() => navigate('/notifications')}>
                     <Alert />
                     알림
-                  </a>
+                  </div>
                 </li>
-                <li>
-                  <a onClick={logout}>
+                <li className="header-nav-profile-dropdown-list">
+                  <div onClick={logout}>
                     <Logout />
                     로그아웃
-                  </a>
+                  </div>
                 </li>
               </ul>
             </li>
           ) : (
-            <li className="auth-links">
-              <a>
-                <div onClick={() => navigate('/login')}>로그인 /</div>
-                <div onClick={() => navigate('/signup')}>회원가입</div>
-              </a>
+            <li className="header-nav-list">
+              <div onClick={() => navigate('/login')}>로그인/</div>
+              <div onClick={() => navigate('/signup')}>회원가입</div>
             </li>
           )}
         </ul>
