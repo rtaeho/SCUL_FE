@@ -17,7 +17,7 @@ const Layout = () => {
 
   return (
     <>
-      {showFooter && <Header />}
+      <div className="layout-header-container">{showFooter && <Header />}</div>
       <Outlet />
       <Footer />
     </>

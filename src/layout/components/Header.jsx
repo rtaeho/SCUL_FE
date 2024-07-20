@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // react-router-dom을 사용하여 라우팅 구현
-// SVG 파일을 import
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Soccer } from '../../assets/images/Soccer.svg';
 import { ReactComponent as Select } from '../../assets/images/Select.svg';
 import { ReactComponent as Review } from '../../assets/images/Review.svg';
@@ -14,8 +13,8 @@ import { ReactComponent as Basketball } from '../../assets/images/Basketball.svg
 import { ReactComponent as Baseball } from '../../assets/images/Baseball.svg';
 import { ReactComponent as Badminton } from '../../assets/images/Badminton.svg';
 import { ReactComponent as Alert } from '../../assets/images/Alert.svg';
+import { ReactComponent as More } from '../../assets/images/More.svg';
 
-// SVG 컴포넌트를 객체에 저장
 const languageSvgObj = {
   Soccer,
   Select,
@@ -30,29 +29,34 @@ const languageSvgObj = {
   Baseball,
   Badminton,
   Alert,
+  More,
 };
+
 const Header = () => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [notifications, setNotifications] = useState(false);
   const [sports, setSports] = useState([]);
+  const [selectedSport, setSelectedSport] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    // 로그인 상태를 확인하고 상태를 업데이트하는 로직을 추가
-    setLoggedIn(true);
-    setProfileImage(null); // 실제 프로필 이미지 URL이 있으면 설정
-    setNotifications(true); // 알림이 있는 경우
+    // 여기서 로그인 상태를 확인하고 필요한 정보를 설정합니다.
+    setLoggedIn(false); // 임시로 true로 설정
+    setProfileImage(null); // 프로필 이미지 설정
+    setNotifications(true); // 알림 설정
 
-    // 비회원일 경우 가장 많이 선택한 스포츠
-    if (!loggedIn) {
-      setSports(['Soccer', 'Baseball', 'Basketball', 'Badminton']);
-    } else {
-      // 회원일 경우 회원이 선택한 스포츠 (우선순위 설정에 따라)
-      setSports(['Badminton', 'Basketball', 'Baseball', 'Soccer']); // 실제 데이터에 맞게 수정 필요
-    }
-  }, [loggedIn]);
+    const sportsList = [
+      { name: '축구', icon: 'Soccer' },
+      { name: '야구', icon: 'Baseball' },
+      { name: '농구', icon: 'Basketball' },
+      { name: '배드민턴', icon: 'Badminton' },
+    ];
+
+    setSports(sportsList);
+    setSelectedSport(sportsList[0]);
+  }, []);
 
   const goHome = () => {
     navigate('/');
@@ -69,100 +73,126 @@ const Header = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const handleSportSelect = (sport) => {
+    setSelectedSport(sport);
+    setShowDropdown(false);
+  };
+
   const renderSportIcon = (sport) => {
-    const SvgComponent = languageSvgObj[sport];
+    const SvgComponent = languageSvgObj[sport.icon];
     return SvgComponent ? <SvgComponent /> : null;
   };
 
   return (
-    <header className="header">
-      <div className="logo" onClick={goHome}>
+    <header className="header-container">
+      <div className="header-logo" onClick={goHome}>
         S-CUL
       </div>
-      <div className="sports-dropdown">
-        {renderSportIcon(sports[0])}
-        {sports[0]}
-        <Select onClick={toggleDropdown}></Select>
+      <div className="header-sports-container">
+        <div className="header-sports-dropdown-container">
+          {selectedSport && renderSportIcon(selectedSport)}
+          <span className="header-sports-dropdown-title">
+            {selectedSport ? selectedSport.name : '선택하세요'}
+          </span>
+          <div
+            className="header-sports-dropdown-icon-container"
+            onClick={toggleDropdown}
+          >
+            <Select className="header-sports-dropdown-icon" />
+          </div>
+        </div>
         {showDropdown && (
-          <div className="dropdown-content">
-            {sports.slice(1, 4).map((sport, index) => (
-              <a href="#" key={index}>
-                {renderSportIcon(sport)}
-                {sport}
-              </a>
-            ))}
-            <a href="#" className="more">
-              ...
-            </a>
+          <div className="header-sports-dropdown-contents-container">
+            {sports
+              .filter((sport) => sport !== selectedSport)
+              .map((sport, index) => (
+                <div
+                  className="header-sports-dropdown-contents-sport"
+                  key={index}
+                  onClick={() => handleSportSelect(sport)}
+                >
+                  {renderSportIcon(sport)}
+                  <div className="header-sports-dropdown-contents-sport-name">
+                    {sport.name}
+                  </div>
+                </div>
+              ))}
+            <hr style={{ backgroundColor: '#FFF', width: '100%', margin: 0 }} />
+
+            <div className="header-sports-dropdown-more-icon">
+              <More />
+            </div>
           </div>
         )}
       </div>
-      <nav>
-        <ul>
-          <li className="hover-dropdown">
-            <a onClick={() => navigate('/community')}>커뮤니티</a>
-            <ul className="dropdown-content">
-              <li>
-                <a onClick={() => navigate('/community/free')}>
-                  <Free />
+      <nav className="header-nav-container">
+        <ul className="header-nav-list-container">
+          <li className="header-nav-list">
+            <div>커뮤니티</div>
+            <ul className="header-nav-list-dropdown-container">
+              <li className="header-nav-list-dropdown-list">
+                <Free />
+                <div onClick={() => navigate('/community/free')}>
                   자유 게시판
-                </a>
+                </div>
               </li>
-              <li>
-                <a onClick={() => navigate('/community/review')}>
-                  <Review />
+              <li className="header-nav-list-dropdown-list">
+                <Review />
+                <div onClick={() => navigate('/community/review')}>
                   후기 게시판
-                </a>
+                </div>
               </li>
-              <li>
-                <a onClick={() => navigate('/community/info')}>
-                  <Information />
+              <li className="header-nav-list-dropdown-list">
+                <Information />
+                <div onClick={() => navigate('/community/info')}>
                   정보 게시판
-                </a>
+                </div>
               </li>
             </ul>
           </li>
-          <li>
-            <a onClick={() => navigate('/club')}>소모임</a>
+          <li className="header-nav-list">
+            <div onClick={() => navigate('/club')}>소모임</div>
           </li>
-          <li>
-            <a onClick={() => navigate('/inquiry')}>문의/신고</a>
+          <li className="header-nav-list">
+            <div onClick={() => navigate('/inquiry')}>문의/신고</div>
           </li>
           {loggedIn ? (
-            <li className="profile-dropdown">
-              {profileImage ? (
-                <img src={profileImage} alt="Profile" id="profileImage" />
-              ) : (
-                <Default_Profile />
-              )}
-              {notifications && <div className="notification">N</div>}
-              <ul className="dropdown-content">
-                <li>
-                  <a onClick={() => navigate('/my-page')}>
+            <li className="header-nav-profile">
+              <div className="header-nav-profile-image">
+                {profileImage ? (
+                  <img src={profileImage} alt="Profile" id="profileImage" />
+                ) : (
+                  <Default_Profile />
+                )}
+                {notifications && (
+                  <div className="header-nav-profile-notification">N</div>
+                )}
+              </div>
+              <ul className="header-nav-profile-dropdown-list-container">
+                <li className="header-nav-profile-dropdown-list">
+                  <div onClick={() => navigate('/my-page')}>
                     <Mypage />
                     마이 페이지
-                  </a>
+                  </div>
                 </li>
-                <li>
-                  <a onClick={() => navigate('/notifications')}>
+                <li className="header-nav-profile-dropdown-list">
+                  <div onClick={() => navigate('/notifications')}>
                     <Alert />
                     알림
-                  </a>
+                  </div>
                 </li>
-                <li>
-                  <a onClick={logout}>
+                <li className="header-nav-profile-dropdown-list">
+                  <div onClick={logout}>
                     <Logout />
                     로그아웃
-                  </a>
+                  </div>
                 </li>
               </ul>
             </li>
           ) : (
-            <li className="auth-links">
-              <a>
-                <a onClick={() => navigate('/login')}>로그인 /</a>
-                <a onClick={() => navigate('/signup')}>회원가입</a>
-              </a>
+            <li className="header-nav-list">
+              <div onClick={() => navigate('/login')}>로그인/</div>
+              <div onClick={() => navigate('/signup')}>회원가입</div>
             </li>
           )}
         </ul>
