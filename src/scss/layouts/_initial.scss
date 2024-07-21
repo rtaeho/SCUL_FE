@@ -1,0 +1,145 @@
+.Initial {
+  width: 50%;
+  margin: 0 auto;
+  background-color: #f1f1f5;
+}
+
+/*---닉네임설정---*/
+
+.nickSet {
+  margin-top: 135px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.redund {
+  margin-left: 16px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 8px;
+  border: solid 1px #4285f4;
+  background-color: #74b0d9;
+  color: #ffffff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.inputWrap input {
+  flex: 1;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 1px solid #888888;
+  border-radius: 8px;
+  background-color: #f1f1f5;
+  transition: border-color 0.1s, background-color 0.1s;
+  box-sizing: border-box;
+}
+
+.inputWrap input::placeholder {
+  color: #999999;
+  font-size: 14px;
+}
+
+.inputWrap input:hover {
+  outline: none;
+  background-color: #e8e8e8;
+  border-color: #999999;
+}
+
+.inputWrap input.focused {
+  outline: none;
+  border-color: #74b0d9;
+  background-color: #f1f1f5;
+}
+
+.inputWrap .focused:hover {
+  outline: none;
+  border-color: #74b0d9;
+  background-color: #dcfefe;
+}
+
+.inputWrap input.error {
+  border-color: #ff0000;
+  background-color: #ffe6e6;
+}
+
+.inputWrap input.success {
+  border-color: #74b0d9;
+  background-color: #e6f0ff;
+}
+
+.message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.successMessage {
+  color: #74b0d9;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/*---선호종목선택---*/
+.sportsSetInfo {
+  color: #999999;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.sportsSet {
+  margin-top: 64px;
+  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.buttonWrap {
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+}
+
+.buttonWrap .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #74b0d9;
+  color: #fdfdfd;
+  border: solid 1px #ffffff;
+  border-radius: 50%;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.sportsButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: white;
+  color: #000000;
+  cursor: pointer;
+}
+
+.selectedSportsButton {
+  background-color: #111111;
+  color: #fdfdfd;
+}
+
+.initialComplete {
+  margin-top: 100px;
+  margin-bottom: 26px;
+  padding: 14px 16px;
+  color: #ffffff;
+  background-color: #111111;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 8px;
+}
