@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Kakao } from '../../assets/images/Kakao.svg';
 import { ReactComponent as Google } from '../../assets/images/Google.svg';
 
 const Auth = () => {
-  const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(true);
 
-  /* const Login = () => {
-    const REST_API_KEY = '1';
-    const REDIRECT_URI = '2';
-    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const kakaoLogin = () => {
+    const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
+    const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URL;
+    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    window.location.href = kakaoURL;
+  };
 
-    const loginHandler = () => {
-      window.location.href = link;
-    }; */
+  const googleLogin = () => {
+    const CLIENT_ID = process.env.REACT_APP_CLIENT_ID_GOOGLE;
+    const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URL_GOOGLE;
+    const googleURL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=email profile`;
+    window.location.href = googleURL;
+  };
 
   const toggleAuthState = () => {
     setIsSignUp(!isSignUp);
@@ -24,17 +27,13 @@ const Auth = () => {
     <div className="Auth">
       <h2 className="h2_wrap">{isSignUp ? '회원가입' : '로그인'}</h2>
       <div className="wrap">
-        {/* 카카오로 로그인(시작하기)버튼누르면 일시적으로 초기설정페이지 확인 가능 */}
-        <button
-          onClick={() => navigate('/initial')}
-          className="kakaoLogin" /*onClick={loginHandler}*/
-        >
+        <button onClick={kakaoLogin} className="kakaoLogin">
           <Kakao className="kLogo" />
           카카오로 {isSignUp ? '시작하기' : '로그인'}
         </button>
       </div>
       <div className="wrap">
-        <button className="googleLogin" /*onClick={loginHandler}*/>
+        <button onClick={googleLogin} className="googleLogin">
           <Google className="gLogo" />
           구글로 {isSignUp ? '시작하기' : '로그인'}
         </button>

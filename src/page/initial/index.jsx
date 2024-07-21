@@ -36,8 +36,8 @@ const Initial = () => {
   const existingNicknames = ['user1', 'user2', 'user3'];
 
   const validateNickname = (name) => {
-    if (!/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{3,12}$/.test(name)) {
-      alert('영어, 숫자포함 3자~12자 가능합니다');
+    if (!/^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{3,12}$/.test(name)) {
+      alert('한글, 영어, 숫자포함 3자~12자 가능합니다');
       setInputClass('error');
       return false;
     }
