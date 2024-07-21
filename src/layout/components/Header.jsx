@@ -8,7 +8,7 @@ import { ReactComponent as Logout } from '../../assets/images/Logout.svg';
 import { ReactComponent as Information } from '../../assets/images/Information.svg';
 import { ReactComponent as Free } from '../../assets/images/Free.svg';
 import { ReactComponent as Favorite } from '../../assets/images/Favorite.svg';
-import { ReactComponent as Default_Profile } from '../../assets/images/Default_Profile.svg';
+import { ReactComponent as DefaultProfile } from '../../assets/images/DefaultProfile.svg';
 import { ReactComponent as Basketball } from '../../assets/images/Basketball.svg';
 import { ReactComponent as Baseball } from '../../assets/images/Baseball.svg';
 import { ReactComponent as Badminton } from '../../assets/images/Badminton.svg';
@@ -24,7 +24,7 @@ const languageSvgObj = {
   Information,
   Free,
   Favorite,
-  Default_Profile,
+  DefaultProfile,
   Basketball,
   Baseball,
   Badminton,
@@ -40,10 +40,16 @@ const Header = () => {
   const [sports, setSports] = useState([]);
   const [selectedSport, setSelectedSport] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
-
   useEffect(() => {
-    // 여기서 로그인 상태를 확인하고 필요한 정보를 설정합니다.
-    setLoggedIn(false); // 임시로 true로 설정
+    // localStorage에서 로그인 상태를 확인
+    const token = localStorage.getItem('token');
+    if (token) {
+      // 로그인 상태일 때
+      setLoggedIn(true);
+    } else {
+      // 비로그인 상태일 때
+      setLoggedIn(false);
+    }
     setProfileImage(null); // 프로필 이미지 설정
     setNotifications(true); // 알림 설정
 
@@ -63,12 +69,13 @@ const Header = () => {
   };
 
   const logout = () => {
+    localStorage.removeItem('token');
     alert('Logged out!');
     setLoggedIn(false);
     setProfileImage(null);
     setNotifications(false);
+    navigate('/main');
   };
-
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
@@ -162,7 +169,7 @@ const Header = () => {
                 {profileImage ? (
                   <img src={profileImage} alt="Profile" id="profileImage" />
                 ) : (
-                  <Default_Profile />
+                  <DefaultProfile />
                 )}
                 {notifications && (
                   <div className="header-nav-profile-notification">N</div>
@@ -191,8 +198,8 @@ const Header = () => {
             </li>
           ) : (
             <li className="header-nav-list">
-              <div onClick={() => navigate('/login')}>로그인/</div>
-              <div onClick={() => navigate('/signup')}>회원가입</div>
+              <div onClick={() => navigate('/auth')}>로그인/</div>
+              <div onClick={() => navigate('/auth')}>회원가입</div>
             </li>
           )}
         </ul>

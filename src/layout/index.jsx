@@ -8,7 +8,7 @@ const Layout = () => {
   // const isMainPage = location.pathname === "/"
 
   // 유저정보 모달을 안띄우고 싶은 라우팅을 설정
-  const noFooterPaths = ['/main'];
+  const noFooterPaths = ['/auth', '/initial'];
 
   // 현재 location이랑 같은지 확인
   const showFooter = !noFooterPaths.some((path) =>

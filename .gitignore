@@ -109,6 +109,13 @@ $RECYCLE.BIN/
 # comment the following lines
 !.yarn/cache
 
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
 # and uncomment the following lines
 # .pnp.*
 
