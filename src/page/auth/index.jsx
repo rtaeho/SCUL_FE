@@ -25,25 +25,25 @@ const Auth = () => {
 
   return (
     <div className="Auth">
-      <h2 className="h2_wrap">{isSignUp ? '회원가입' : '로그인'}</h2>
+      <h2 className="h2_wrap">{isSignUp ? '로그인' : '회원가입'}</h2>
       <div className="wrap">
         <button onClick={kakaoLogin} className="kakaoLogin">
           <Kakao className="kLogo" />
-          카카오로 {isSignUp ? '시작하기' : '로그인'}
+          카카오로 {isSignUp ? '로그인' : '회원가입'}
         </button>
       </div>
       <div className="wrap">
         <button onClick={googleLogin} className="googleLogin">
           <Google className="gLogo" />
-          구글로 {isSignUp ? '시작하기' : '로그인'}
+          구글로 {isSignUp ? '로그인' : '회원가입'}
         </button>
       </div>
       <div className="wrap">
         <p className="nonMem_p">
-          {isSignUp ? '이미 회원이신가요?' : '아직 회원이 아니신가요?'}
+          {isSignUp ? '아직 회원이 아니신가요?' : '이미 회원이신가요?'}
         </p>
         <button className="nonMem" onClick={toggleAuthState}>
-          {isSignUp ? '로그인' : '회원가입'}
+          {isSignUp ? '회원가입' : '로그인'}
         </button>
       </div>
     </div>
