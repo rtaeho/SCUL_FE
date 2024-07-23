@@ -13,8 +13,8 @@ const Auth = () => {
   };
 
   const googleLogin = () => {
-    const CLIENT_ID = process.env.REACT_APP_CLIENT_ID_GOOGLE;
-    const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URL_GOOGLE;
+    const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    const REDIRECT_URI = process.env.REACT_APP_GOOGLE_REDIRECT_URL;
     const googleURL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=email profile`;
     window.location.href = googleURL;
   };
