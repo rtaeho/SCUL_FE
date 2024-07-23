@@ -18,7 +18,7 @@ const sportIcons = {
   Soccer: SoccerIcon, // 축구 아이콘
   Baseball: BaseballIcon, // 야구 아이콘
   Basketball: BasketballIcon, // 농구 아이콘
-  // Badminton: BadmintonIcon, // 배드민턴 아이콘
+  Badminton: BadmintonIcon, // 배드민턴 아이콘
   // Bowling: BowlingIcon,     // 볼링 아이콘
   // Climbing: ClimbingIcon,   // 클라이밍 아이콘
   // Boxing: BoxingIcon,       // 복싱 아이콘
