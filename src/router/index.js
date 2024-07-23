@@ -33,7 +33,15 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'community',
+        path: 'main/:sport',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Main />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'community/:board/:sport',
         element: (
           <Suspense fallback={<Loading />}>
             <Community />
@@ -49,7 +57,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'club',
+        path: 'club/:sport',
         element: (
           <Suspense fallback={<Loading />}>
             <Club />
@@ -81,7 +89,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'oauth/google/callback',
+        path: 'oauth2',
         element: (
           <Suspense fallback={<Loading />}>
             <GoogleRedirect />
