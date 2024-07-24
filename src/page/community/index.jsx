@@ -3,17 +3,13 @@ import { useParams } from 'react-router-dom';
 
 // 게시판 목록 컴포넌트
 const BoardList = ({ boardName }) => {
-  return (
-    <div className="board-list">
-      <h2>{boardName}</h2>
-    </div>
-  );
+  return <div className="board-header-name">{boardName}</div>;
 };
 
 // 글 작성 버튼 컴포넌트
 const WriteButton = ({ onWrite }) => {
   return (
-    <button className="write-button" onClick={onWrite}>
+    <button className="board-header-writebutton" onClick={onWrite}>
       글 작성
     </button>
   );
@@ -142,7 +138,7 @@ const Community = () => {
   ];
 
   return (
-    <div className="board">
+    <div className="board-container">
       <div className="board-header">
         <BoardList boardName={boardName} />
         <WriteButton onWrite={handleWriteClick} />

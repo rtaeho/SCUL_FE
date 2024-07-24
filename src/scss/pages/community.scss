@@ -1,27 +1,37 @@
 /* Board.css */
-.board {
-  width: 80%;
-  margin: 0 auto;
+.board-container {
+  width: 66.7%;
+  margin: 40px auto;
+  border-radius: 16px;
+  background: #fbfbfb;
 }
 
 .board-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
+  @include inline-flexbox(between, center);
+  padding: 27px 32px 26px 32px;
+}
+
+.board-header-name {
+  color: #111;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -0.5px;
+}
+.board-header-writebutton {
+  @include inline-flexbox(center, center);
+  padding: 8px 14px;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid #7d7d7d;
+  background: #333;
+  color: white;
+  margin-top: 5px;
 }
 
 .board-list h2 {
   margin: 0;
-}
-
-.write-button {
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .notice {
