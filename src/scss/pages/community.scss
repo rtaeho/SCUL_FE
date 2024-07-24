@@ -150,9 +150,10 @@
 }
 
 .board-filter-search-container {
-  @include inline-flexbox(center, center);
+  @include inline-flexbox(between, center);
   position: relative;
-  gap: 10px;
+  width: 364px;
+  gap: 5px;
 }
 
 .board-filter-search-select-container {
