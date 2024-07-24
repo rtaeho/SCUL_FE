@@ -1,11 +1,11 @@
 @charset "UTF-8";
-
 @import 'setting/common';
 @import 'setting/reset';
-
 @import './mixins/flexbox';
-
 @import './layouts/header';
 @import './layouts/footer';
 @import './layouts/auth';
 @import './layouts/initial';
+@import './layouts/Postlist';
+@import './layouts/main';
+@import './pages/community';
