@@ -1,0 +1,90 @@
+.postList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.titleBox {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 3px;
+  min-width: 0;
+}
+
+.postItem {
+  border-bottom: 0.5px solid #999999;
+  padding: 16px 0;
+  display: flex;
+}
+
+.postImg {
+  display: block;
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  align-items: center;
+  object-fit: cover;
+  overflow: hidden;
+  margin-right: 12px;
+}
+
+.postTag {
+  display: block;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+
+.postTitle {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.postComments {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-left: 16px;
+  color: #1ad2a6;
+}
+
+.postInfo {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  color: #888888;
+  gap: 4px;
+}
+
+.postInfo span {
+  margin: 0 4px;
+}
+
+.viewsIcon {
+  height: 14px;
+  transform: translateY(2.5px);
+}
+
+.postViews {
+  transform: translateY(-1.5px);
+}
+
+.postLikes {
+  transform: translateY(-1.5px);
+}
+
+.likesIcon {
+  margin-left: 4px;
+  transform: translateY(3.5px);
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Initial = () => {
@@ -106,7 +106,7 @@ const Initial = () => {
         <h2 className="nickSet">닉네임 설정</h2>
         <div className="inputWrap">
           <input
-            placeholder="닉네임은 영어, 숫자포함 3자에서 12자까지 설정할 수 있어요"
+            placeholder="닉네임은 한글, 영어, 숫자포함 3자에서 12자까지 설정할 수 있어요"
             type="text"
             value={nickname}
             onChange={handleChange}
