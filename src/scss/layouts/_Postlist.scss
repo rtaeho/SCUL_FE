@@ -8,6 +8,7 @@
   display: flex;
   gap: 10px;
   margin-bottom: 3px;
+  min-width: 0;
 }
 
 .postItem {
@@ -17,6 +18,7 @@
 }
 
 .postImg {
+  display: block;
   width: 42px;
   height: 42px;
   border-radius: 6px;
@@ -27,21 +29,21 @@
 }
 
 .postTag {
-  display: flex;
-  @include inline-flexbox(center);
+  display: block;
   background-color: #000000;
   color: #ffffff;
   padding: 4px 8px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 500;
+  flex-wrap: nowrap;
   flex-shrink: 0;
 }
 
 .postTitle {
+  display: block;
   font-size: 16px;
   font-weight: 500;
-  display: flex;
   align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -50,6 +52,7 @@
 }
 
 .postComments {
+  display: block;
   font-size: 16px;
   font-weight: 600;
   margin-left: 16px;
@@ -72,6 +75,7 @@
   height: 14px;
   transform: translateY(2.5px);
 }
+
 .postViews {
   transform: translateY(-1.5px);
 }
