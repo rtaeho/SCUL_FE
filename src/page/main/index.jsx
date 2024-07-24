@@ -71,7 +71,7 @@ const mockPosts = [
   {
     id: 6,
     tag: '경기 결과',
-    title: '우리팀 개조졌다',
+    title: '우리팀 개조졌다 어떡하냐 열라 큰일인데',
     summary: '게시글 요약',
     createdAt: '2024-07-13T03:30:00Z',
     likes: 300,
@@ -158,10 +158,12 @@ const Main = ({ sport }) => {
         </div>
       </div>
       <div className="clubs">
-        <h1>소모임</h1>
-        <button className="moreClubs" onClick={() => nav('/club')}>
-          소모임 더보기 &#10095;
-        </button>
+        <div className="postsHead">
+          <h1>소모임</h1>
+          <button className="moreClubs" onClick={() => nav('/club')}>
+            소모임 더보기 &#10095;
+          </button>
+        </div>
       </div>
     </div>
   );
