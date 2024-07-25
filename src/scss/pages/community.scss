@@ -152,14 +152,15 @@
 .board-filter-search-container {
   @include inline-flexbox(between, center);
   position: relative;
-  width: 364px;
-  gap: 5px;
+  gap: 10px;
 }
 
 .board-filter-search-select-container {
+  @include inline-flexbox(center, center);
   border-radius: 20px;
   border: 1px solid #bbb8b8;
   padding: 6px 12px;
+  width: 62px;
 }
 
 .board-filter-search-select-selected {
