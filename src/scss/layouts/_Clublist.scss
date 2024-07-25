@@ -1,0 +1,88 @@
+.clubList {
+  display: flex;
+  list-style-type: none;
+  padding: 16px;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.clubItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 16px;
+  align-items: flex-start;
+}
+
+.clubImg {
+  width: 288px;
+  height: 224px;
+  border-radius: 16px 16px 0px 0px;
+  object-fit: cover;
+  border: 1px solid #efefef;
+  border-bottom: none;
+}
+
+.clubTitle {
+  font-size: 18px;
+  height: 50px;
+  font-weight: 700;
+  max-width: 240px;
+  line-height: 25px;
+  max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  margin-bottom: 10px;
+}
+
+.clubDate,
+.clubMemNum,
+.clubLocate {
+  display: flex;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.clubDate,
+.clubMemNum {
+  margin-bottom: 10px;
+}
+
+.calendarIcon,
+.personnelIcon,
+.pinIcon {
+  margin-right: 16px;
+  transform: translateY(1.5px);
+}
+
+.clubWrapper {
+  border-radius: 0 0 16px 16px;
+  border: 1px solid #efefef;
+  border-top: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 172px;
+  width: 288px;
+}
+
+/* ㅡㅡㅡ스크롤ㅡㅡㅡ */
+.clubList::-webkit-scrollbar {
+  height: 5px;
+}
+
+.clubList::-webkit-scrollbar-track {
+  background: none;
+}
+
+.clubList::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.clubList::-webkit-scrollbar-thumb:hover {
+  background: #999999;
+}
