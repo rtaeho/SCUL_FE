@@ -6,7 +6,7 @@
   background: #fbfbfb;
   @include column-flexbox(start, center);
 }
-
+// header
 .board-header {
   display: flex;
   @include inline-flexbox(between, center);
@@ -34,23 +34,7 @@
   color: white;
   margin-top: 5px;
 }
-
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  margin-top: 20px;
-}
-
-.pagination button {
-  padding: 5px 10px;
-  margin: 0 5px;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  background-color: #ffffff;
-}
-
+// filter
 .board-filter-container {
   width: 896px;
   height: 52px;
@@ -363,9 +347,80 @@
   line-height: 16.8px;
   letter-spacing: -0.3px;
   text-decoration-line: underline;
+  cursor: pointer;
 }
 .board-postlist-divider {
   border: 0;
   border-top: 1px solid #d7d7d7;
   margin: 15px 0;
+}
+
+// pgaenation
+.board-pagination-container {
+  display: flex;
+  width: 100%;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  @include inline-flexbox(center, center);
+}
+.board-pagination-box {
+  @include inline-flexbox(between, center);
+  gap: 12px;
+}
+.board-pagination-page {
+  color: #111;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  @include inline-flexbox(center, center);
+  cursor: pointer;
+}
+.board-pagination-selectedpage {
+  border-radius: 100px;
+  background: #111;
+  color: #fdfdfd;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  @include inline-flexbox(center, center);
+  cursor: pointer;
+}
+
+.board-pagination-nexticon-box {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  @include inline-flexbox(center, center);
+  border-radius: 100px;
+  border: 1px solid #e1e1e1;
+  cursor: pointer;
+}
+.board-pagination-nexticon {
+  stroke-width: 1px;
+  stroke: #9f9f9f;
+}
+
+.board-pagination-previcon-box {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  @include inline-flexbox(center, center);
+  border-radius: 100px;
+  border: 1px solid #e1e1e1;
+  cursor: pointer;
+}
+.board-pagination-previcon {
+  stroke-width: 1px;
+  stroke: #9f9f9f;
+  transform: rotate(180deg);
 }

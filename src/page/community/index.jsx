@@ -4,6 +4,7 @@ import { ReactComponent as Select } from '../../assets/images/FilterSelect.svg';
 import { ReactComponent as Search } from '../../assets/images/FilterSearch.svg';
 import { ReactComponent as ViewsIcon } from '../../assets/images/ViewsIcon.svg';
 import { ReactComponent as LikesIcon } from '../../assets/images/LikesIcon.svg';
+import { ReactComponent as NextIcon } from '../../assets/images/Next.svg';
 import DefaultPostImg from '../../assets/images/DefaultPostImg.jpg';
 
 const tags = {
@@ -196,7 +197,9 @@ const timeForm = (date) => {
   if (months < 12) return `${months}달 전`;
   return new Date(date).toLocaleDateString();
 };
-
+const handleAdClick = (link) => {
+  window.open(link, '_blank');
+};
 const Postlist = ({ posts }) => {
   return (
     <div className="board-postlist-container">
@@ -224,7 +227,10 @@ const Postlist = ({ posts }) => {
                     <div className="board-postlist-ad-adbox-infobox-nickname">
                       {post.nickname}
                     </div>
-                    <div className="board-postlist-ad-adbox-infobox-link">
+                    <div
+                      className="board-postlist-ad-adbox-infobox-link"
+                      onClick={() => handleAdClick(post.link)}
+                    >
                       {post.link}
                     </div>
                   </div>
@@ -287,20 +293,62 @@ const Postlist = ({ posts }) => {
 
 // 페이지네이션 컴포넌트
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const maxPagesToShow = 5;
+  const currentGroup = Math.floor((currentPage - 1) / maxPagesToShow);
+  const startPage = currentGroup * maxPagesToShow + 1;
+  const endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+
+  const pages = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i
+  );
+
+  const handleNextGroup = () => {
+    const nextGroupFirstPage = startPage + maxPagesToShow;
+    if (nextGroupFirstPage <= totalPages) {
+      onPageChange(nextGroupFirstPage);
+    }
+  };
+
+  const handlePrevGroup = () => {
+    const prevGroupFirstPage = startPage - maxPagesToShow;
+    if (prevGroupFirstPage > 0) {
+      onPageChange(prevGroupFirstPage);
+    }
+  };
 
   return (
-    <div className="pagination">
-      <span>
-        페이지: {currentPage} / {totalPages}
-      </span>
-      <div>
+    <div className="board-pagination-container">
+      <div className="board-pagination-box">
+        {startPage > 1 && (
+          <div
+            className="board-pagination-previcon-box"
+            onClick={handlePrevGroup}
+          >
+            <NextIcon className="board-pagination-previcon" />
+          </div>
+        )}
         {pages.map((page) => (
-          <button key={page} onClick={() => onPageChange(page)}>
+          <div
+            key={page}
+            onClick={() => onPageChange(page)}
+            className={
+              page === currentPage
+                ? 'board-pagination-selectedpage'
+                : 'board-pagination-page'
+            }
+          >
             {page}
-          </button>
+          </div>
         ))}
-        <button onClick={() => onPageChange(currentPage + 1)}>다음</button>
+        {endPage < totalPages && (
+          <div
+            className="board-pagination-nexticon-box"
+            onClick={handleNextGroup}
+          >
+            <NextIcon className="board-pagination-nexticon" />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -323,10 +371,10 @@ const Community = () => {
   // 현재 게시판에 맞는 태그 배열 선택
   const currentTags = tags[board] || [];
   // 총 페이지 수를 게시물 수로 계산
-  const totalPages = Math.ceil(30 / 14); // 총 30개의 목업 데이터와 한 페이지에 14개씩
+  const totalPages = Math.ceil(100 / 14); // 총 30개의 목업 데이터와 한 페이지에 14개씩
 
   // 목업 데이터
-  const mockPosts = Array.from({ length: 30 }, (_, i) => ({
+  const mockPosts = Array.from({ length: 100 }, (_, i) => ({
     id: i + 1,
     imageUrl: '',
     title: `게시글 제목 ${i + 1}`,
