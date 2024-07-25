@@ -142,7 +142,11 @@ const Header = () => {
           </div>
         </div>
         {showDropdown && (
-          <div className="header-sports-dropdown-contents-container">
+          <div
+            className={`header-sports-dropdown-contents-container ${
+              showMoreSports ? 'expanded' : ''
+            }`}
+          >
             {sports
               .filter((sport) => sport.name !== selectedSport.name)
               .slice(0, 3)
