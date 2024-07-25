@@ -1,58 +1,426 @@
 /* Board.css */
-.board {
-  width: 80%;
-  margin: 0 auto;
+.board-container {
+  width: 66.7%;
+  margin: 40px auto;
+  border-radius: 16px;
+  background: #fbfbfb;
+  @include column-flexbox(start, center);
 }
-
+// header
 .board-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
+  @include inline-flexbox(between, center);
+  padding: 27px 32px 26px 32px;
+  width: 100%;
 }
 
-.board-list h2 {
+.board-header-name {
+  color: #111;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -0.5px;
+}
+
+.board-header-writebutton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 14px;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid #7d7d7d;
+  background: #333;
+  color: white;
+  margin-top: 5px;
+}
+// filter
+.board-filter-container {
+  width: 896px;
+  height: 52px;
+  @include inline-flexbox(between, center);
+  padding: 20px;
+  border-radius: 32px;
+  border: 1px solid #ebebeb;
+  background: #fdfdfd;
+}
+
+.board-filter-select-container {
+  @include inline-flexbox(center, center);
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid #bbb8b8;
+  padding: 6px 12px;
+  gap: 10px;
+  height: auto;
+}
+
+.board-filter-selected {
+  color: #111;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+}
+
+.board-filter-select-button {
+  cursor: pointer;
+}
+
+.board-filter-select-dropdown-container {
+  position: absolute;
+  top: 33px;
+  display: flex;
+  width: 89px;
+  padding: 8px 0px;
+  @include column-flexbox(center, center);
+  gap: 6px;
+  border-radius: 12px;
+  border: 1px solid #bbb8b8;
+  background: #fdfdfd;
+}
+
+.board-filter-select-dropdown-list {
+  color: #111;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  cursor: pointer;
+}
+
+.board-filter-select-dropdown-list-hr {
+  border: none;
+  border-top: 1px solid #bbb8b8;
+  width: 89px;
   margin: 0;
 }
-
-.write-button {
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
+.board-filter-tag-container {
+  @include inline-flexbox(center, center);
+}
+.board-filter-tag-list-container {
+  @include inline-flexbox(between, center);
+  gap: 6px;
+}
+.board-filter-tag-list {
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid #bbb8b8;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
   cursor: pointer;
 }
 
-.notice {
-  background-color: #f9f9f9;
-  padding: 10px;
-  margin-top: 20px;
+.board-filter-tag-list-selected {
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid #bbb8b8;
+  background: #111;
+  color: #fdfdfd;
+  font-size: 14px;
+  font-family: PretendardBold;
+  font-weight: 700;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  cursor: pointer;
 }
 
-.notice h3 {
-  margin: 0 0 10px 0;
+.board-filter-search-container {
+  @include inline-flexbox(between, center);
+  position: relative;
+  gap: 10px;
 }
 
-.post-list {
-  background-color: #ffffff;
-  padding: 10px;
-  margin-top: 20px;
-  border: 1px solid #ddd;
+.board-filter-search-select-container {
+  @include inline-flexbox(center, center);
+  border-radius: 20px;
+  border: 1px solid #bbb8b8;
+  padding: 6px 12px;
+  width: 62px;
 }
 
-.pagination {
+.board-filter-search-select-selected {
+  color: #111;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+}
+
+.board-filter-search-select-dropdown-container {
+  position: absolute;
+  top: 35px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  margin-top: 20px;
+  width: 89px;
+  padding: 8px 0px;
+  @include column-flexbox(center, center);
+  gap: 6px;
+  border-radius: 12px;
+  border: 1px solid #bbb8b8;
+  background: #fdfdfd;
+  left: 0;
 }
 
-.pagination button {
-  padding: 5px 10px;
-  margin: 0 5px;
+.board-filter-search-select-dropdown-list {
+  color: #111;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
   cursor: pointer;
-  border: 1px solid #ddd;
-  background-color: #ffffff;
+}
+.board-filter-search-select-dropdown-list-hr {
+  border: none;
+  border-top: 1px solid #bbb8b8;
+  width: 89px;
+  margin: 0;
+}
+.board-filter-search-input-container {
+  display: flex;
+  @include inline-flexbox(start, center);
+  border-radius: 20px;
+  border: 1px solid #bbb8b8;
+  background: #fdfdfd;
+  width: 296px;
+  padding: 7px 0px 7px 10px;
+  gap: 13px;
+}
+.board-filter-search-input-icon {
+  width: 18px;
+  height: 18px;
+}
+.board-filter-search-input {
+  color: #999;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+}
+
+// postlist
+.board-postlist-container {
+  display: flex;
+  width: 896px;
+  @include column-flexbox(center, start);
+  border-radius: 8px;
+  border: 1px solid #efefef;
+  margin-top: 20px;
+}
+.board-postist {
+  padding: 16px;
+  width: 100%;
+  gap: 16px;
+}
+
+.board-postlist-postitem-post {
+  @include inline-flexbox(start, center);
+}
+.board-postlist-postitem-postimage {
+  display: inline;
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  margin-right: 12px;
+}
+.board-postlist-postitem-postbox-titlebox {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 3px;
+  width: 100%;
+}
+
+.board-postlist-postitem-postbox-titlebox-tag {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.board-postlist-postitem-postbox-titlebox-title {
+  color: #111;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22.4px;
+  letter-spacing: -0.4px;
+}
+
+.board-postlist-postitem-postbox-titlebox-comments {
+  color: #1ad2a6;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22.4px;
+  letter-spacing: -0.4px;
+  margin-left: 8px;
+}
+
+.board-postlist-postitem-infobox {
+  display: flex;
+  @include inline-flexbox(start, center);
+  font-size: 10px;
+  color: #888888;
+  gap: 4px;
+}
+
+.board-postlist-postitem-infobox-view-icon {
+  width: 10px;
+  height: 7px;
+}
+
+.board-postlist-postitem-infobox-like-icon {
+  width: 14px;
+  height: 14px;
+}
+.board-postlist-postitem-ad {
+  @include inline-flexbox(start, center);
+}
+
+.board-postlist-postitem-adimage {
+  display: block;
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  align-items: center;
+  object-fit: cover;
+  overflow: hidden;
+  margin-right: 12px;
+}
+.board-postlist-ad-adbox-titlebox {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 3px;
+  width: 100%;
+}
+.board-postlist-ad-adbox-titlebox-tag {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.board-postlist-ad-adbox-titlebox-title {
+  color: #111;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22.4px;
+  letter-spacing: -0.4px;
+}
+.board-postlist-ad-adbox-infobox {
+  display: flex;
+  @include inline-flexbox(start, center);
+  font-size: 10px;
+  color: #888888;
+  gap: 16px;
+  margin-top: 0px;
+}
+.board-postlist-ad-adbox-infobox-nickname {
+  color: #888;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: -0.25px;
+}
+.board-postlist-ad-adbox-infobox-link {
+  color: #555;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+.board-postlist-divider {
+  border: 0;
+  border-top: 1px solid #d7d7d7;
+  margin: 15px 0;
+}
+
+// pgaenation
+.board-pagination-container {
+  display: flex;
+  width: 100%;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  @include inline-flexbox(center, center);
+}
+.board-pagination-box {
+  @include inline-flexbox(between, center);
+  gap: 12px;
+}
+.board-pagination-page {
+  color: #111;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  @include inline-flexbox(center, center);
+  cursor: pointer;
+}
+.board-pagination-selectedpage {
+  border-radius: 100px;
+  background: #111;
+  color: #fdfdfd;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  @include inline-flexbox(center, center);
+  cursor: pointer;
+}
+
+.board-pagination-nexticon-box {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  @include inline-flexbox(center, center);
+  border-radius: 100px;
+  border: 1px solid #e1e1e1;
+  cursor: pointer;
+}
+.board-pagination-nexticon {
+  stroke-width: 1px;
+  stroke: #9f9f9f;
+}
+
+.board-pagination-previcon-box {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  @include inline-flexbox(center, center);
+  border-radius: 100px;
+  border: 1px solid #e1e1e1;
+  cursor: pointer;
+}
+.board-pagination-previcon {
+  stroke-width: 1px;
+  stroke: #9f9f9f;
+  transform: rotate(180deg);
 }
