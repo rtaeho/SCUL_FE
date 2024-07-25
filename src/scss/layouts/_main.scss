@@ -107,7 +107,57 @@
   padding: 16px 32px;
 }
 
-.postsHead>h1 {
+.postsHead > h1,
+.clubsHead > h1 {
+  flex: 1;
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 16px;
+}
+
+.postsContents,
+.postsHead,
+.clubsHead,
+.clubsContents {
+  display: flex;
+  gap: 16px;
+}
+
+.postsHead {
+  margin-bottom: 4px;
+}
+
+.moreCommunities,
+.moreClubs {
+  background-color: #fbfbfb;
+  color: #888888;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: flex-end;
+}
+
+.latestPost,
+.popularPost {
+  width: 50%;
+  background-color: #fdfdfd;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.latestPost > h2,
+.popularPost > h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.clubsHead {
+  margin-bottom: 20px;
+}
+
+.postsHead > h1 {
   flex: 1;
   font-size: 32px;
   font-weight: 700;
@@ -143,8 +193,8 @@
   padding: 16px;
 }
 
-.latestPost>h2,
-.popularPost>h2 {
+.latestPost > h2,
+.popularPost > h2 {
   font-size: 24px;
   font-weight: 700;
   color: #111111;
