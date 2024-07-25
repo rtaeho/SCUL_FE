@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import Postlist from '../../layout/components/Postlist';
 import Clublist from '../../layout/components/Clubslist';
 
-//배너이미지(임시)
+//배너이미지(mock)
 import banner1 from '../../assets/images/banner1.jpg';
 import banner2 from '../../assets/images/banner2.jpg';
 import banner3 from '../../assets/images/banner3.jpg';
 import banner4 from '../../assets/images/banner4.jpg';
 
-//임의 배너이미지
+//배너 mockdata
 const images = [banner1, banner2, banner3, banner4];
 
 //게시글 mockdata
@@ -128,19 +128,49 @@ const mockClubs = [
   },
 ];
 
+//실제 배너배열
+// const bannerImages = [];
+
 const Main = ({ sport }) => {
   const nav = useNavigate();
   const [current, setCurrent] = useState(0);
   const [latestPosts, setLatestPosts] = useState([]);
   const [popularPosts, setPopularPosts] = useState([]);
-  const [latestClubs, setlatestClubs] = useState([]);
+  const [latestClubs, setLatestClubs] = useState([]);
 
   const [selectedSport, setSelectedSport] = useState(null);
 
-  useEffect(() => {
-    const savedSport = JSON.parse(localStorage.getItem('selectedSport'));
-    setSelectedSport(savedSport);
-  }, []);
+  //***ㅡㅡㅡ ↓↓ API ↓↓ ㅡㅡㅡ***//
+
+  //작동하는지는? 몰?루
+
+  // const [bannerImages, setBannerImages] = useState(bannerImages);
+
+  // useEffect(() => {
+  //   const savedSport = JSON.parse(localStorage.getItem('selectedSport'));
+  //   setSelectedSport(savedSport);
+
+  //   fetch('/api/selectedSport', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ sport: savedSport }),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const { bannerImages, latestPosts, popularPosts, latestClubs } = data;
+  //       setBannerImages(bannerImages);
+  //       setLatestPosts(latestPosts);
+  //       setPopularPosts(popularPosts);
+  //       setLatestClubs(latestClubs);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching data', error);
+  //     });
+  // }, []);
+
+  //***ㅡㅡㅡ ↑↑ API ↑↑ ㅡㅡㅡ***//
 
   const nextSlide = () => {
     setCurrent(current === images.length - 1 ? 0 : current + 1);
@@ -149,6 +179,8 @@ const Main = ({ sport }) => {
   const prevSlide = () => {
     setCurrent(current === 0 ? images.length - 1 : current - 1);
   };
+
+  //***ㅡㅡㅡ ↓↓ mockdata ↓↓ ㅡㅡㅡ***//
 
   useEffect(() => {
     const sortedByLatest = [...mockPosts]
@@ -164,8 +196,10 @@ const Main = ({ sport }) => {
     const sortedByLatestClub = [...mockClubs].sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
-    setlatestClubs(sortedByLatestClub);
+    setLatestClubs(sortedByLatestClub);
   }, []);
+
+  //***ㅡㅡㅡ ↑↑ mockdata ↑↑ ㅡㅡㅡ***//
 
   return (
     <div className="Main">
