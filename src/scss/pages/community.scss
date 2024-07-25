@@ -1,0 +1,58 @@
+/* Board.css */
+.board {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.board-list h2 {
+  margin: 0;
+}
+
+.write-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.notice {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.notice h3 {
+  margin: 0 0 10px 0;
+}
+
+.post-list {
+  background-color: #ffffff;
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+}
