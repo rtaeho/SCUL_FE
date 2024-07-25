@@ -8,6 +8,7 @@ const Community = lazy(() => import('../page/community'));
 const Initial = lazy(() => import('../page/initial'));
 const Club = lazy(() => import('../page/club'));
 const Policy = lazy(() => import('../page/policy'));
+const CreatePost = lazy(() => import('../page/createPost'));
 const KakaoRedirect = lazy(() => import('../page/auth/KakaoRedirect'));
 const GoogleRedirect = lazy(() => import('../page/auth/GoogleRedirect'));
 const Loading = () => <>로딩중입니다.</>;
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <Community />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'createPost',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreatePost />
           </Suspense>
         ),
       },
