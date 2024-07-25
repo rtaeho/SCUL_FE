@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { ReactComponent as Select } from '../../assets/images/FilterSelect.svg';
 import { ReactComponent as Search } from '../../assets/images/FilterSearch.svg';
+import { ReactComponent as ViewsIcon } from '../../assets/images/ViewsIcon.svg';
+import { ReactComponent as LikesIcon } from '../../assets/images/LikesIcon.svg';
+import DefaultPostImg from '../../assets/images/DefaultPostImg.jpg';
 
 const tags = {
   free: ['전체', '소모임', '용품', '운동', '시설'],
@@ -176,12 +179,106 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
 };
 
 // 게시글 목록 컴포넌트
-const PostList = ({ posts }) => {
+const timeForm = (date) => {
+  const now = new Date();
+  const diff = now - new Date(date);
+
+  const minutes = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  const weeks = Math.floor(diff / 604800000);
+  const months = Math.floor(diff / 2592000000);
+
+  if (minutes < 60) return `${minutes}분 전`;
+  if (hours < 24) return `${hours}시간 전`;
+  if (days < 7) return `${days}일 전`;
+  if (weeks < 4) return `${weeks}주 전`;
+  if (months < 12) return `${months}달 전`;
+  return new Date(date).toLocaleDateString();
+};
+
+const Postlist = ({ posts }) => {
   return (
-    <div className="post-list">
-      <ul>
+    <div className="board-postlist-container">
+      <ul className="board-postist">
         {posts.map((post, index) => (
-          <li key={index}>{post.title}</li>
+          <li key={post.id} className="board-postlist-postitem-container">
+            {post.isAd ? (
+              <div className="board-postlist-postitem-ad">
+                <img
+                  src={post.imageUrl || DefaultPostImg}
+                  alt="adimg"
+                  className="board-postlist-postitem-adimage"
+                />
+
+                <div className="board-postlist-ad-adbox">
+                  <div className="board-postlist-ad-adbox-titlebox">
+                    <div className="board-postlist-ad-adbox-titlebox-tag">
+                      {post.tag}
+                    </div>
+                    <div className="board-postlist-ad-adbox-titlebox-title">
+                      {post.title}
+                    </div>
+                  </div>
+                  <div className="board-postlist-ad-adbox-infobox">
+                    <div className="board-postlist-ad-adbox-infobox-nickname">
+                      {post.nickname}
+                    </div>
+                    <div className="board-postlist-ad-adbox-infobox-link">
+                      {post.link}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="board-postlist-postitem-post">
+                <img
+                  src={post.imageUrl || DefaultPostImg}
+                  alt={post.title}
+                  className="board-postlist-postitem-postimage"
+                />
+                <div className="board-postlist-postitem-postbox">
+                  <div className="board-postlist-postitem-postbox-titlebox">
+                    <div className="board-postlist-postitem-postbox-titlebox-tag">
+                      {post.tag}
+                    </div>
+                    <div className="board-postlist-postitem-postbox-titlebox-title">
+                      {post.title}
+                    </div>
+                    {post.comments > 0 && (
+                      <div className="board-postlist-postitem-postbox-titlebox-comments">
+                        {post.comments}
+                      </div>
+                    )}
+                  </div>
+                  <div className="board-postlist-postitem-infobox">
+                    <div className="board-postlist-postitem-infobox-nickname">
+                      {post.nickname}
+                    </div>
+                    <div className="board-postlist-postitem-infobxo-dot">·</div>
+                    <div className="board-postlist-postitem-infobox-time">
+                      {timeForm(post.createdAt)}
+                    </div>
+                    <div className="board-postlist-postitem-infobxo-dot">·</div>
+                    <ViewsIcon className="board-postlist-postitem-infobox-view-icon" />
+                    <div className="postViboard-postlist-postitem-infobox-view">
+                      {post.views}{' '}
+                    </div>
+                    <div className="board-postlist-postitem-infobxo-dot">·</div>
+                    <LikesIcon className="board-postlist-postitem-infobox-like-icon" />
+                    {post.likes > 0 && (
+                      <div className="board-postlist-postitem-infobox-like">
+                        {post.likes}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+            {index < posts.length - 1 && (
+              <hr className="board-postlist-divider" />
+            )}
+          </li>
         ))}
       </ul>
     </div>
@@ -215,7 +312,6 @@ const Community = () => {
   const { sport } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
-  const totalPages = 5;
 
   // 게시판별 태그 배열 정의
   const tags = {
@@ -226,8 +322,42 @@ const Community = () => {
 
   // 현재 게시판에 맞는 태그 배열 선택
   const currentTags = tags[board] || [];
+  // 총 페이지 수를 게시물 수로 계산
+  const totalPages = Math.ceil(30 / 14); // 총 30개의 목업 데이터와 한 페이지에 14개씩
+
+  // 목업 데이터
+  const mockPosts = Array.from({ length: 30 }, (_, i) => ({
+    id: i + 1,
+    imageUrl: '',
+    title: `게시글 제목 ${i + 1}`,
+    tag: '태그',
+    nickname: `작성자 ${i + 1}`,
+    createdAt: new Date().toISOString(),
+    views: Math.floor(Math.random() * 1000),
+    likes: Math.floor(Math.random() * 100),
+    comments: Math.floor(Math.random() * 50),
+  }));
+
+  // 광고 목업 데이터
+  const adData = {
+    id: 'ad1',
+    isAd: true,
+    tag: '광고',
+    title: '나랑 스껄할래?',
+    nickname: '스컬스컬',
+    link: 'https://s-cul.com',
+  };
 
   useEffect(() => {
+    // 페이지에 맞는 게시물 목록을 필터링 및 광고 삽입
+    const startIdx = (currentPage - 1) * 14;
+    const endIdx = startIdx + 14;
+    const postsWithAd = [
+      ...mockPosts.slice(startIdx, startIdx + 4),
+      adData,
+      ...mockPosts.slice(startIdx + 4, endIdx),
+    ];
+    setPosts(postsWithAd);
     //fetchPosts();
   }, [currentPage]);
 
@@ -283,7 +413,7 @@ const Community = () => {
         onTagChange={handleTagChange}
         onSearch={handleSearch}
       />
-      <PostList posts={posts} />
+      <Postlist posts={posts} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
