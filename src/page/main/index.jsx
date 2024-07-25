@@ -142,6 +142,8 @@ const Main = ({ sport }) => {
 
   //***ㅡㅡㅡ ↓↓ API ↓↓ ㅡㅡㅡ***//
 
+  //작동하는지는? 몰?루
+
   // const [bannerImages, setBannerImages] = useState(bannerImages);
 
   // useEffect(() => {

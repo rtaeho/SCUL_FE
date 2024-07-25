@@ -1,22 +1,15 @@
 @font-face {
-  //   font-family: 'Pretendard';
-  //   src: url('../../assets/Pretendard-Medium.otf') format('opentype');
+  font-family: 'Pretendard';
+  src: url('../../assets/font/Pretendard-Medium.otf') format('opentype');
+}
+@font-face {
+  font-family: 'PretendardBold';
+  src: url('../../assets/font/Pretendard-Bold.otf') format('opentype');
 }
 
 * {
   font-family: 'Pretendard', sans-serif;
 }
-
-// @media (min-width: 375px) {
-//   #root {
-//     width: 430px;
-//   }
-// }
-// @media (max-width: 500px) {
-//   #root {
-//     width: 100vw;
-//   }
-// }
 
 #root {
   margin: 0 auto;
