@@ -4,10 +4,22 @@
   margin: 0;
 }
 
+.Wrapper {
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .titleBox {
   display: flex;
   gap: 10px;
   margin-bottom: 3px;
+  align-items: center;
+}
+
+.postTitleWrapper {
+  display: flex;
 }
 
 .postItem {
@@ -15,15 +27,18 @@
   padding: 16px 0;
   display: flex;
 }
+.postItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
 
 .postImg {
   width: 42px;
   height: 42px;
   border-radius: 6px;
-  align-items: center;
   object-fit: cover;
-  overflow: hidden;
   margin-right: 12px;
+  flex-shrink: 0;
 }
 
 .postTag {
@@ -41,12 +56,13 @@
 .postTitle {
   font-size: 16px;
   font-weight: 500;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100%;
+  min-width: 0;
+  max-width: 220px;
 }
 
 .postComments {
@@ -54,6 +70,7 @@
   font-weight: 600;
   margin-left: 16px;
   color: #1ad2a6;
+  flex-shrink: 0;
 }
 
 .postInfo {

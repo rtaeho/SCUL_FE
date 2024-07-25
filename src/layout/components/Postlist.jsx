@@ -36,8 +36,8 @@ const Postlist = ({ posts }) => {
           <div className="Wrapper">
             <div className="titleBox">
               <div className="postTag">{post.tag}</div>
-              <div className="postTitle">
-                {post.title}
+              <div className="postTitleWrapper">
+                <div className="postTitle">{post.title}</div>
                 {post.comments > 0 && (
                   <span className="postComments">{post.comments}</span>
                 )}
