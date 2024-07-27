@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'createPost',
+        path: 'createPost/:sport',
         element: (
           <Suspense fallback={<Loading />}>
             <CreatePost />

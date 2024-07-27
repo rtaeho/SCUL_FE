@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactQuill, { Quill, quillRef } from 'react-quill';
 import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
@@ -56,7 +57,29 @@ const imageHandler = () => {
   });
 };
 
+const sportsList = [
+  { name: '축구', englishName: 'Soccer' },
+  { name: '야구', englishName: 'Baseball' },
+  { name: '농구', englishName: 'Basketball' },
+  { name: '볼링', englishName: 'Bowling' },
+  { name: '배드민턴', englishName: 'Badminton' },
+  { name: '클라이밍', englishName: 'Climbing' },
+  { name: '복싱', englishName: 'Boxing' },
+  { name: '테니스', englishName: 'Tennis' },
+  { name: '사이클', englishName: 'Cycling' },
+  { name: '골프', englishName: 'Golf' },
+  { name: '수영', englishName: 'Swimming' },
+  { name: '런닝', englishName: 'Running' },
+  { name: '발레', englishName: 'Ballet' },
+  { name: '필라테스', englishName: 'Pilates' },
+  { name: '등산', englishName: 'Hiking' },
+  { name: '크로스핏', englishName: 'CrossFit' },
+  { name: '탁구', englishName: 'Table Tennis' },
+  { name: '요가', englishName: 'Yoga' },
+];
+
 const CreatePost = () => {
+  const nav = useNavigate();
   const [isBoardOpen, setIsBoardOpen] = useState(false);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [selectedBoard, setSelectedBoard] = useState('게시판을 선택해 주세요');
@@ -64,6 +87,12 @@ const CreatePost = () => {
   const [options, setOptions] = useState([]);
   const [isOptionDisabled, setIsOptionDisabled] = useState(true);
   const [content, setContent] = useState('');
+  const titleRef = useRef(null);
+  const { sport } = useParams();
+
+  const selectedSport = sportsList.find(
+    (s) => s.englishName.toLowerCase() === sport.toLowerCase()
+  ) || { name: '축구', englishName: 'Soccer' };
 
   const toggleBoardDropdown = () => {
     setIsBoardOpen(!isBoardOpen);
@@ -93,6 +122,7 @@ const CreatePost = () => {
           '분류 추가 건의',
         ]);
         setIsOptionDisabled(false);
+        alert('문의 / 신고 게시판은 관리자만 조회 할 수 있습니다');
         break;
       case '정보 게시판':
         setOptions(['대회', '경기 결과', '경기 일정']);
@@ -112,6 +142,78 @@ const CreatePost = () => {
   const handleContentChange = (value) => {
     setContent(value);
   };
+
+  // 사이트 탈주 알림
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  const handleSubmit = async () => {
+    if (selectedBoard === '게시판을 선택해 주세요') {
+      alert('게시판을 선택해 주세요');
+      return;
+    }
+
+    if (selectedBoard !== '자유 게시판' && selectedOption === '분류 선택') {
+      alert('분류를 선택해 주세요');
+      return;
+    }
+    if (titleRef.current.value.trim() === '') {
+      alert('제목을 작성해 주세요');
+      return;
+    }
+
+    if (content.trim() === '') {
+      alert('내용을 입력해 주세요');
+      return;
+    }
+
+    let redirectUrl = '';
+    switch (selectedBoard) {
+      case '자유 게시판':
+        redirectUrl = `/community/free/${sport.toLowerCase()}`;
+        break;
+      case '후기 게시판':
+        redirectUrl = `/community/review/${sport.toLowerCase()}`;
+        break;
+      case '정보 게시판':
+        redirectUrl = `/community/info/${sport.toLowerCase()}`;
+        break;
+      case '문의 / 신고':
+        redirectUrl = `/inquiry`;
+        break;
+      default:
+        redirectUrl = '/';
+    }
+
+    window.location.href = redirectUrl;
+  };
+
+  //   try {
+  //     const userToken = 'user-token'; // 실제 유저 토큰으로 대체 필요
+  //     await axios.post('http://localhost:3000/post', {
+  //       board: selectedBoard,
+  //       tag: selectedOption,
+  //       title: titleRef.current.value,
+  //       content: content,
+  //       token: userToken,
+  //       sport: selectedSport,
+  //     });
+  //     // 게시글 등록 성공 시 해당 게시판으로 이동
+  //     window.location.href = `/board/${selectedBoard}`;
+  //   } catch (error) {
+  //     console.error('게시글 등록 실패:', error);
+  //   }
+  // };
 
   return (
     <div className="CreatePost">
@@ -166,6 +268,7 @@ const CreatePost = () => {
           className="setTitle"
           placeholder="제목을 입력해 주세요"
           type="text"
+          ref={titleRef}
         />
       </div>
       <div className="quill">
@@ -179,7 +282,9 @@ const CreatePost = () => {
       </div>
 
       <div className="createBtn">
-        <button className="create">게시글 등록</button>
+        <button className="create" onClick={handleSubmit}>
+          게시글 등록
+        </button>
       </div>
     </div>
   );
