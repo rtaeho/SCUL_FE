@@ -1,0 +1,125 @@
+.custom-header {
+  margin: 10px;
+}
+.react-datepicker {
+  border-radius: 16px;
+  border: 1px solid #bbb8b8;
+  background: #fdfdfd;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: inline-block;
+  cursor: default;
+}
+
+.react-datepicker__month,
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  margin: 0;
+}
+
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: #111;
+
+  &:nth-child(1) {
+    color: #e30000; // 일요일
+  }
+
+  &.react-datepicker__day--outside-month {
+    color: #999; // 해당 월이 아닌 날짜
+  }
+}
+.react-datepicker__month-container {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.react-datepicker__day-names {
+  margin-bottom: 0;
+}
+
+.react-datepicker__header {
+  background-color: #fdfdfd;
+  border-bottom: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h2.react-datepicker__current-month {
+  color: #111;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22.4px;
+  letter-spacing: -0.4px;
+  margin: 10px 0;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day {
+  color: #111;
+  text-align: center;
+  font-family: Pretendard, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  width: 44px;
+  height: 44px;
+  line-height: 44px; /* 세로 가운데 정렬 */
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.react-datepicker__day-name {
+  color: #767676;
+  font-weight: 400;
+}
+
+.react-datepicker__day--outside-month {
+  color: #999;
+}
+
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+  background: #fdfdfd;
+  border-radius: 100px;
+}
+
+.react-datepicker__day:hover {
+  border-radius: 100px;
+}
+
+.react-datepicker__day:hover {
+  border-radius: 100px;
+  background: #e0e0e0;
+}
+.react-datepicker__day--selected {
+  border-radius: 100px;
+  background: #74b0d9;
+  color: #fdfdfd;
+  &:hover {
+    background: #74b0d9;
+  }
+}
+.custom-nav-button-prev {
+  background-color: #f9f9f9;
+  width: 12px;
+  height: 12px;
+  margin-right: 13px;
+}
+
+.custom-nav-button-next {
+  background-color: #f9f9f9;
+  width: 12px;
+  height: 12px;
+  margin-left: 10px;
+}

@@ -8,9 +8,9 @@ import { ReactComponent as NextIcon } from '../../assets/images/Next.svg';
 import DefaultPostImg from '../../assets/images/DefaultPostImg.jpg';
 
 const tags = {
-  free: ['전체', '소모임', '용품', '운동', '시설'],
-  review: ['전체', '리뷰', '추천', '경험담'],
-  info: ['전체', '공지', '이벤트', '문의'],
+  free: ['전체'],
+  review: ['전체', '소모임', '용품', '운동', '시설'],
+  info: ['전체', '대회', '경기 일정', '경기 결과'],
 };
 
 // 게시판 목록 컴포넌트
@@ -360,13 +360,6 @@ const Community = () => {
   const { sport } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
-
-  // 게시판별 태그 배열 정의
-  const tags = {
-    free: ['전체', '소모임', '용품', '운동', '시설'],
-    review: ['전체', '리뷰', '추천', '경험담'],
-    info: ['전체', '공지', '이벤트', '문의'],
-  };
 
   // 현재 게시판에 맞는 태그 배열 선택
   const currentTags = tags[board] || [];
