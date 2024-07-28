@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { ReactComponent as Select } from '../../assets/images/FilterSelect.svg';
 import { ReactComponent as Search } from '../../assets/images/FilterSearch.svg';
 import { ReactComponent as ViewsIcon } from '../../assets/images/ViewsIcon.svg';
 import { ReactComponent as LikesIcon } from '../../assets/images/LikesIcon.svg';
 import { ReactComponent as NextIcon } from '../../assets/images/Next.svg';
+import { ReactComponent as CalendarPrev } from '../../assets/images/CalendarPrev.svg';
+import { ReactComponent as CalendarNext } from '../../assets/images/CalendarNext.svg';
 import DefaultPostImg from '../../assets/images/DefaultPostImg.jpg';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // 스타일시트
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 // 소모임 생성 버튼 컴포넌트
 const WriteButton = ({ onWrite }) => {
@@ -17,7 +20,6 @@ const WriteButton = ({ onWrite }) => {
     </button>
   );
 };
-
 const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedSort, setSelectedSort] = useState('최신 순');
@@ -27,10 +29,62 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const calendarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+        setCalendarVisible(false);
+        if (selectedDate) {
+          const formattedDate = `${
+            selectedDate.getMonth() + 1
+          }/${selectedDate.getDate()}`;
+          setSelectedTags((prevSelectedTags) => {
+            const updatedTags = prevSelectedTags.filter(
+              (tag) => !tag.includes('/')
+            );
+            updatedTags.push(formattedDate);
+            onTagChange(updatedTags);
+            return updatedTags;
+          });
+        }
+      }
+    };
+
+    if (calendarVisible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [calendarVisible, selectedDate, onTagChange]);
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setCalendarVisible(false);
+    const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`;
+    setSelectedTags((prevSelectedTags) => {
+      const updatedTags = prevSelectedTags
+        .filter((tag) => !tag.includes('/') && tag !== '날짜')
+        .concat(formattedDate);
+      onTagChange(updatedTags);
+      return updatedTags;
+    });
+  };
 
   const handleTagChange = (tag) => {
     if (tag === '날짜') {
-      setCalendarVisible(!calendarVisible);
+      setCalendarVisible(true);
+      setSelectedTags((prevSelectedTags) => {
+        if (!prevSelectedTags.includes('날짜')) {
+          const updatedTags = [...prevSelectedTags, '날짜'];
+          onTagChange(updatedTags);
+          return updatedTags;
+        }
+        return prevSelectedTags;
+      });
       return;
     }
 
@@ -38,20 +92,6 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
       const updatedTags = prevSelectedTags.includes(tag)
         ? prevSelectedTags.filter((t) => t !== tag)
         : [...prevSelectedTags, tag];
-      onTagChange(updatedTags);
-      return updatedTags;
-    });
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    setCalendarVisible(false);
-    const formattedDate = date ? date.toISOString().split('T')[0] : null;
-    setSelectedTags((prevSelectedTags) => {
-      const updatedTags = prevSelectedTags.filter((tag) => !tag.includes('-'));
-      if (formattedDate) {
-        updatedTags.push(formattedDate);
-      }
       onTagChange(updatedTags);
       return updatedTags;
     });
@@ -87,6 +127,20 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
       });
     }
   };
+
+  const renderCustomHeader = ({ date, decreaseMonth, increaseMonth }) => (
+    <div className="custom-header">
+      <button onClick={decreaseMonth} className="custom-nav-button-prev">
+        <CalendarPrev />
+      </button>
+      <span className="react-datepicker__current-month">
+        {format(date, 'yyyy년 M월', { locale: ko })}
+      </span>
+      <button onClick={increaseMonth} className="custom-nav-button-next">
+        <CalendarNext />
+      </button>
+    </div>
+  );
 
   return (
     <div className="club-filter-container">
@@ -129,19 +183,24 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
           <li
             onClick={() => handleTagChange('날짜')}
             className={
-              selectedTags.some((tag) => tag.includes('-'))
+              selectedTags.some((tag) => tag.includes('/')) ||
+              selectedTags.includes('날짜')
                 ? 'club-filter-tag-list-selected'
                 : 'club-filter-tag-list'
             }
           >
-            {selectedDate ? selectedDate.toISOString().split('T')[0] : '날짜'}
+            {selectedDate
+              ? `${selectedDate.getMonth() + 1}/${selectedDate.getDate()}`
+              : '날짜'}
+
             {calendarVisible && (
-              <div className="club-filter-calendar-container">
+              <div ref={calendarRef} className="club-filter-calendar-container">
                 <DatePicker
                   selected={selectedDate}
                   onChange={handleDateChange}
                   dateFormat="yyyy/MM/dd"
-                  className="club-filter-calendar"
+                  locale={ko} // 한국어 로케일 설정
+                  renderCustomHeader={renderCustomHeader}
                   inline
                 />
               </div>
@@ -227,7 +286,6 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
     </div>
   );
 };
-
 // 게시글 목록 컴포넌트
 const timeForm = (date) => {
   const now = new Date();
