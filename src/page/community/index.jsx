@@ -414,7 +414,8 @@ const Community = () => {
   };
 
   const handleWriteClick = () => {
-    alert('글 작성 버튼 클릭됨');
+    const baseUrl = window.location.origin;
+    window.location.href = `${baseUrl}/createpost/${sport.toLowerCase()}`;
   };
 
   const handlePageChange = (page) => {
