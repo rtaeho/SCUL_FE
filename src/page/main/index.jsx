@@ -131,7 +131,7 @@ const mockClubs = [
 //실제 배너배열
 // const bannerImages = [];
 
-const Main = ({ sport }) => {
+const Main = () => {
   const nav = useNavigate();
   const [current, setCurrent] = useState(0);
   const [latestPosts, setLatestPosts] = useState([]);
@@ -235,7 +235,12 @@ const Main = ({ sport }) => {
       <div className="posts">
         <div className="postsHead">
           <h1>커뮤니티</h1>
-          <button className="moreCommunities" onClick={() => nav('/community')}>
+          <button
+            className="moreCommunities"
+            onClick={() => {
+              nav(`/community/free/${selectedSport}`);
+            }}
+          >
             게시글 더보기 &#10095;
           </button>
         </div>
@@ -253,7 +258,12 @@ const Main = ({ sport }) => {
       <div className="clubs">
         <div className="clubsHead">
           <h1>소모임</h1>
-          <button className="moreClubs" onClick={() => nav('/club')}>
+          <button
+            className="moreClubs"
+            onClick={() => {
+              nav(`/club/${selectedSport}`);
+            }}
+          >
             소모임 더보기 &#10095;
           </button>
         </div>

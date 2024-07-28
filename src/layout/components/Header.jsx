@@ -299,7 +299,7 @@ const Header = () => {
             </li>
           ) : (
             <li className="header-nav-list">
-              <div onClick={() => navigate('/auth')}>로그인/</div>
+              <div onClick={() => navigate('/auth')}>로그인</div> /
               <div onClick={() => navigate('/auth')}>회원가입</div>
             </li>
           )}

@@ -4,11 +4,11 @@
 @import './mixins/flexbox';
 @import './layouts/header';
 @import './layouts/footer';
-@import './layouts/auth';
-@import './layouts/initial';
-@import './layouts/main';
 @import './layouts/Postlist';
 @import './layouts/Clublist';
 @import './pages/community';
 @import './pages/club';
-
+@import './pages/auth';
+@import './pages/initial';
+@import './pages/main';
+@import './pages/createPost';

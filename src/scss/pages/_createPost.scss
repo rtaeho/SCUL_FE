@@ -1,0 +1,155 @@
+.CreatePost {
+  width: 66%;
+  min-width: 950px;
+  height: max-content;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 32px;
+  border-radius: 16px;
+  background-color: #fbfbfb;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.CreatePost > h1 {
+  color: #111111;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.postSetting {
+  display: flex;
+  flex-direction: column;
+  margin-top: 26px;
+  padding: 20px 40px;
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  border: 1px solid #efefef;
+}
+
+.setDropdown {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.createTagDropdown,
+.createBoardDropdown {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.createBoardDropdown {
+  flex: 1;
+}
+
+.setBoardBtn,
+.setTagBtn {
+  flex: 1;
+  position: relative;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: start;
+  border-radius: 12px;
+  border: 1px solid #bbb8b8;
+  background-color: #fdfdfd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setBoardBtn {
+  flex: 1;
+  position: relative;
+}
+
+.setTagBtn {
+  width: 206px;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.setTagBtn.disabled {
+  background-color: #e3e3e3;
+  color: #888888;
+}
+
+.setMenu {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  border: 1px solid #bbb8b8;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  width: 100%;
+}
+
+.setMenu div {
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+.setMenu div:hover {
+  background-color: #74b0d9;
+  text-decoration: underline;
+  color: #fdfdfd;
+}
+
+.setMenu div:hover:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.setMenu div:hover:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.setTitle {
+  margin-top: 16px;
+  padding: 8px 14px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #bbb8b8;
+  font-size: 14px;
+}
+
+.setTitle::placeholder {
+  color: #999999;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.create {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 19px;
+  padding: 8px 14px;
+  background-color: #333333;
+  color: #fdfdfd;
+  border: 1px solid #fdfdfd;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.createBtn {
+  @include inline-flexbox(center);
+}
+
+.ql-editor {
+  min-height: 300px;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  color: #888888;
+}
