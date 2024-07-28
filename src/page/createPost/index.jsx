@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ReactQuill, { Quill, quillRef } from 'react-quill';
 import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
@@ -57,29 +57,7 @@ const imageHandler = () => {
   });
 };
 
-const sportsList = [
-  { name: '축구', englishName: 'Soccer' },
-  { name: '야구', englishName: 'Baseball' },
-  { name: '농구', englishName: 'Basketball' },
-  { name: '볼링', englishName: 'Bowling' },
-  { name: '배드민턴', englishName: 'Badminton' },
-  { name: '클라이밍', englishName: 'Climbing' },
-  { name: '복싱', englishName: 'Boxing' },
-  { name: '테니스', englishName: 'Tennis' },
-  { name: '사이클', englishName: 'Cycling' },
-  { name: '골프', englishName: 'Golf' },
-  { name: '수영', englishName: 'Swimming' },
-  { name: '런닝', englishName: 'Running' },
-  { name: '발레', englishName: 'Ballet' },
-  { name: '필라테스', englishName: 'Pilates' },
-  { name: '등산', englishName: 'Hiking' },
-  { name: '크로스핏', englishName: 'CrossFit' },
-  { name: '탁구', englishName: 'Table Tennis' },
-  { name: '요가', englishName: 'Yoga' },
-];
-
 const CreatePost = () => {
-  const nav = useNavigate();
   const [isBoardOpen, setIsBoardOpen] = useState(false);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [selectedBoard, setSelectedBoard] = useState('게시판을 선택해 주세요');
@@ -89,10 +67,6 @@ const CreatePost = () => {
   const [content, setContent] = useState('');
   const titleRef = useRef(null);
   const { sport } = useParams();
-
-  const selectedSport = sportsList.find(
-    (s) => s.englishName.toLowerCase() === sport.toLowerCase()
-  ) || { name: '축구', englishName: 'Soccer' };
 
   const toggleBoardDropdown = () => {
     setIsBoardOpen(!isBoardOpen);
