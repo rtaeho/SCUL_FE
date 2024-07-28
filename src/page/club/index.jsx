@@ -28,6 +28,7 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   const [sortDropdownVisible, setSortDropdownVisible] = useState(false);
   const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
+  const [tempDate, setTempDate] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const calendarRef = useRef(null);
 
@@ -35,19 +36,6 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
     const handleClickOutside = (event) => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendarVisible(false);
-        if (selectedDate) {
-          const formattedDate = `${
-            selectedDate.getMonth() + 1
-          }/${selectedDate.getDate()}`;
-          setSelectedTags((prevSelectedTags) => {
-            const updatedTags = prevSelectedTags.filter(
-              (tag) => !tag.includes('/')
-            );
-            updatedTags.push(formattedDate);
-            onTagChange(updatedTags);
-            return updatedTags;
-          });
-        }
       }
     };
 
@@ -60,31 +48,29 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [calendarVisible, selectedDate, onTagChange]);
+  }, [calendarVisible]);
+
+  useEffect(() => {
+    if (!calendarVisible && tempDate) {
+      const formattedDate = `${tempDate.getMonth() + 1}/${tempDate.getDate()}`;
+      setSelectedTags((prevSelectedTags) => {
+        const updatedTags = prevSelectedTags.filter(
+          (tag) => !tag.includes('/')
+        );
+        updatedTags.push(formattedDate);
+        onTagChange(updatedTags);
+        return updatedTags;
+      });
+      setSelectedDate(tempDate);
+    }
+  }, [calendarVisible, tempDate, onTagChange]);
   const handleDateChange = (date) => {
-    setSelectedDate(date);
-    setCalendarVisible(false);
-    const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`;
-    setSelectedTags((prevSelectedTags) => {
-      const updatedTags = prevSelectedTags
-        .filter((tag) => !tag.includes('/') && tag !== '날짜')
-        .concat(formattedDate);
-      onTagChange(updatedTags);
-      return updatedTags;
-    });
+    setTempDate(date);
   };
 
   const handleTagChange = (tag) => {
     if (tag === '날짜') {
       setCalendarVisible(true);
-      setSelectedTags((prevSelectedTags) => {
-        if (!prevSelectedTags.includes('날짜')) {
-          const updatedTags = [...prevSelectedTags, '날짜'];
-          onTagChange(updatedTags);
-          return updatedTags;
-        }
-        return prevSelectedTags;
-      });
       return;
     }
 
@@ -96,7 +82,6 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
       return updatedTags;
     });
   };
-
   const handleSortChange = (sort) => {
     setSelectedSort(sort);
     setSortDropdownVisible(false);
@@ -183,8 +168,7 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
           <li
             onClick={() => handleTagChange('날짜')}
             className={
-              selectedTags.some((tag) => tag.includes('/')) ||
-              selectedTags.includes('날짜')
+              selectedTags.some((tag) => tag.includes('/')) || calendarVisible
                 ? 'club-filter-tag-list-selected'
                 : 'club-filter-tag-list'
             }
@@ -192,14 +176,13 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
             {selectedDate
               ? `${selectedDate.getMonth() + 1}/${selectedDate.getDate()}`
               : '날짜'}
-
             {calendarVisible && (
               <div ref={calendarRef} className="club-filter-calendar-container">
                 <DatePicker
-                  selected={selectedDate}
+                  selected={tempDate}
                   onChange={handleDateChange}
                   dateFormat="yyyy/MM/dd"
-                  locale={ko} // 한국어 로케일 설정
+                  locale={ko}
                   renderCustomHeader={renderCustomHeader}
                   inline
                 />
