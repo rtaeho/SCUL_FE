@@ -172,7 +172,7 @@ const CreatePost = () => {
     window.location.href = redirectUrl;
   };
 
-  //   try {
+  ///   try {
   //     const userToken = 'user-token'; // 실제 유저 토큰으로 대체 필요
   //     await axios.post('http://localhost:3000/post', {
   //       board: selectedBoard,
