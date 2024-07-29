@@ -9,6 +9,7 @@ const Initial = lazy(() => import('../page/initial'));
 const Club = lazy(() => import('../page/club'));
 const Policy = lazy(() => import('../page/policy'));
 const CreatePost = lazy(() => import('../page/createPost'));
+const Post = lazy(() => import('../page/post'));
 const KakaoRedirect = lazy(() => import('../page/auth/KakaoRedirect'));
 const GoogleRedirect = lazy(() => import('../page/auth/GoogleRedirect'));
 const Loading = () => <>로딩중입니다.</>;
@@ -81,6 +82,7 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+
       {
         path: 'auth',
         element: (
@@ -102,6 +104,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <GoogleRedirect />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'post/:sport',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Post />
           </Suspense>
         ),
       },
