@@ -28,7 +28,7 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   const [sortDropdownVisible, setSortDropdownVisible] = useState(false);
   const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
-  const [tempDate, setTempDate] = useState(null);
+  const [tempDate, setTempDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const calendarRef = useRef(null);
 
@@ -49,15 +49,13 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [calendarVisible]);
-
   useEffect(() => {
     if (!calendarVisible && tempDate) {
       const formattedDate = `${tempDate.getMonth() + 1}/${tempDate.getDate()}`;
       setSelectedTags((prevSelectedTags) => {
-        const updatedTags = prevSelectedTags.filter(
-          (tag) => !tag.includes('/')
+        const updatedTags = prevSelectedTags.map((tag) =>
+          tag === '날짜' ? formattedDate : tag
         );
-        updatedTags.push(formattedDate);
         onTagChange(updatedTags);
         return updatedTags;
       });
@@ -66,10 +64,19 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   }, [calendarVisible, tempDate, onTagChange]);
   const handleDateChange = (date) => {
     setTempDate(date);
+    setSelectedDate(date); // Set selected date
+    setCalendarVisible(false); // Close calendar after date selection
   };
-
   const handleTagChange = (tag) => {
     if (tag === '날짜') {
+      setSelectedTags((prevSelectedTags) => {
+        if (!prevSelectedTags.includes('날짜')) {
+          const updatedTags = [...prevSelectedTags, '날짜'];
+          onTagChange(updatedTags);
+          return updatedTags;
+        }
+        return prevSelectedTags;
+      });
       setCalendarVisible(true);
       return;
     }
@@ -168,23 +175,25 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
           <li
             onClick={() => handleTagChange('날짜')}
             className={
-              selectedTags.some((tag) => tag.includes('/')) || calendarVisible
+              selectedTags.some((tag) => tag.includes('/') || tag === '날짜') ||
+              calendarVisible
                 ? 'club-filter-tag-list-selected'
                 : 'club-filter-tag-list'
             }
           >
-            {selectedDate
+            {selectedDate && selectedTags.some((tag) => tag.includes('/'))
               ? `${selectedDate.getMonth() + 1}/${selectedDate.getDate()}`
               : '날짜'}
             {calendarVisible && (
               <div ref={calendarRef} className="club-filter-calendar-container">
                 <DatePicker
-                  selected={tempDate}
+                  selected={selectedDate || new Date()}
                   onChange={handleDateChange}
                   dateFormat="yyyy/MM/dd"
                   locale={ko}
                   renderCustomHeader={renderCustomHeader}
                   inline
+                  disabledKeyboardNavigation
                 />
               </div>
             )}
