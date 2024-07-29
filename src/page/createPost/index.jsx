@@ -268,6 +268,7 @@ CreatePost.modules = {
   toolbar: [
     [{ size: [] }],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ color: [] }, { background: [] }],
     [
       { align: '' },
       { align: 'center' },
@@ -281,7 +282,7 @@ CreatePost.modules = {
       { indent: '+1' },
     ],
     ['link', 'image', 'video'],
-    [{ color: [] }, { background: [] }],
+
   ],
   imageDrop: true,
 

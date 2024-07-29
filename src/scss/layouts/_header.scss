@@ -7,6 +7,7 @@
   background-color: #111111;
   padding: 0 24px;
   width: 66.7%;
+  min-width: 950px;
   height: 6.5%;
   border-radius: 32px;
   margin-top: 40px;
@@ -43,6 +44,7 @@
       .header-sports-dropdown-icon-container {
         @include inline-flexbox(end, center);
         margin-left: auto;
+
         .header-sports-dropdown-icon {
           background-color: #111111;
           font-size: 1rem;
@@ -70,11 +72,13 @@
       &.expanded {
         max-height: 1000px;
       }
+
       .header-sports-dropdown-contents-sport {
         @include inline-flexbox(start, center);
         width: 100%;
         gap: 8px;
         padding: 6px 16px;
+
         &:first-child {
           margin-top: 10px;
         }
@@ -112,9 +116,11 @@
         color: white;
         position: relative;
         height: 38px;
+
         div:hover {
           color: #65ffff;
         }
+
         &:hover .header-nav-list-dropdown-container {
           display: flex;
         }
@@ -157,6 +163,7 @@
 
         .header-nav-profile-image {
           @include inline-flexbox(center, center);
+
           .header-nav-profile-notification {
             position: absolute;
             top: -0.5px;
@@ -195,6 +202,7 @@
               padding: 6px 16px;
               color: white;
             }
+
             &:hover {
               cursor: pointer;
             }

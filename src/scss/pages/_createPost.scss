@@ -12,7 +12,7 @@
   flex-direction: column;
 }
 
-.CreatePost > h1 {
+.CreatePost>h1 {
   color: #111111;
   font-size: 20px;
   font-weight: 700;
@@ -147,7 +147,7 @@
   min-height: 300px;
 }
 
-.quill > .ql-container > .ql-editor.ql-blank::before {
+.quill>.ql-container>.ql-editor.ql-blank::before {
   font-size: 16px;
   font-weight: 400;
   font-style: normal;
