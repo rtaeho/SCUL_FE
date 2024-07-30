@@ -133,11 +133,131 @@
   letter-spacing: -0.35px;
   cursor: pointer;
 }
+//calendar
 .club-filter-calendar-container {
   position: absolute;
   margin-top: 30px;
   margin-left: -10px;
+  transform: translateX(-40%);
 }
+//location
+.club-filter-location-dropdown-container {
+  position: absolute;
+  margin-top: 310px;
+  transform: translateX(-29%);
+  width: 400px;
+  height: 271px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid #bbb8b8;
+  background: #fdfdfd;
+  @include inline-flexbox(start, start);
+  padding: 16px 16px;
+}
+
+.club-filter-location-left-container,
+.club-filter-location-right-container {
+  flex: 1;
+  padding-right: 8px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.club-filter-location-header {
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  padding-bottom: 15px;
+}
+
+.club-filter-location-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.club-filter-location-item {
+  padding: 8px;
+  cursor: pointer;
+  color: #111;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  height: 23px;
+  @include inline-flexbox(start, center);
+}
+
+.club-filter-location-item-selected {
+  color: #fdfdfd;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+  padding: 8px;
+  cursor: pointer;
+  background: #74b0d9;
+  text-decoration-line: underline;
+  height: 23px;
+  @include inline-flexbox(start, center);
+  width: 95%;
+}
+
+.club-filter-location-left-container {
+  border-right: 1px solid #c1c1c1;
+  overflow-y: hidden;
+}
+.club-filter-location-right-container {
+  overflow-y: hidden;
+  margin-left: 16px;
+}
+/* 시/도 리스트 컨테이너 */
+.club-filter-location-left-container .club-filter-location-list {
+  max-height: calc(100% - 40px); /* 헤더 공간을 제외한 높이 설정 */
+  overflow-y: auto; /* 시/도 리스트에 스크롤 가능하도록 설정 */
+}
+
+/* 시/군/구 리스트 컨테이너 */
+.club-filter-location-right-container .club-filter-location-list {
+  max-height: calc(100% - 40px); /* 헤더 공간을 제외한 높이 설정 */
+  overflow-y: auto; /* 시/군/구 리스트에 스크롤 가능하도록 설정 */
+}
+/* 스크롤바 기본 디자인 유지, 범위가 보이지 않도록 설정 */
+.club-filter-location-left-container::-webkit-scrollbar,
+.club-filter-location-right-container::-webkit-scrollbar,
+.club-filter-location-list::-webkit-scrollbar {
+  width: 6px; /* 스크롤바의 너비 */
+}
+
+.club-filter-location-left-container::-webkit-scrollbar-track,
+.club-filter-location-right-container::-webkit-scrollbar-track,
+.club-filter-location-list::-webkit-scrollbar-track {
+  background: #c4c4c4;
+  border-radius: 15px;
+}
+
+.club-filter-location-left-container::-webkit-scrollbar-thumb,
+.club-filter-location-right-container::-webkit-scrollbar-thumb,
+.club-filter-location-list::-webkit-scrollbar-thumb {
+  background: #888; /* 손잡이 색상 */
+  border-radius: 15px; /* 모서리 둥글게 설정 */
+}
+
+.club-filter-location-left-container::-webkit-scrollbar-thumb:hover,
+.club-filter-location-right-container::-webkit-scrollbar-thumb:hover,
+.club-filter-location-list::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 손잡이 호버 상태 색상 */
+}
+
+//search
 .club-filter-search-container {
   @include inline-flexbox(between, center);
   position: relative;
