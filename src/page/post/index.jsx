@@ -642,7 +642,7 @@ const Post = () => {
                             ) : (
                                 <DefaultProfile className="post-profileImg" />
                             )}
-                            <span className="postNickname"> {mockPost.nickname}</span>
+                            <span className="post-nickname"> {mockPost.nickname}</span>
                         </button>
                         {mockPost.nickname === currentUserNickname ?
                             ''

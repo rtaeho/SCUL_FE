@@ -238,7 +238,7 @@ const Main = () => {
           <button
             className="moreCommunities"
             onClick={() => {
-              nav(`/community/free/${selectedSport}`);
+              nav(`/community/free/${sport.toLowerCase()}`);
             }}
           >
             게시글 더보기 &#10095;
@@ -261,7 +261,7 @@ const Main = () => {
           <button
             className="moreClubs"
             onClick={() => {
-              nav(`/club/${selectedSport}`);
+              nav(`/club/${sport.toLowerCase()}`);
             }}
           >
             소모임 더보기 &#10095;
