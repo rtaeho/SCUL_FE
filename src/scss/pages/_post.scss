@@ -1,6 +1,7 @@
 .Post {
   width: 66.7%;
   min-width: 950px;
+  height: auto;
   margin: 0 auto;
   padding: 10px;
   background-color: #f1f1f5;
@@ -15,6 +16,7 @@
 }
 
 .post-content-wrap {
+  position: relative;
   background-color: #fbfbfb;
   border-radius: 16px;
   padding: 32px;
@@ -158,7 +160,7 @@
 }
 
 .post-btn2,
-.post-btn2 > button {
+.post-btn2>button {
   background-color: #fbfbfb;
   font-size: 12px;
   font-weight: 400;
@@ -169,12 +171,15 @@
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 1;
   }
+
   80% {
     opacity: 0;
   }
+
   100% {
     opacity: 0;
   }
@@ -186,12 +191,13 @@
 
 .modal-copyhref {
   animation: fadeInOut 1.5s forwards;
+  position: absolute;
+  bottom: 65px;
+  right: 35px;
   padding: 12px 10px;
   border-radius: 5px;
   white-space: nowrap;
   z-index: 10;
-  position: absolute;
-  transform: translateX(475%) translateY(-45px);
   max-width: 170px;
   background: #888888;
   color: #fdfdfd;
@@ -222,7 +228,7 @@
   margin-top: 20px;
 }
 
-.post-comment > h1 {
+.post-comment>h1 {
   color: #000000;
   font-size: 24px;
   font-weight: 700;
@@ -260,6 +266,7 @@
 .post-comment-nickname {
   vertical-align: middle;
 }
+
 .post-comment-content {
   color: #000000;
   font-size: 14px;
@@ -296,9 +303,14 @@
   margin-bottom: 0;
 }
 
-.post-comment-input {
-  flex: 1;
+.add-post-comment {
   position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.post-comment-input {
+  width: 100%;
   color: #000000;
   font-size: 14px;
   font-weight: 400;
@@ -318,33 +330,40 @@
   font-weight: 400;
 }
 
-.post-comment-input::-webkit-scrollbar {
+.post-comment-input::-webkit-scrollbar,
+.input-report::-webkit-scrollbar {
   width: 5px;
+  cursor: pointer;
 }
 
-.post-comment-input::-webkit-scrollbar-track {
+.post-comment-input::-webkit-scrollbar-track,
+.input-report::-webkit-scrollbar-track {
   background: none;
   margin: 5px 0;
 }
 
-.post-comment-input::-webkit-scrollbar-thumb {
+.post-comment-input::-webkit-scrollbar-thumb,
+.input-report::-webkit-scrollbar-thumb {
   background: #c1c1c1;
   border-radius: 2px;
 }
 
-.post-comment-input::-webkit-scrollbar-thumb:hover {
+.post-comment-input::-webkit-scrollbar-thumb:hover .input-report::-webkit-scrollbar-thumb:hover {
   background: #999999;
+  cursor: pointer;
 }
 
 .post-comment-submit {
   position: absolute;
+  bottom: 10px;
+  right: 10px;
   color: #fdfdfd;
   font-size: 12px;
   font-weight: 400;
   background-color: #111111;
   border-radius: 8px;
   padding: 6px 10px;
-  transform: translateX(788px) translateY(80px);
+  z-index: 10;
 }
 
 /*ㅡㅡㅡ게시글더보기ㅡㅡㅡ*/
@@ -425,4 +444,108 @@
 .more-post-likesNum,
 .more-post-likesIcon {
   vertical-align: middle;
+}
+
+/*ㅡㅡㅡ 신고 모달 ㅡㅡㅡ*/
+
+.modal-report {
+  width: 424px;
+  height: 425px;
+  position: absolute;
+  left: 38%;
+  top: 20%;
+  background-color: #fdfdfd;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  padding: 32px;
+  z-index: 10000;
+}
+
+.report-modal-back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+}
+
+.report-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.report-head>h1 {
+  color: #000000;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.report-head>button {
+  background-color: #fdfdfd;
+  transform: translateY(-17px);
+}
+
+.report-nickname>p,
+.report-content>p,
+.report-reason>p {
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 16px;
+}
+
+.report-content-in {
+  display: block;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  max-width: 300px;
+}
+
+.report-nickname,
+.report-content {
+  display: flex;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.input-report {
+  width: 100%;
+  background-color: #e9e9e9;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-top: 12px;
+  margin-bottom: 40px;
+  height: auto;
+  min-height: 116px;
+  overflow-y: auto;
+  resize: none;
+
+  color: #111111;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.input-report::placeholder {
+  color: #888888;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.submit-report {
+  color: #fdfdfd;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #74b0d9;
+  padding: 8px 16px;
+  text-align: center;
+  border-radius: 5px;
+  transform: translateX(138px);
 }

@@ -108,7 +108,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'post/:sport',
+        path: 'post/:board/:sport/:id',
         element: (
           <Suspense fallback={<Loading />}>
             <Post />

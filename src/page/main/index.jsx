@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Postlist from '../../layout/components/Postlist';
 import Clublist from '../../layout/components/Clubslist';
 
@@ -16,7 +16,8 @@ const images = [banner1, banner2, banner3, banner4];
 const mockPosts = [
   {
     id: 1,
-    tag: '정보',
+    board: 'info',
+    boardName: '정보',
     title: '게시글 1',
     createdAt: '2024-07-01T12:00:00Z',
     likes: 10,
@@ -26,7 +27,8 @@ const mockPosts = [
   },
   {
     id: 2,
-    tag: '자유',
+    board: 'free',
+    boardName: '자유',
     title: '제목이예용',
     createdAt: '2024-05-27T21:29:00Z',
     likes: 20,
@@ -36,7 +38,8 @@ const mockPosts = [
   },
   {
     id: 3,
-    tag: '후기',
+    board: 'review',
+    boardName: '후기',
     title: '게시글!ㅎ',
     createdAt: '2024-03-03T12:00:00Z',
     likes: 5,
@@ -46,7 +49,8 @@ const mockPosts = [
   },
   {
     id: 4,
-    tag: '정보',
+    board: 'info',
+    boardName: '정보',
     title: '게시글 3',
     createdAt: '2024-07-20T19:21:00Z',
     likes: 20,
@@ -56,23 +60,14 @@ const mockPosts = [
   },
   {
     id: 5,
-    tag: '자유',
+    board: 'free',
+    boardName: '자유',
     title: '게시글입니다',
     createdAt: '2024-07-23T15:20:00Z',
     likes: 0,
     views: 3,
     comments: 2,
     nickname: '작성자12321',
-  },
-  {
-    id: 6,
-    tag: '후기',
-    title: '글씨가넘어간다왜그러니어떡해어떡해어떡하나요어떡해',
-    createdAt: '2024-07-13T03:30:00Z',
-    likes: 300,
-    views: 1576,
-    comments: 48,
-    nickname: '데박이',
   },
 ];
 
@@ -133,11 +128,11 @@ const mockClubs = [
 
 const Main = () => {
   const nav = useNavigate();
+  const { sport } = useParams();
   const [current, setCurrent] = useState(0);
   const [latestPosts, setLatestPosts] = useState([]);
   const [popularPosts, setPopularPosts] = useState([]);
   const [latestClubs, setLatestClubs] = useState([]);
-
   const [selectedSport, setSelectedSport] = useState(null);
 
   //***ㅡㅡㅡ ↓↓ API ↓↓ ㅡㅡㅡ***//
@@ -171,6 +166,11 @@ const Main = () => {
   // }, []);
 
   //***ㅡㅡㅡ ↑↑ API ↑↑ ㅡㅡㅡ***//
+
+  const handlePostClick = (board, id) => {
+    const baseUrl = window.location.origin;
+    window.location.href = `${baseUrl}/post/${board}/${sport.toLowerCase()}/${id}`;
+  }
 
   const nextSlide = () => {
     setCurrent(current === images.length - 1 ? 0 : current + 1);
@@ -247,11 +247,11 @@ const Main = () => {
         <div className="postsContents">
           <div className="latestPost">
             <h2>최근 게시글</h2>
-            <Postlist posts={latestPosts} />
+            <Postlist posts={latestPosts} onDetail={handlePostClick} />
           </div>
           <div className="popularPost">
             <h2>인기 게시글</h2>
-            <Postlist posts={popularPosts} />
+            <Postlist posts={popularPosts} onDetail={handlePostClick} />
           </div>
         </div>
       </div>

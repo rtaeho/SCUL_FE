@@ -240,6 +240,11 @@
   @include inline-flexbox(start, center);
 }
 
+.board-postlist-postitem-container {
+  cursor: pointer;
+}
+
+
 .board-postlist-postitem-postimage {
   display: inline;
   width: 42px;
