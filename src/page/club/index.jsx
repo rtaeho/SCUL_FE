@@ -4,7 +4,7 @@ import { ReactComponent as ViewsIcon } from '../../assets/images/ViewsIcon.svg';
 import { ReactComponent as LikesIcon } from '../../assets/images/LikesIcon.svg';
 import { ReactComponent as NextIcon } from '../../assets/images/Next.svg';
 import DefaultPostImg from '../../assets/images/DefaultPostImg.jpg';
-import Filter from './filter/Filter.jsx';
+import Filter from './filter/index.jsx';
 // 소모임 생성 버튼 컴포넌트
 const WriteButton = ({ onWrite }) => {
   return (
