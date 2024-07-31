@@ -466,149 +466,88 @@
 // postlist
 .club-postlist-container {
   display: flex;
-  width: 896px;
-  @include column-flexbox(center, start);
+  @include column-flexbox(center, center);
   border-radius: 8px;
   border: 1px solid #efefef;
   margin-top: 20px;
 }
 .club-postist {
-  padding: 16px;
-  width: 100%;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4개의 열을 생성 */
+  grid-gap: 18px; /* 항목들 사이의 간격 (옵션) */
+  margin: 16px 16px;
 }
 
-.club-postlist-postitem-post {
-  @include inline-flexbox(start, center);
+.club-postlist-postitem-container {
+  @include column-flexbox(center, center);
+  border-radius: 16px;
+  border: 1px solid #efefef;
+  position: relative;
 }
 .club-postlist-postitem-postimage {
+  width: 205px;
+  height: 205px;
   display: inline;
-  width: 42px;
-  height: 42px;
   border-radius: 6px;
-  margin-right: 12px;
+}
+.club-postlist-postitem-status {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  color: #fdfdfd;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  border-radius: 8px;
+  background: #111;
+  padding: 4px 8px;
 }
 .club-postlist-postitem-postbox-titlebox {
   display: flex;
-  gap: 8px;
-  margin-bottom: 3px;
+  @include column-flexbox(start, start);
   width: 100%;
+  gap: 8px;
+  padding: 16px 12px;
 }
-
-.club-postlist-postitem-postbox-titlebox-tag {
-  background-color: #000000;
-  color: #ffffff;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.club-postlist-postitem-postbox-titlebox-title {
+.club-postlist-postitem-postbox-title {
   color: #111;
-  font-size: 16px;
+  font-family: Pretendard;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 22.4px;
-  letter-spacing: -0.4px;
+  font-weight: 700;
+  line-height: 25.2px;
+  letter-spacing: -0.45px;
 }
-
-.club-postlist-postitem-postbox-titlebox-comments {
-  color: #1ad2a6;
-  font-size: 16px;
+.club-postlist-postitem-postbox-date,
+.club-postlist-postitem-postbox-member,
+.club-postlist-postitem-postbox-location {
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 22.4px;
-  letter-spacing: -0.4px;
-  margin-left: 8px;
-}
-
-.club-postlist-postitem-infobox {
-  display: flex;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  letter-spacing: -0.35px;
   @include inline-flexbox(start, center);
-  font-size: 10px;
-  color: #888888;
-  gap: 4px;
 }
-
-.club-postlist-postitem-infobox-view-icon {
-  width: 10px;
-  height: 7px;
-}
-
-.club-postlist-postitem-infobox-like-icon {
+.club-postlist-postitem-postbox-date-icon,
+.club-postlist-postitem-postbox-location-icon {
   width: 14px;
   height: 14px;
-}
-.club-postlist-postitem-ad {
-  @include inline-flexbox(start, center);
-}
-
-.club-postlist-postitem-adimage {
-  display: block;
-  width: 42px;
-  height: 42px;
-  border-radius: 6px;
-  align-items: center;
-  object-fit: cover;
-  overflow: hidden;
-  margin-right: 12px;
-}
-.club-postlist-ad-adbox-titlebox {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 3px;
-  width: 100%;
-}
-.club-postlist-ad-adbox-titlebox-tag {
-  background-color: #000000;
-  color: #ffffff;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.club-postlist-ad-adbox-titlebox-title {
-  color: #111;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 22.4px;
-  letter-spacing: -0.4px;
-}
-.club-postlist-ad-adbox-infobox {
-  display: flex;
-  @include inline-flexbox(start, center);
-  font-size: 10px;
-  color: #888888;
-  gap: 16px;
-  margin-top: 0px;
-}
-.club-postlist-ad-adbox-infobox-nickname {
-  color: #888;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 14px;
-  letter-spacing: -0.25px;
-}
-.club-postlist-ad-adbox-infobox-link {
-  color: #555;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 16.8px;
-  letter-spacing: -0.3px;
-  text-decoration-line: underline;
-  cursor: pointer;
-}
-.club-postlist-divider {
-  border: 0;
-  border-top: 1px solid #d7d7d7;
-  margin: 15px 0;
+  text-align: center;
+  margin-right: 8px;
 }
 
-// pgaenation
+.club-postlist-postitem-postbox-member-icon {
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  margin-right: 6px;
+}
+// pagenation
 .club-pagination-container {
   display: flex;
   width: 100%;

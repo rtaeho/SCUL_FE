@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { ReactComponent as ViewsIcon } from '../../assets/images/ViewsIcon.svg';
-import { ReactComponent as LikesIcon } from '../../assets/images/LikesIcon.svg';
 import { ReactComponent as NextIcon } from '../../assets/images/Next.svg';
 import DefaultPostImg from '../../assets/images/DefaultPostImg.jpg';
 import Filter from './filter/index.jsx';
+import { ReactComponent as Personnel } from '../../assets/images/Personnel.svg';
+import { ReactComponent as Pin } from '../../assets/images/Pin.svg';
+import { ReactComponent as Calendar } from '../../assets/images/Calendar.svg';
 // 소모임 생성 버튼 컴포넌트
 const WriteButton = ({ onWrite }) => {
   return (
@@ -15,110 +16,46 @@ const WriteButton = ({ onWrite }) => {
 };
 
 // 소모임 목록 컴포넌트
-const timeForm = (date) => {
-  const now = new Date();
-  const diff = now - new Date(date);
-
-  const minutes = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
-  const weeks = Math.floor(diff / 604800000);
-  const months = Math.floor(diff / 2592000000);
-
-  if (minutes < 60) return `${minutes}분 전`;
-  if (hours < 24) return `${hours}시간 전`;
-  if (days < 7) return `${days}일 전`;
-  if (weeks < 4) return `${weeks}주 전`;
-  if (months < 12) return `${months}달 전`;
-  return new Date(date).toLocaleDateString();
-};
-const handleAdClick = (link) => {
-  window.open(link, '_blank');
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${month}.${day}`;
 };
 const Postlist = ({ posts }) => {
   return (
     <div className="club-postlist-container">
       <ul className="club-postist">
-        {posts.map((post, index) => (
-          <li key={post.id} className="club-postlist-postitem-container">
-            {post.isAd ? (
-              <div className="club-postlist-postitem-ad">
-                <img
-                  src={post.imageUrl || DefaultPostImg}
-                  alt="adimg"
-                  className="club-postlist-postitem-adimage"
-                />
+        {posts.map((club) => (
+          <li key={club.id} className="club-postlist-postitem-container">
+            {club.status === '마감' && (
+              <div className="club-postlist-postitem-status">마감</div>
+            )}
+            <img
+              src={club.imageUrl || DefaultPostImg}
+              alt={club.title}
+              className="club-postlist-postitem-postimage"
+            />
+            <div className="club-postlist-postitem-postbox-titlebox">
+              <div className="club-postlist-postitem-postbox-title">
+                {club.title}
+              </div>
 
-                <div className="club-postlist-ad-adbox">
-                  <div className="club-postlist-ad-adbox-titlebox">
-                    <div className="club-postlist-ad-adbox-titlebox-tag">
-                      {post.tag}
-                    </div>
-                    <div className="club-postlist-ad-adbox-titlebox-title">
-                      {post.title}
-                    </div>
-                  </div>
-                  <div className="club-postlist-ad-adbox-infobox">
-                    <div className="club-postlist-ad-adbox-infobox-nickname">
-                      {post.nickname}
-                    </div>
-                    <div
-                      className="club-postlist-ad-adbox-infobox-link"
-                      onClick={() => handleAdClick(post.link)}
-                    >
-                      {post.link}
-                    </div>
-                  </div>
-                </div>
+              <div className="club-postlist-postitem-postbox-date">
+                <Calendar className="club-postlist-postitem-postbox-date-icon" />
+                {formatDate(club.date)}
               </div>
-            ) : (
-              <div className="club-postlist-postitem-post">
-                <img
-                  src={post.imageUrl || DefaultPostImg}
-                  alt={post.title}
-                  className="club-postlist-postitem-postimage"
-                />
-                <div className="club-postlist-postitem-postbox">
-                  <div className="club-postlist-postitem-postbox-titlebox">
-                    <div className="club-postlist-postitem-postbox-titlebox-tag">
-                      {post.tag}
-                    </div>
-                    <div className="club-postlist-postitem-postbox-titlebox-title">
-                      {post.title}
-                    </div>
-                    {post.comments > 0 && (
-                      <div className="club-postlist-postitem-postbox-titlebox-comments">
-                        {post.comments}
-                      </div>
-                    )}
-                  </div>
-                  <div className="club-postlist-postitem-infobox">
-                    <div className="club-postlist-postitem-infobox-nickname">
-                      {post.nickname}
-                    </div>
-                    <div className="club-postlist-postitem-infobxo-dot">·</div>
-                    <div className="club-postlist-postitem-infobox-time">
-                      {timeForm(post.createdAt)}
-                    </div>
-                    <div className="club-postlist-postitem-infobxo-dot">·</div>
-                    <ViewsIcon className="club-postlist-postitem-infobox-view-icon" />
-                    <div className="postViclub-postlist-postitem-infobox-view">
-                      {post.views}{' '}
-                    </div>
-                    <div className="club-postlist-postitem-infobxo-dot">·</div>
-                    <LikesIcon className="club-postlist-postitem-infobox-like-icon" />
-                    {post.likes > 0 && (
-                      <div className="club-postlist-postitem-infobox-like">
-                        {post.likes}
-                      </div>
-                    )}
-                  </div>
-                </div>
+
+              <div className="club-postlist-postitem-postbox-member">
+                <Personnel className="club-postlist-postitem-postbox-member-icon" />
+                {club.member}명
               </div>
-            )}
-            {index < posts.length - 1 && (
-              <hr className="club-postlist-divider" />
-            )}
+
+              <div className="club-postlist-postitem-postbox-location">
+                <Pin className="club-postlist-postitem-postbox-location-icon" />
+                {club.location}
+              </div>
+            </div>
           </li>
         ))}
       </ul>
@@ -206,41 +143,27 @@ const Club = () => {
   // 현재 게시판에 맞는 태그 배열 선택
   const currentTags = tags[club] || [];
   // 총 페이지 수를 게시물 수로 계산
-  const totalPages = Math.ceil(100 / 14); // 총 30개의 목업 데이터와 한 페이지에 14개씩
+  const totalPages = Math.ceil(60 / 8); // 총 60개의 목업 데이터와 한 페이지에 8개씩
 
   // 목업 데이터
-  const mockPosts = Array.from({ length: 100 }, (_, i) => ({
+  const mockPosts = Array.from({ length: 60 }, (_, i) => ({
     id: i + 1,
-    imageUrl: '',
-    title: `게시글 제목 ${i + 1}`,
-    tag: '태그',
+    imageUrl: ``,
+    title: `소모임 제목 ${i + 1}`,
     nickname: `작성자 ${i + 1}`,
-    createdAt: new Date().toISOString(),
-    views: Math.floor(Math.random() * 1000),
-    likes: Math.floor(Math.random() * 100),
-    comments: Math.floor(Math.random() * 50),
+    date: new Date(
+      Date.now() - Math.floor(Math.random() * 10000000000)
+    ).toISOString(), // 임의의 날짜
+    member: Math.floor(Math.random() * 50) + 1, // 1~50명의 멤버
+    location: `위치 ${i + 1}`,
+    status: Math.random() > 0.5 ? '모집중' : '마감',
   }));
 
-  // 광고 목업 데이터
-  const adData = {
-    id: 'ad1',
-    isAd: true,
-    tag: '광고',
-    title: '나랑 스껄할래?',
-    nickname: '스컬스컬',
-    link: 'https://s-cul.com',
-  };
-
   useEffect(() => {
-    // 페이지에 맞는 게시물 목록을 필터링 및 광고 삽입
-    const startIdx = (currentPage - 1) * 14;
-    const endIdx = startIdx + 14;
-    const postsWithAd = [
-      ...mockPosts.slice(startIdx, startIdx + 4),
-      adData,
-      ...mockPosts.slice(startIdx + 4, endIdx),
-    ];
-    setPosts(postsWithAd);
+    // 페이지에 맞는 게시물 목록을 필터링
+    const startIdx = (currentPage - 1) * 8;
+    const posts = [...mockPosts.slice(startIdx, startIdx + 8)];
+    setPosts(posts);
     //fetchPosts();
   }, [currentPage]);
 
