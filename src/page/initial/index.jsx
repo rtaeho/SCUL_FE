@@ -1,15 +1,20 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+// src/page/initial/Initial.jsx
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Initial = () => {
-  const nav = useNavigate();
+  const navigate = useNavigate();
   const [selectedButtons, setSelectedButtons] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const [nickname, setNickname] = useState('');
   const [isUnique, setIsUnique] = useState(true);
   const [showError, setShowError] = useState(false);
   const [inputClass, setInputClass] = useState('');
+  const [name, setName] = useState('');
+  const [gender, setGender] = useState('');
+  const [age, setAge] = useState('');
+  const [region, setRegion] = useState('');
 
   const sports = [
     '축구',
@@ -32,9 +37,6 @@ const Initial = () => {
     '요가',
   ];
 
-  // 이미 존재하는 닉네임 예시
-  const existingNicknames = ['user1', 'user2', 'user3'];
-
   const validateNickname = (name) => {
     if (!/^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{3,12}$/.test(name)) {
       alert('한글, 영어, 숫자포함 3자~12자 가능합니다');
@@ -45,21 +47,20 @@ const Initial = () => {
     return true;
   };
 
-  const checkNicknameUnique = (name) => {
-    if (existingNicknames.includes(name)) {
-      setIsUnique(false);
-      setInputClass('error');
-      return false;
+  const checkNicknameUnique = async (name) => {
+    try {
+      const response = await axios.get(`/user/check-nickname/${name}`);
+      setIsUnique(response.data.boolean);
+      setInputClass(response.data.boolean ? 'success' : 'error');
+    } catch (error) {
+      console.error('닉네임 중복 확인 오류:', error);
     }
-    setIsUnique(true);
-    setInputClass('success');
-    return true;
   };
 
   const handleChange = (e) => {
     setNickname(e.target.value);
-    setInputClass(''); // 입력 변경시 클래스 초기화
-    setShowError(false); // 에러 메시지 초기화
+    setInputClass('');
+    setShowError(false);
   };
 
   const handleCheckNickname = () => {
@@ -67,7 +68,6 @@ const Initial = () => {
     if (validateNickname(nickname)) {
       checkNicknameUnique(nickname);
     } else {
-      // 불가능한 닉네임일경우, 중복검사실행안함
       setIsUnique(true);
     }
   };
@@ -91,32 +91,68 @@ const Initial = () => {
     return selectedButtons.indexOf(button) + 1;
   };
 
-  //설정완료 중복확인여부체크
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (inputClass !== 'success') {
       alert('중복확인을 완료해야 합니다');
       return;
     }
-    nav('/main');
+
+    try {
+      // 사용자 정보를 제출합니다.
+      const response = await axios.post('/auth/join/submit-info', {
+        name,
+        gender,
+        age,
+        region,
+        nickname,
+        sports: selectedButtons,
+      });
+
+      // 백엔드에서 토큰을 처리하고 메인 페이지로 리다이렉트합니다.
+      // 추가적인 동작은 백엔드에서 처리합니다.
+      navigate('/main');
+    } catch (error) {
+      console.error('회원 정보 제출 오류:', error);
+    }
   };
 
   return (
     <div className="Initial">
       <div className="nickWrap">
-        <h2 className="nickSet">닉네임 설정</h2>
+        <h2 className="nickSet">초기 설정</h2>
         <div className="inputWrap">
           <input
-            placeholder="닉네임은 한글, 영어, 숫자포함 3자에서 12자까지 설정할 수 있어요"
+            placeholder="이름"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            placeholder="성별"
+            type="text"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          />
+          <input
+            placeholder="나이"
+            type="number"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
+          <input
+            placeholder="지역"
+            type="text"
+            value={region}
+            onChange={(e) => setRegion(e.target.value)}
+          />
+          <input
+            placeholder="닉네임"
             type="text"
             value={nickname}
             onChange={handleChange}
             className={`${inputClass} ${isFocused ? 'focused' : ''}`}
-            onFocus={() => {
-              setIsFocused(true);
-            }}
-            onBlur={() => {
-              setIsFocused(false);
-            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
           <button className="redund" onClick={handleCheckNickname}>
             중복확인
@@ -152,11 +188,9 @@ const Initial = () => {
           ))}
         </div>
       </div>
-      <div className="wrap">
-        <button className="initialComplete" onClick={handleComplete}>
-          설정완료
-        </button>
-      </div>
+      <button className="submitButton" onClick={handleComplete}>
+        완료
+      </button>
     </div>
   );
 };
