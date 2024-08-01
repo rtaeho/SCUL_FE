@@ -52,7 +52,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-
         path: 'createClub/:sport',
         element: (
           <Suspense fallback={<Loading />}>
@@ -106,6 +105,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <Auth />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'post/:board/:sport/:id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Post />
           </Suspense>
         ),
       },
