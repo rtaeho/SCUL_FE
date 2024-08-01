@@ -119,7 +119,7 @@ const Initial = () => {
       // 토큰 저장
       localStorage.setItem('accessToken', access_token);
       localStorage.setItem('refreshToken', refresh_token);
-      localStorage.removeItem('usercode');
+      localStorage.removeItem('userCode');
       // 메인 페이지로 이동
       navigate('/main');
     } catch (error) {

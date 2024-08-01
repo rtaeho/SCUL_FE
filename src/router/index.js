@@ -9,7 +9,7 @@ const Initial = lazy(() => import('../page/initial'));
 const Club = lazy(() => import('../page/club'));
 const Policy = lazy(() => import('../page/policy'));
 const CreatePost = lazy(() => import('../page/createPost'));
-
+const ClubPost = lazy(() => import('../page/clubPost'));
 
 const Loading = () => <>로딩중입니다.</>;
 
@@ -103,7 +103,6 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <Initial />
-
           </Suspense>
         ),
       },

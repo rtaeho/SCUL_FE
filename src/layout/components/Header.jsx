@@ -106,6 +106,7 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('selectedSport');
     alert('Logged out!');
     setLoggedIn(false);
     setProfileImage(null);
