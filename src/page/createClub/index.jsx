@@ -86,6 +86,12 @@ const CreateClub = () => {
   const [startDate, setStartDate] = useState('');
   const { sport } = useParams();
 
+  useEffect(() => {
+    if (startDate > endDate) {
+      setEndDate('');
+    }
+  }, [startDate, endDate]);
+
   const handleDateChange = (date) => {
     setStartDate(date);
     setShowDatePicker(false); // 날짜 선택 후 달력 숨김
@@ -214,75 +220,10 @@ const CreateClub = () => {
     </div>
   );
 
-  ///   try {
-  //     const userToken = 'user-token'; // 실제 유저 토큰으로 대체 필요
-  //     await axios.post('http://localhost:3000/post', {
-  //       board: selectedBoard,
-  //       tag: selectedOption,
-  //       title: titleRef.current.value,
-  //       content: content,
-  //       token: userToken,
-  //       sport: selectedSport,
-  //     });
-  //     // 게시글 등록 성공 시 해당 게시판으로 이동
-  //     window.location.href = `/board/${selectedBoard}`;
-  //   } catch (error) {
-  //     console.error('게시글 등록 실패:', error);
-  //   }
-  // };
-
   return (
     <div className="CreatePost">
       <h1>글 작성하기</h1>
       <div className="postSetting">
-        <div className="postSetting-1">
-          <div className="setDropdown">
-            <div className="createBoardDropdown">
-              <button className="setBoardBtn" onClick={toggleBoardDropdown}>
-                {selectedBoard}
-                <Select className="selectIcon" />
-              </button>
-              {isBoardOpen && (
-                <div className="setMenu">
-                  <div onClick={() => handleBoardSelect('후기 게시판')}>
-                    후기 게시판
-                  </div>
-                  <div onClick={() => handleBoardSelect('자유 게시판')}>
-                    자유 게시판
-                  </div>
-                  <div onClick={() => handleBoardSelect('정보 게시판')}>
-                    정보 게시판
-                  </div>
-                  <div onClick={() => handleBoardSelect('문의 / 신고')}>
-                    문의 / 신고
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="createTagDropdown">
-              <button
-                className={`setTagBtn ${isOptionDisabled ? 'disabled' : ''}`}
-                onClick={toggleOptionDropdown}
-                disabled={isOptionDisabled}
-              >
-                {selectedOption}
-                <Select className="selectIcon" />
-              </button>
-              {isOptionOpen && (
-                <div className="setMenu">
-                  {options.map((option) => (
-                    <div
-                      key={option}
-                      onClick={() => handleOptionSelect(option)}
-                    >
-                      {option}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
         <div className="postSetting-2">
           <button onClick={() => setShowDatePicker(!showDatePicker)}>
             {formatDate(startDate)}
