@@ -9,9 +9,8 @@ const Initial = lazy(() => import('../page/initial'));
 const Club = lazy(() => import('../page/club'));
 const Policy = lazy(() => import('../page/policy'));
 const CreatePost = lazy(() => import('../page/createPost'));
-const Post = lazy(() => import('../page/post'));
-const ClubPost = lazy(() => import('../page/clubPost'));
-const Oauth2 = lazy(() => import('../page/auth/OauthRedirect'));
+
+
 const Loading = () => <>로딩중입니다.</>;
 
 const router = createBrowserRouter([
@@ -28,6 +27,14 @@ const router = createBrowserRouter([
       },
       {
         path: 'main',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Main />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'home',
         element: (
           <Suspense fallback={<Loading />}>
             <Main />
@@ -55,14 +62,6 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <CreatePost />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'oauth2',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Initial />
           </Suspense>
         ),
       },
@@ -99,19 +98,12 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
-      // {
-      //   path: 'oauth2',
-      //   element: (
-      //     <Suspense fallback={<Loading />}>
-      //       <Oauth2 />
-      //     </Suspense>
-      //   ),
-      // },
       {
-        path: 'post/:board/:sport/:id',
+        path: 'initial',
         element: (
           <Suspense fallback={<Loading />}>
-            <Post />
+            <Initial />
+
           </Suspense>
         ),
       },

@@ -1,7 +1,6 @@
 .layout-header-container {
   @include column-flexbox(center, center);
 }
-
 .header-container {
   @include inline-flexbox(between, center);
   background-color: #111111;
