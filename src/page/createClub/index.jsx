@@ -179,7 +179,7 @@ const CreateClub = () => {
       alert('제목을 작성해 주세요');
       return;
     }
-
+    //일단
     if (content.trim() === '') {
       alert('내용을 입력해 주세요');
       return;
