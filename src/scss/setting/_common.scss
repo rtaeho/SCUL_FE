@@ -2,6 +2,7 @@
   font-family: 'Pretendard';
   src: url('../../assets/font/Pretendard-Medium.otf') format('opentype');
 }
+
 @font-face {
   font-family: 'PretendardBold';
   src: url('../../assets/font/Pretendard-Bold.otf') format('opentype');
@@ -13,7 +14,7 @@
 
 #root {
   margin: 0 auto;
-  height: 100vh;
+  height: auto;
   width: 100%;
   position: relative;
 }

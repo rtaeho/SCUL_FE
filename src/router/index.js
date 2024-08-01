@@ -9,7 +9,10 @@ const Initial = lazy(() => import('../page/initial'));
 const Club = lazy(() => import('../page/club'));
 const Policy = lazy(() => import('../page/policy'));
 const CreatePost = lazy(() => import('../page/createPost'));
-const Oauth2 = lazy(() => import('../page/auth/OauthRedirect'));
+const Post = lazy(() => import('../page/post'));
+const ClubPost = lazy(() => import('../page/clubPost'));
+// const KakaoRedirect = lazy(() => import('../page/auth/KakaoRedirect'));
+// const GoogleRedirect = lazy(() => import('../page/auth/GoogleRedirect'));
 const Loading = () => <>로딩중입니다.</>;
 
 const router = createBrowserRouter([
@@ -73,6 +76,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'clubPost/:sport',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ClubPost />
+          </Suspense>
+        ),
+      },
+      {
         path: 'policy',
         element: (
           <Suspense fallback={<Loading />}>
@@ -80,6 +91,7 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+
       {
         path: 'auth',
         element: (
@@ -89,13 +101,29 @@ const router = createBrowserRouter([
         ),
       },
       // {
-      //   path: 'oauth2',
+      //   path: 'oauth',
       //   element: (
       //     <Suspense fallback={<Loading />}>
-      //       <Oauth2 />
+      //       <KakaoRedirect />
       //     </Suspense>
       //   ),
       // },
+      // {
+      //   path: 'oauth2',
+      //   element: (
+      //     <Suspense fallback={<Loading />}>
+      //       <GoogleRedirect />
+      //     </Suspense>
+      //   ),
+      // },
+      {
+        path: 'post/:board/:sport/:id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Post />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);
