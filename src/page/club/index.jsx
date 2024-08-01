@@ -22,12 +22,18 @@ const formatDate = (dateString) => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${month}.${day}`;
 };
-const Postlist = ({ posts }) => {
+const Postlist = ({ posts, onDetail }) => {
   return (
     <div className="club-postlist-container">
       <ul className="club-postist">
         {posts.map((club) => (
-          <li key={club.id} className="club-postlist-postitem-container">
+          <li
+            key={club.id}
+            className="club-postlist-postitem-container"
+            onClick={() => {
+              onDetail(club.id);
+            }}
+          >
             {club.status === '마감' && (
               <div className="club-postlist-postitem-status">마감</div>
             )}
@@ -179,7 +185,13 @@ const Club = () => {
   };
 
   const handleWriteClick = () => {
-    alert('글 작성 버튼 클릭됨');
+    const baseUrl = window.location.origin;
+    window.location.href = `${baseUrl}/createClub/${sport.toLowerCase()}`;
+  };
+
+  const handlePostClick = (id) => {
+    const baseUrl = window.location.origin;
+    window.location.href = `${baseUrl}/clubPost/${sport.toLowerCase()}/${id}`;
   };
 
   const handlePageChange = (page) => {
@@ -212,7 +224,7 @@ const Club = () => {
         onTagChange={handleTagChange}
         onSearch={handleSearch}
       />
-      <Postlist posts={posts} />
+      <Postlist posts={posts} onDetail={handlePostClick} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
