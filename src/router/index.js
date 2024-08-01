@@ -11,8 +11,7 @@ const Policy = lazy(() => import('../page/policy'));
 const CreatePost = lazy(() => import('../page/createPost'));
 const Post = lazy(() => import('../page/post'));
 const ClubPost = lazy(() => import('../page/clubPost'));
-// const KakaoRedirect = lazy(() => import('../page/auth/KakaoRedirect'));
-// const GoogleRedirect = lazy(() => import('../page/auth/GoogleRedirect'));
+const Oauth2 = lazy(() => import('../page/auth/OauthRedirect'));
 const Loading = () => <>로딩중입니다.</>;
 
 const router = createBrowserRouter([
@@ -101,18 +100,10 @@ const router = createBrowserRouter([
         ),
       },
       // {
-      //   path: 'oauth',
-      //   element: (
-      //     <Suspense fallback={<Loading />}>
-      //       <KakaoRedirect />
-      //     </Suspense>
-      //   ),
-      // },
-      // {
       //   path: 'oauth2',
       //   element: (
       //     <Suspense fallback={<Loading />}>
-      //       <GoogleRedirect />
+      //       <Oauth2 />
       //     </Suspense>
       //   ),
       // },
