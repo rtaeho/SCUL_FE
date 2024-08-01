@@ -114,7 +114,6 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <Initial />
-
           </Suspense>
         ),
       },

@@ -31,7 +31,7 @@ const Auth = () => {
           if (is_member) {
             navigate('/main');
           } else {
-            localStorage.setItem('usercode', code);
+            localStorage.setItem('userCode', code);
             navigate('/initial');
           }
         } catch (error) {
