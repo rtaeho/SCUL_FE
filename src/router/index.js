@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'initial',
+        path: 'oauth2',
         element: (
           <Suspense fallback={<Loading />}>
             <Initial />

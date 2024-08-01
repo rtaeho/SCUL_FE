@@ -1,49 +1,45 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ReactComponent as Kakao } from '../../assets/images/Kakao.svg';
 import { ReactComponent as Google } from '../../assets/images/Google.svg';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Auth = () => {
-  const [isSignUp, setIsSignUp] = useState(true);
+  const navigate = useNavigate();
 
-  const kakaoLogin = () => {
-    const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
-    const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URL;
-    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-    window.location.href = kakaoURL;
-  };
+  const handleLogin = async (provider) => {
+    try {
+      const response = await axios.post(`/oauth2/${provider}/redirect`);
+      const { access_token, refresh_token } = response.data;
 
-  const googleLogin = () => {
-    const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-    const REDIRECT_URI = process.env.REACT_APP_GOOGLE_REDIRECT_URL;
-    const googleURL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=email profile`;
-    window.location.href = googleURL;
-  };
+      if (access_token && refresh_token) {
+        // 로그인이 완료된 후, 사용자에게 토큰을 저장하고 메인 페이지로 이동
+        localStorage.setItem('accessToken', access_token);
+        localStorage.setItem('refreshToken', refresh_token);
 
-  const toggleAuthState = () => {
-    setIsSignUp(!isSignUp);
+        // 메인 페이지로 이동
+        navigate('/main');
+      } else {
+        console.error('Failed to get tokens');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
     <div className="Auth">
-      <h2 className="h2_wrap">{isSignUp ? '로그인' : '회원가입'}</h2>
+      <h2 className="h2_wrap">로그인</h2>
       <div className="wrap">
-        <button onClick={kakaoLogin} className="kakaoLogin">
+        <button onClick={() => handleLogin('kakao')} className="kakaoLogin">
           <Kakao className="kLogo" />
-          카카오로 {isSignUp ? '로그인' : '회원가입'}
+          카카오로 로그인
         </button>
       </div>
       <div className="wrap">
-        <button onClick={googleLogin} className="googleLogin">
+        <button onClick={() => handleLogin('google')} className="googleLogin">
           <Google className="gLogo" />
-          구글로 {isSignUp ? '로그인' : '회원가입'}
-        </button>
-      </div>
-      <div className="wrap">
-        <p className="nonMem_p">
-          {isSignUp ? '아직 회원이 아니신가요?' : '이미 회원이신가요?'}
-        </p>
-        <button className="nonMem" onClick={toggleAuthState}>
-          {isSignUp ? '회원가입' : '로그인'}
+          구글로 로그인
         </button>
       </div>
     </div>
