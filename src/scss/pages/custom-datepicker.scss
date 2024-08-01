@@ -1,22 +1,78 @@
 .custom-header {
-  margin: 10px;
+  padding-top: 9px;
+  padding-bottom: 1px;
+  background: #fdfdfd;
+  border-radius: 16px;
 }
 .react-datepicker {
+  width: 320px;
   border-radius: 16px;
   border: 1px solid #bbb8b8;
-  background: #fdfdfd;
-  padding: 0;
+  background-color: #fdfdfd;
+  padding: 5px;
   margin: 0;
-  box-sizing: border-box;
-  display: inline-block;
   cursor: default;
+}
+
+@for $i from 1 through 31 {
+  $day: if($i < 10, '00#{$i}', '0#{$i}');
+  .react-datepicker__day.react-datepicker__day--#{$day} {
+    width: 44px;
+    height: 44px;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0;
+    padding: 10px;
+  }
+
+  .react-datepicker__day.react-datepicker__day--#{$day}:hover {
+    border-radius: 50%;
+  }
+
+  .react-datepicker__day.react-datepicker__day--#{$day}.react-datepicker__day--selected.react-datepicker__day--today {
+    width: 44px;
+    height: 44px;
+    background-color: #74b0d9;
+    border-radius: 50%;
+  }
+
+  .react-datepicker__day.react-datepicker__day--#{$day}.react-datepicker__day--selected {
+    width: 44px;
+    height: 44px;
+    background-color: #74b0d9;
+    border-radius: 50%;
+  }
+  .react-datepicker__day.react-datepicker__day--#{$day}.react-datepicker__day--disabled.react-datepicker__day--outside-month,
+  .react-datepicker__day.react-datepicker__day--#{$day}.react-datepicker__day--disabled.react-datepicker__day--weekend {
+    color: #ccc;
+  }
+}
+
+.react-datepicker__month-container {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 16px;
+  padding: 0;
+  align-items: left;
+}
+
+.react-datepicker__day-names {
+  margin: 0 !important;
+}
+
+.react-datepicker__header.react-datepicker__header--custom {
+  background-color: #fdfdfd;
+  padding: 0;
+  border: none;
+  border-radius: 16px;
+  width: 100%;
 }
 
 .react-datepicker__month,
 .react-datepicker__day-name,
 .react-datepicker__day,
 .react-datepicker__time-name {
-  margin: 0;
+  margin: 0 !important;
 }
 
 .react-datepicker__day,
@@ -31,16 +87,20 @@
     color: #999; // 해당 월이 아닌 날짜
   }
 }
+
 .react-datepicker__month-container {
   width: auto;
   height: auto;
+  background-color: #fdfdfd;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-.react-datepicker__day-names {
-  margin-bottom: 0;
+.react-datepicker__day-name {
+  width: 44px !important;
+  height: 44px !important;
+  margin: 0 !important;
+  padding: 10px;
 }
 
 .react-datepicker__header {

@@ -11,6 +11,7 @@ const Policy = lazy(() => import('../page/policy'));
 const CreatePost = lazy(() => import('../page/createPost'));
 const Post = lazy(() => import('../page/post'));
 const ClubPost = lazy(() => import('../page/clubPost'));
+const CreateClub = lazy(() => import('../page/createClub'));
 const Oauth2 = lazy(() => import('../page/auth/OauthRedirect'));
 const Loading = () => <>로딩중입니다.</>;
 
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'createClub/:sport',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreateClub />
+          </Suspense>
+        ),
+      },
+      {
         path: 'createPost/:sport',
         element: (
           <Suspense fallback={<Loading />}>
@@ -75,7 +84,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'clubPost/:sport',
+        path: 'clubPost/:sport/:id',
         element: (
           <Suspense fallback={<Loading />}>
             <ClubPost />
