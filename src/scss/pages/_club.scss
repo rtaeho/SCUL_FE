@@ -1,6 +1,7 @@
 /* club.css */
 .club-container {
   width: 66.7%;
+  min-width: 950px;
   margin: 40px auto;
   border-radius: 16px;
   background: #fbfbfb;
@@ -331,7 +332,8 @@
 }
 .club-filter-cost-option input[type='radio']:checked + span::before {
   background-color: #74b0d9; /* 선택된 상태의 배경 색상 */
-  border-color: #74b0d9; /* 선택된 상태의 테두리 색상 */
+  border: 6px double #74b0d9;
+  border-color: #fff; /* 선택된 상태의 테두리 색상 */
 }
 .club-filter-cost-apply-button {
   border-radius: 4px;
@@ -484,6 +486,7 @@
   border-radius: 16px;
   border: 1px solid #efefef;
   position: relative;
+  cursor: pointer;
 }
 .club-postlist-postitem-postimage {
   width: 205px;
