@@ -1,0 +1,246 @@
+.ClubPost {
+  width: 66.7%;
+  min-width: 950px;
+  height: auto;
+  margin: 40px auto;
+  margin-bottom: 80px;
+  padding: 32px;
+  border-radius: 16px;
+  background-color: #fbfbfb;
+  position: relative;
+}
+
+.club-post-board-btn {
+  background-color: #fbfbfb;
+  color: #111111;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+.club-post-head {
+  margin-bottom: 27px;
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.club-post-title {
+  color: #111111;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.club-post-head-1 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 27px;
+}
+
+.club-post-profileImg,
+.club-post-nickname {
+  vertical-align: middle;
+}
+
+.club-post-profileImg {
+  width: 38px;
+  height: 38px;
+  margin-right: 12px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.club-post-nickname {
+  color: #555555;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.club-post-profile_btn {
+  background-color: #fbfbfb;
+  margin-right: 8px;
+}
+
+.club-post-follow {
+  color: #fdfdfd;
+  font-size: 11px;
+  font-weight: 500;
+  margin-right: 20px;
+  padding: 4px 6px;
+  background-color: #74b0d9;
+  border-radius: 6px;
+}
+
+.club-post-time {
+  color: #888888;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.club-post-content-1 {
+  padding: 32px 0px;
+}
+
+.club-post-content-info {
+  background-color: #ffffff;
+  padding: 24px 32px;
+  border-radius: 8px;
+  margin: 0 32px;
+  margin-bottom: 64px;
+  display: flex;
+  justify-content: space-between;
+}
+.club-post-content-2,
+.club-post-content-3 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.club-info-icon,
+.club-info-content {
+  vertical-align: middle;
+}
+.club-info-icon {
+  margin-right: 4px;
+}
+.club-info-content {
+  color: #111111;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.club-post-btns {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.club-post-closING-btn,
+.club-post-chat-btn,
+.club-post-request-btn,
+.club-post-joined-btn {
+  width: 147px;
+  height: 70px;
+  padding: 18px 32px;
+  border-radius: 9px;
+  vertical-align: middle;
+}
+.club-post-closeD-btn {
+  width: auto;
+  height: 70px;
+  color: #888888;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 18px 32px;
+  border-radius: 9px;
+  vertical-align: middle;
+  background-color: #e3e3e3;
+}
+
+.club-post-closING-btn,
+.club-post-chat-btn,
+.club-post-request-btn {
+  background-color: #111111;
+  color: #fdfdfd;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.club-post-chat-btn {
+  padding: 11.5px 10px;
+  display: inline-block;
+  line-height: 1.2;
+
+  .chatting {
+    display: block;
+  }
+
+  .moving {
+    display: block;
+    color: #a1a1a1;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}
+
+.club-post-joined-btn {
+  padding: 13px 20px;
+  background-color: #e3e3e3;
+  display: inline-block;
+  line-height: 1.2;
+}
+.club-post-joined-btn > span {
+  display: block;
+  color: #888888;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/*ㅡㅡㅡ주소복사모달ㅡㅡㅡ*/
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+.club-post-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.club-post-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.modal-copyhref-club {
+  animation: fadeInOut 1.5s forwards;
+  position: absolute;
+  bottom: 62px;
+  right: 33px;
+  padding: 12px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 10;
+  max-width: 170px;
+  background: #888888;
+  color: #fdfdfd;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.modal-copyhref-club:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 13px 8px 0;
+  border-color: #888888 transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  bottom: -10px;
+  left: 119px;
+}
+
+.club-post-btn,
+.club-post-btn > button {
+  background-color: #fbfbfb;
+  color: #111111;
+  font-size: 12px;
+  font-weight: 400;
+}

@@ -15,7 +15,7 @@ const timeForm = (date) => {
   const months = Math.floor(diff / 2592000000);
   const years = Math.floor(diff / 31536000000);
 
-  if (minutes < 1) return "지금";
+  if (minutes < 1) return '지금';
   if (hours < 1) return `${minutes}분 전`;
   if (days < 1) return `${hours}시간 전`;
   if (weeks < 1) return `${days}일 전`;
@@ -24,11 +24,16 @@ const timeForm = (date) => {
   return new Date(date).toLocaleDateString();
 };
 const Postlist = ({ posts, onDetail }) => {
-
   return (
     <ul className="postList">
       {posts.map((post) => (
-        <li key={post.id} className="postItem" onClick={() => { onDetail(post.board, post.id) }}>
+        <li
+          key={post.id}
+          className="postItem"
+          onClick={() => {
+            onDetail(post.board, post.id);
+          }}
+        >
           <img
             src={post.imageUrl || DefaultPostImg}
             alt={post.title}

@@ -3,7 +3,6 @@
   min-width: 950px;
   height: auto;
   margin: 0 auto;
-  padding: 10px;
   background-color: #f1f1f5;
 }
 
@@ -160,7 +159,7 @@
 }
 
 .post-btn2,
-.post-btn2>button {
+.post-btn2 > button {
   background-color: #fbfbfb;
   font-size: 12px;
   font-weight: 400;
@@ -228,7 +227,7 @@
   margin-top: 20px;
 }
 
-.post-comment>h1 {
+.post-comment > h1 {
   color: #000000;
   font-size: 24px;
   font-weight: 700;
@@ -348,7 +347,8 @@
   border-radius: 2px;
 }
 
-.post-comment-input::-webkit-scrollbar-thumb:hover .input-report::-webkit-scrollbar-thumb:hover {
+.post-comment-input::-webkit-scrollbar-thumb:hover
+  .input-report::-webkit-scrollbar-thumb:hover {
   background: #999999;
   cursor: pointer;
 }
@@ -452,13 +452,13 @@
   width: 424px;
   height: 425px;
   position: absolute;
-  left: 38%;
-  top: 20%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   background-color: #fdfdfd;
   border: 1px solid #efefef;
   border-radius: 8px;
   padding: 32px;
-  z-index: 10000;
 }
 
 .report-modal-back {
@@ -476,21 +476,21 @@
   justify-content: space-between;
 }
 
-.report-head>h1 {
+.report-head > h1 {
   color: #000000;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 32px;
 }
 
-.report-head>button {
+.report-head > button {
   background-color: #fdfdfd;
   transform: translateY(-17px);
 }
 
-.report-nickname>p,
-.report-content>p,
-.report-reason>p {
+.report-nickname > p,
+.report-content > p,
+.report-reason > p {
   font-size: 16px;
   font-weight: 600;
   margin-right: 16px;
