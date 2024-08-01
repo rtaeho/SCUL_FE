@@ -189,23 +189,25 @@ const timeForm = (date) => {
   const days = Math.floor(diff / 86400000);
   const weeks = Math.floor(diff / 604800000);
   const months = Math.floor(diff / 2592000000);
+  const years = Math.floor(diff / 31536000000);
 
-  if (minutes < 60) return `${minutes}분 전`;
-  if (hours < 24) return `${hours}시간 전`;
-  if (days < 7) return `${days}일 전`;
-  if (weeks < 4) return `${weeks}주 전`;
-  if (months < 12) return `${months}달 전`;
+  if (minutes < 1) return "지금";
+  if (hours < 1) return `${minutes}분 전`;
+  if (days < 1) return `${hours}시간 전`;
+  if (weeks < 1) return `${days}일 전`;
+  if (months < 1) return `${weeks}주 전`;
+  if (years < 1) return `${months}달 전`;
   return new Date(date).toLocaleDateString();
 };
 const handleAdClick = (link) => {
   window.open(link, '_blank');
 };
-const Postlist = ({ posts }) => {
+const Postlist = ({ posts, onDetail }) => {
   return (
     <div className="board-postlist-container">
       <ul className="board-postist">
         {posts.map((post, index) => (
-          <li key={post.id} className="board-postlist-postitem-container">
+          <li key={post.id} className="board-postlist-postitem-container" onClick={() => { onDetail(post.id) }}>
             {post.isAd ? (
               <div className="board-postlist-postitem-ad">
                 <img
@@ -418,6 +420,11 @@ const Community = () => {
     window.location.href = `${baseUrl}/createpost/${sport.toLowerCase()}`;
   };
 
+  const handlePostClick = (id) => {
+    const baseUrl = window.location.origin;
+    window.location.href = `${baseUrl}/post/${board.toLowerCase()}/${sport.toLowerCase()}/${id}`;
+  }
+
   const handlePageChange = (page) => {
     if (page > 0 && page <= totalPages) {
       setCurrentPage(page);
@@ -440,8 +447,8 @@ const Community = () => {
     board === 'free'
       ? '자유 게시판'
       : board === 'review'
-      ? '후기 게시판'
-      : '정보 게시판';
+        ? '후기 게시판'
+        : '정보 게시판';
 
   return (
     <div className="board-container">
@@ -455,7 +462,7 @@ const Community = () => {
         onTagChange={handleTagChange}
         onSearch={handleSearch}
       />
-      <Postlist posts={posts} />
+      <Postlist posts={posts} onDetail={handlePostClick} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

@@ -1695,7 +1695,7 @@
 
 "@looop/quill-image-resize-module-react@^3.1.5":
   version "3.1.5"
-  resolved "https://registry.npmjs.org/@looop/quill-image-resize-module-react/-/quill-image-resize-module-react-3.1.5.tgz"
+  resolved "https://registry.yarnpkg.com/@looop/quill-image-resize-module-react/-/quill-image-resize-module-react-3.1.5.tgz#1b46e9f29ada229e50b2339e9ea96d6b7104bdea"
   integrity sha512-Rr8R8ScVoKYFzSKMG92sWv91AFggOq0qovrToRoVJFMVxHavltLdrpUIzsEXxsRkECI7EY+SSyiXFIu2Cj5W1Q==
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
@@ -8073,7 +8073,7 @@ quill-image-resize-module-ts@^3.0.3:
 
 quill-image-resize@^3.0.9:
   version "3.0.9"
-  resolved "https://registry.npmjs.org/quill-image-resize/-/quill-image-resize-3.0.9.tgz"
+  resolved "https://registry.yarnpkg.com/quill-image-resize/-/quill-image-resize-3.0.9.tgz#5677fb6257560bff951153ddbdb836758e49f804"
   integrity sha512-5Dk0nixhbFsCwSWtPU9qqqtfM2gURfaP+pbBhQvAoMJoF4p99xbAibfAI3gsZJkbWUodoK2iAPf1V5oTSpv9ww==
   dependencies:
     lodash "^4.17.4"

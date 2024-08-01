@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as ViewsIcon } from '../../assets/images/ViewsIcon.svg';
 import { ReactComponent as LikesIcon } from '../../assets/images/LikesIcon.svg';
 import DefaultPostImg from '../../assets/images/DefaultPostImg.jpg';
@@ -13,20 +13,27 @@ const timeForm = (date) => {
   const days = Math.floor(diff / 86400000);
   const weeks = Math.floor(diff / 604800000);
   const months = Math.floor(diff / 2592000000);
+  const years = Math.floor(diff / 31536000000);
 
-  if (minutes < 60) return `${minutes}분 전`;
-  if (hours < 24) return `${hours}시간 전`;
-  if (days < 7) return `${days}일 전`;
-  if (weeks < 4) return `${weeks}주 전`;
-  if (months < 12) return `${months}달 전`;
+  if (minutes < 1) return '지금';
+  if (hours < 1) return `${minutes}분 전`;
+  if (days < 1) return `${hours}시간 전`;
+  if (weeks < 1) return `${days}일 전`;
+  if (months < 1) return `${weeks}주 전`;
+  if (years < 1) return `${months}달 전`;
   return new Date(date).toLocaleDateString();
 };
-
-const Postlist = ({ posts }) => {
+const Postlist = ({ posts, onDetail }) => {
   return (
     <ul className="postList">
       {posts.map((post) => (
-        <li key={post.id} className="postItem">
+        <li
+          key={post.id}
+          className="postItem"
+          onClick={() => {
+            onDetail(post.board, post.id);
+          }}
+        >
           <img
             src={post.imageUrl || DefaultPostImg}
             alt={post.title}
@@ -35,7 +42,7 @@ const Postlist = ({ posts }) => {
 
           <div className="Wrapper">
             <div className="titleBox">
-              <div className="postTag">{post.tag}</div>
+              <div className="postTag">{post.boardName}</div>
               <div className="postTitleWrapper">
                 <div className="postTitle">{post.title}</div>
                 {post.comments > 0 && (

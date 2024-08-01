@@ -4,9 +4,9 @@ import ReactQuill, { Quill, quillRef } from 'react-quill';
 import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
 import { ReactComponent as Select } from '../../assets/images/FilterSelect.svg';
-import ImageResize from 'quill-image-resize-module-react';
 import { ImageDrop } from 'quill-image-drop-module';
 import axios from 'axios';
+import ImageResize from '@looop/quill-image-resize-module-react'
 
 // 전역 스코프에 Quill 인스턴스 등록
 window.Quill = Quill;
@@ -31,7 +31,7 @@ const StyledReactQuill = styled(ReactQuill)`
 //Firebase Storage로 이미지 처리하기
 //참고 :: https://yhuj79.github.io/React/230214/
 const imageHandler = () => {
-  console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
+  //에디터에서 이미지 버튼을 클릭하면 핸들러 시작
 
   const input = document.createElement('input');
 
@@ -287,7 +287,7 @@ CreatePost.modules = {
   imageDrop: true,
 
   imageResize: {
-    modules: ['Resize', 'DisplaySize'],
+    modules: ['Resize'],
 
     handlers: {
       image: imageHandler,
