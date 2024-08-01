@@ -1,7 +1,7 @@
-// src/page/initial/Initial.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ReactComponent as Select } from '../../assets/images/AgeSelect.svg';
 
 const Initial = () => {
   const navigate = useNavigate();
@@ -11,11 +11,12 @@ const Initial = () => {
   const [isUnique, setIsUnique] = useState(true);
   const [showError, setShowError] = useState(false);
   const [inputClass, setInputClass] = useState('');
-  const [name, setName] = useState('');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
-  const [region, setRegion] = useState('');
-
+  const [showAgeDropdown, setShowAgeDropdown] = useState(false);
+  useEffect(() => {
+    console.log(localStorage.getItem('isMember'));
+  }, []);
   const sports = [
     '축구',
     '야구',
@@ -68,7 +69,7 @@ const Initial = () => {
     if (validateNickname(nickname)) {
       checkNicknameUnique(nickname);
     } else {
-      setIsUnique(true);
+      setIsUnique(false);
     }
   };
 
@@ -96,57 +97,45 @@ const Initial = () => {
       alert('중복확인을 완료해야 합니다');
       return;
     }
-
+    const response = {
+      gender,
+      age,
+      nickname,
+      sports: selectedButtons,
+    };
+    console.log(response);
     try {
       // 사용자 정보를 제출합니다.
       const response = await axios.post('/auth/join/submit-info', {
-        name,
         gender,
         age,
-        region,
         nickname,
         sports: selectedButtons,
       });
 
       // 백엔드에서 토큰을 처리하고 메인 페이지로 리다이렉트합니다.
-      // 추가적인 동작은 백엔드에서 처리합니다.
+      const { access_token, refresh_token } = response.data;
+
+      // 토큰 저장
+      localStorage.setItem('accessToken', access_token);
+      localStorage.setItem('refreshToken', refresh_token);
+      localStorage.removeItem('usercode');
+      // 메인 페이지로 이동
       navigate('/main');
     } catch (error) {
       console.error('회원 정보 제출 오류:', error);
     }
   };
 
+  const ageOptions = Array.from({ length: 58 }, (_, i) => i + 8);
+
   return (
     <div className="Initial">
       <div className="nickWrap">
-        <h2 className="nickSet">초기 설정</h2>
+        <div className="nickSet">닉네임 설정</div>
         <div className="inputWrap">
           <input
-            placeholder="이름"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            placeholder="성별"
-            type="text"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          />
-          <input
-            placeholder="나이"
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-          <input
-            placeholder="지역"
-            type="text"
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
-          />
-          <input
-            placeholder="닉네임"
+            placeholder="닉네임은 영어, 숫자포함 3자에서 12자까지 설정할 수 있어요"
             type="text"
             value={nickname}
             onChange={handleChange}
@@ -159,17 +148,17 @@ const Initial = () => {
           </button>
         </div>
         {showError && !isUnique && (
-          <div className="message">이미 존재하는 닉네임입니다</div>
+          <div className="message">이미 존재하는 닉네임입니다.</div>
         )}
         {showError && isUnique && inputClass === 'success' && (
-          <div className="successMessage">사용가능한 닉네임입니다</div>
+          <div className="successMessage">사용 가능한 닉네임입니다.</div>
         )}
       </div>
       <div className="pickSports">
-        <h2 className="sportsSet">선호 종목 선택</h2>
-        <h4 className="sportsSetInfo">
+        <div className="sportsSet">선호 종목 선택</div>
+        <div className="sportsSetInfo">
           최대 5개까지 설정 가능합니다. 추후에 변경 가능합니다.
-        </h4>
+        </div>
         <div className="btnContainer">
           {sports.map((button) => (
             <div key={button} className="buttonWrap">
@@ -188,8 +177,65 @@ const Initial = () => {
           ))}
         </div>
       </div>
+      <div className="initial-additional-container">
+        <div className="initial-additional-left">
+          <div>나이</div>
+          <div
+            className="initial-additional-left-age-container"
+            onClick={() => setShowAgeDropdown(!showAgeDropdown)}
+          >
+            <div className="initial-additional-left-age-select">
+              {age || '선택'}
+            </div>
+            <Select className="initial-additional-left-age-icon" />
+            {showAgeDropdown && (
+              <ul className="age-list">
+                {ageOptions.map((ageOption) => (
+                  <li
+                    key={ageOption}
+                    className={`age-item ${
+                      age === ageOption ? 'selected-age' : ''
+                    }`}
+                    onClick={() => {
+                      setAge(ageOption);
+                      setShowAgeDropdown(false);
+                    }}
+                  >
+                    {ageOption}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+        <div className="initial-additional-right">
+          <div className="initial-additional-right-gender">성별</div>
+          <div className="initial-additional-right-gender-radio">
+            <label className="initial-additional-right-gender-radio-box">
+              <input
+                className="initial-additional-right-gender-radio-button"
+                type="radio"
+                value="남자"
+                checked={gender === '남자'}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              남자
+            </label>
+            <label className="initial-additional-right-gender-radio-box">
+              <input
+                className="initial-additional-right-gender-radio-button"
+                type="radio"
+                value="여자"
+                checked={gender === '여자'}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              여자
+            </label>
+          </div>
+        </div>
+      </div>
       <button className="submitButton" onClick={handleComplete}>
-        완료
+        설정완료
       </button>
     </div>
   );

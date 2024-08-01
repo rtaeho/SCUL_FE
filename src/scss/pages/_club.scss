@@ -51,6 +51,7 @@
   font-weight: 500;
   line-height: 19.6px;
   letter-spacing: -0.35px;
+  z-index: 1;
 }
 .club-filter-left-container {
   @include inline-flexbox(start, center);

@@ -12,7 +12,7 @@ const CreatePost = lazy(() => import('../page/createPost'));
 const Post = lazy(() => import('../page/post'));
 const ClubPost = lazy(() => import('../page/clubPost'));
 const CreateClub = lazy(() => import('../page/createClub'));
-const Oauth2 = lazy(() => import('../page/auth/OauthRedirect'));
+
 const Loading = () => <>로딩중입니다.</>;
 
 const router = createBrowserRouter([
@@ -36,10 +36,27 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'home',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Main />
+          </Suspense>
+        ),
+      },
+      {
         path: 'main/:sport',
         element: (
           <Suspense fallback={<Loading />}>
             <Main />
+          </Suspense>
+        ),
+      },
+      {
+
+        path: 'createClub/:sport',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreateClub />
           </Suspense>
         ),
       },
@@ -52,26 +69,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'createClub/:sport',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <CreateClub />
-          </Suspense>
-        ),
-      },
-      {
         path: 'createPost/:sport',
         element: (
           <Suspense fallback={<Loading />}>
             <CreatePost />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'oauth2',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Initial />
           </Suspense>
         ),
       },
@@ -108,19 +109,12 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
-      // {
-      //   path: 'oauth2',
-      //   element: (
-      //     <Suspense fallback={<Loading />}>
-      //       <Oauth2 />
-      //     </Suspense>
-      //   ),
-      // },
       {
-        path: 'post/:board/:sport/:id',
+        path: 'initial',
         element: (
           <Suspense fallback={<Loading />}>
-            <Post />
+            <Initial />
+
           </Suspense>
         ),
       },
