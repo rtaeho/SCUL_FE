@@ -1,0 +1,266 @@
+.CreateClub {
+  width: 66%;
+  min-width: 950px;
+  height: max-content;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 32px;
+  border-radius: 16px;
+  background-color: #fbfbfb;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.CreateClub > h1 {
+  color: #111;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 36px;
+}
+
+/*ㅡㅡㅡ헤더ㅡㅡㅡ*/
+.clubSetting {
+  padding: 20px 40px;
+  margin-bottom: 23px;
+  background-color: #fdfdfd;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+}
+
+.clubSetting-1 {
+  display: flex;
+  gap: 12px;
+}
+
+.clubSetting-2 {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/*ㅡㅡㅡ인원, 비용ㅡㅡㅡ*/
+
+.create-club-member,
+.create-club-expense {
+  height: 36px;
+  width: auto;
+  max-width: 148px;
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid #bbb8b8;
+  border-radius: 12px;
+}
+
+.create-club-member > input,
+.create-club-expense > input {
+  max-width: 120px;
+  color: #111;
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.create-club-member > span,
+.create-club-expense > span {
+  margin-left: 2px;
+  white-space: nowrap;
+}
+
+.create-club-member > input,
+.create-club-expense > input,
+.create-club-member > span,
+.create-club-expense > span {
+  vertical-align: middle;
+}
+
+/* ㅡㅡㅡ장소선택ㅡㅡㅡ */
+
+.create-club-location-btn {
+  background-color: #fdfdfd;
+  color: #111;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid #bbb8b8;
+  border-radius: 12px;
+  padding: 8px 14px;
+}
+
+.create-club-dropdown-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: #fdfdfd;
+  width: 400px;
+  height: 271px;
+  padding: 16px;
+  border: 1px solid #bbb8b8;
+  border-radius: 16px;
+  z-index: 100;
+}
+
+.create-club-dropdown-head {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.create-club-dropdown-head > p {
+  width: 50%;
+  color: #111;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.create-club-dropdown-body {
+  display: flex;
+  width: 100%;
+}
+
+.create-club-dropdown-section-1,
+.create-club-dropdown-section-2 {
+  height: 207px;
+  color: #111;
+  font-size: 14px;
+  font-weight: 400;
+  overflow-y: scroll;
+}
+.create-club-dropdown-section-1 {
+  width: 47%;
+  margin-right: 6px;
+}
+
+.create-club-dropdown-section-2 {
+  width: 53%;
+  padding-left: 10px;
+  border-left: 1px solid #c1c1c1;
+}
+
+.create-club-dropdown-section-1 ul,
+.create-club-dropdown-section-2 ul {
+  list-style-type: none;
+  padding: 0;
+  padding-right: 6px;
+  margin: 0;
+}
+
+.create-club-dropdown-section-1 li,
+.create-club-dropdown-section-2 li {
+  padding: 3px 0;
+  padding-left: 6px;
+  cursor: pointer;
+}
+
+.create-club-dropdown-section-1 li:hover,
+.create-club-dropdown-section-2 li:hover {
+  background-color: #f0f0f0;
+  color: #111;
+}
+
+.selected {
+  background-color: #74b0d9;
+  color: #fdfdfd;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration-line: underline;
+}
+
+/* ㅡㅡㅡ장소선택 스크롤ㅡㅡㅡ */
+.create-club-dropdown-section-1::-webkit-scrollbar,
+.create-club-dropdown-section-2::-webkit-scrollbar {
+  width: 5px;
+}
+
+.create-club-dropdown-section-1::-webkit-scrollbar-track,
+.create-club-dropdown-section-2::-webkit-scrollbar-track {
+  background-color: #e6e6e6;
+}
+
+.create-club-dropdown-section-1::-webkit-scrollbar-thumb,
+.create-club-dropdown-section-2::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 8px;
+}
+
+.create-club-dropdown-section-1::-webkit-scrollbar-thumb:hover,
+.create-club-dropdown-section-2::-webkit-scrollbar-thumb:hover {
+  background: #bababa;
+}
+
+/*ㅡㅡㅡ날짜선택ㅡㅡㅡ*/
+
+.create-club-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+}
+
+.create-club-date-btn,
+.create-club-date-btn-disabled {
+  background-color: #fdfdfd;
+  border: 1px solid #bbb8b8;
+  border-radius: 12px;
+  color: #111;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 8px 14px;
+}
+.create-club-date-calendar {
+  position: absolute;
+  margin-top: 35px;
+}
+
+.create-club-date-btn-disabled {
+  color: #aaa;
+  cursor: default;
+}
+
+/***ㅡㅡㅡ옾챗인풋ㅡㅡㅡ***/
+
+.clubSetting-2 input {
+  width: 50%;
+  background-color: #fdfdfd;
+  color: #111;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid #bbb8b8;
+  border-radius: 12px;
+  padding: 8px 14px;
+}
+
+.clubSetting-2 input::placeholder {
+  color: #888;
+}
+
+.set-club-title {
+  margin-top: 16px;
+  padding: 8px 14px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #bbb8b8;
+  font-size: 14px;
+}
+
+.set-club-title::placeholder {
+  color: #999999;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.ql-editor {
+  border: 1px solid #efefef;
+  border-radius: 0 0 12px 12px;
+  border-top: 0;
+}
+
+.ql-toolbar.ql-snow {
+  border: 1px solid #efefef !important;
+  border-bottom: 1px solid #bbb8b8 !important;
+  border-radius: 12px 12px 0 0;
+}

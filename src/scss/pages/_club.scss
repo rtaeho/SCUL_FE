@@ -51,6 +51,7 @@
   font-weight: 500;
   line-height: 19.6px;
   letter-spacing: -0.35px;
+  z-index: 10;
 }
 .club-filter-left-container {
   @include inline-flexbox(start, center);
@@ -157,8 +158,7 @@
 .club-filter-calendar-container {
   position: absolute;
   margin-top: 30px;
-  margin-left: -10px;
-  transform: translateX(-40%);
+  transform: translateX(-46%);
 }
 //location
 .club-filter-location-dropdown-container {
@@ -478,6 +478,7 @@
   grid-template-columns: repeat(4, 1fr); /* 4개의 열을 생성 */
   grid-gap: 18px; /* 항목들 사이의 간격 (옵션) */
   margin: 16px 16px;
+  z-index: 0;
 }
 
 .club-postlist-postitem-container {
