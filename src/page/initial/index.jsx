@@ -8,15 +8,13 @@ const Initial = () => {
   const [selectedButtons, setSelectedButtons] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const [nickname, setNickname] = useState('');
-  const [isUnique, setIsUnique] = useState(true);
+  const [isUnique, setIsUnique] = useState(false);
   const [showError, setShowError] = useState(false);
   const [inputClass, setInputClass] = useState('');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const [showAgeDropdown, setShowAgeDropdown] = useState(false);
-  useEffect(() => {
-    console.log(localStorage.getItem('isMember'));
-  }, []);
+
   const sports = [
     '축구',
     '야구',
@@ -48,11 +46,14 @@ const Initial = () => {
     return true;
   };
 
-  const checkNicknameUnique = async (name) => {
+  const checkNicknameUnique = async (nickname) => {
     try {
-      const response = await axios.get(`/user/check-nickname/${name}`);
-      setIsUnique(response.data.boolean);
-      setInputClass(response.data.boolean ? 'success' : 'error');
+      const response = await axios.get(
+        `/user/check-nickname?nickname=${nickname}`
+      );
+      console.log('반환', response.data);
+      setIsUnique(!response.data); // 반대로 설정 (true -> false, false -> true)
+      setInputClass(!response.data ? 'success' : 'error'); // 중복인 경우 error, 아닌 경우 success
     } catch (error) {
       console.error('닉네임 중복 확인 오류:', error);
     }
@@ -101,18 +102,18 @@ const Initial = () => {
       gender,
       age,
       nickname,
-      sports: selectedButtons,
+      sportsName: selectedButtons,
     };
     console.log(response);
+    console.log('스포츠', selectedButtons);
     try {
       // 사용자 정보를 제출합니다.
       const response = await axios.post('/auth/join/submit-info', {
         gender,
         age,
         nickname,
-        sports: selectedButtons,
+        sportsName: selectedButtons,
       });
-
       // 백엔드에서 토큰을 처리하고 메인 페이지로 리다이렉트합니다.
       const { access_token, refresh_token } = response.data;
 
@@ -150,6 +151,7 @@ const Initial = () => {
         {showError && !isUnique && (
           <div className="message">이미 존재하는 닉네임입니다.</div>
         )}
+        {console.log('중간콘솔 : ', inputClass)}
         {showError && isUnique && inputClass === 'success' && (
           <div className="successMessage">사용 가능한 닉네임입니다.</div>
         )}

@@ -1,0 +1,223 @@
+.mypage-container {
+  width: 960px;
+  height: 842px;
+  border-radius: 16px;
+  background: #fbfbfb;
+  @include column-flexbox(start, start);
+  margin: 30px auto;
+  font-family: Pretendard;
+  color: #111;
+  font-style: normal;
+  padding: 32px 32px;
+}
+.mypage-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -0.5px;
+  margin-bottom: 26px;
+}
+
+.mypage-profile-container {
+  @include inline-flexbox(start, center);
+  padding: 32px 32px;
+  gap: 53px;
+  border-radius: 20px;
+  border: 1px solid #efefef;
+  background: #fdfdfd;
+  width: 100%;
+}
+.mypage-profile-image {
+  border-radius: 120px;
+  border: 1.5px solid #cdcdcd;
+}
+.mypage-profile-info-container {
+  @include column-flexbox(start, start);
+  gap: 12px;
+}
+.mypage-profile-info-namebox {
+  @include inline-flexbox(start, center);
+  gap: 20px;
+}
+.mypage-profile-info-name {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  line-height: 33.6px;
+}
+.mypage-profile-info-edit {
+  color: #fdfdfd;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #74b0d9;
+}
+.mypage-profile-info-sportsbox {
+  @include inline-flexbox(start, center);
+  gap: 6px;
+}
+.mypage-profile-info-sport-icon {
+  background-color: black;
+  width: 22px;
+  height: 22px;
+}
+.mypage-profile-info-sport-name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22.4px;
+  letter-spacing: -0.4px;
+}
+.mypage-profile-info-activitybox {
+  @include inline-flexbox(start, center);
+  gap: 16px;
+}
+
+.mypage-profile-info-activity-followingbox,
+.mypage-profile-info-activity-followerbox,
+.mypage-profile-info-activity-clubbox {
+  @include inline-flexbox(start, center);
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22.4px;
+  letter-spacing: -0.4px;
+}
+.mypage-profile-info-activity-followingnumber,
+.mypage-profile-info-activity-followernumber,
+.mypage-profile-info-activity-clubnumber {
+  color: #74b0d9;
+}
+.mypage-detail-container {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #efefef;
+  background: #fdfdfd;
+  margin-top: 20px;
+  @include inline-flexbox(start, start);
+  padding: 16px 16px;
+}
+.mypage-detail-left-container {
+  @include column-flexbox(start, start);
+  margin-right: 14px;
+}
+
+.mypage-detail-left-list {
+  @include inline-flexbox(start, center);
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22.4px;
+  letter-spacing: -0.4px;
+  width: 90px;
+}
+.mypage-detail-left-list-selected {
+  @include inline-flexbox(start, center);
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22.4px;
+  letter-spacing: -0.4px;
+  border-radius: 12px;
+  background: #ddd;
+  width: 90px;
+}
+.mypage-detail-right-container {
+  border-radius: 20px;
+  border: 1px solid #efefef;
+  background: #fdfdfd;
+  width: 100%;
+  padding: 12px 12px;
+}
+.tag-container {
+  @include inline-flexbox(start, center);
+  margin-bottom: 20px;
+  color: #111;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+  gap: 6px;
+}
+.tag-list {
+  @include inline-flexbox(center, center);
+  padding: 5px 10px;
+  gap: 10px;
+  border-radius: 12px;
+  border: 1px solid #bbb8b8;
+  width: max-content;
+}
+.tag-list-selected {
+  @include inline-flexbox(center, center);
+  padding: 5px 10px;
+  gap: 10px;
+  border-radius: 12px;
+  border: 1px solid #bbb8b8;
+  color: #fdfdfd;
+  font-weight: 600;
+  background: #111;
+  width: max-content;
+}
+
+.contents-post-container {
+  @include column-flexbox(start, start);
+}
+.contents-post-list-container {
+  width: 100%;
+  @include inline-flexbox(between, center);
+  padding: 8px 8px;
+  &:not(:last-child) {
+    border-bottom: 1px solid #d7d7d7;
+  }
+}
+
+.contents-post-icon {
+  margin-right: 4px;
+}
+.contents-post-details,
+.contents-post-box {
+  @include inline-flexbox(start, center);
+}
+.contents-post-sport,
+.contents-post-board {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+}
+.contents-post-title {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  margin-left: 3px;
+}
+.contents-post-comments-count {
+  color: #1ad2a6;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  margin-left: 12px;
+}
+.contents-post-time {
+  color: #888;
+  text-align: right;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+}
