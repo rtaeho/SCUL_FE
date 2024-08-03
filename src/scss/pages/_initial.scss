@@ -3,21 +3,31 @@
   min-width: 788px;
   margin: 0 auto;
   background-color: #f1f1f5;
+  margin-top: 120px;
+  @include column-flexbox(start, center);
 }
-
 /*---닉네임설정---*/
-
+.nickWrap {
+  width: 788px;
+  height: 188px;
+  border-radius: 16px;
+  background: #fbfbfb;
+  @include column-flexbox(start, start);
+  padding: 32px 32px;
+}
 .nickSet {
-  margin-top: 135px;
-  margin-bottom: 20px;
-  font-size: 24px;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
   font-weight: 600;
+  line-height: 28px; /* 28px */
+  letter-spacing: 0.5px;
 }
 
 .inputWrap {
+  margin-top: 20px;
   display: flex;
-  align-items: center;
-  margin: 0 auto;
+  align-items: start;
 }
 
 .redund {
@@ -26,13 +36,15 @@
   border: none;
   border-radius: 8px;
   border: solid 1px #4285f4;
-  background-color: #74B0D9;
+  background-color: #74b0d9;
   color: #ffffff;
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .inputWrap input {
+  width: 625.865px;
+  height: 48px;
   flex: 1;
   padding: 14px 16px;
   font-size: 16px;
@@ -41,6 +53,7 @@
   background-color: #f1f1f5;
   transition: border-color 0.1s, background-color 0.1s;
   box-sizing: border-box;
+  margin-bottom: 6px;
 }
 
 .inputWrap input::placeholder {
@@ -63,7 +76,7 @@
 .inputWrap .focused:hover {
   outline: none;
   border-color: #74b0d9;
-  background-color: #E3F3FF;
+  background-color: #e3f3ff;
 }
 
 .inputWrap input.error {
@@ -73,33 +86,51 @@
 
 .inputWrap input.success {
   border-color: #74b0d9;
-  background-color: #E3F3FF;
+  background-color: #e3f3ff;
 }
 
 .message {
-  color: #ff0000;
-  font-size: 14px;
-  margin-top: 5px;
+  color: #f00;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22.4px;
+  letter-spacing: 0.4px;
 }
 
 .successMessage {
   color: #74b0d9;
-  font-size: 14px;
-  margin-top: 5px;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22.4px;
+  letter-spacing: 0.4px;
 }
 
 /*---선호종목선택---*/
+.pickSports {
+  width: 788px;
+  height: 222px;
+  border-radius: 16px;
+  background: #fbfbfb;
+  padding: 32px 32px;
+  margin-top: 32px;
+}
+.sportsSet {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+}
 .sportsSetInfo {
   color: #999999;
   font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.sportsSet {
-  margin-top: 64px;
-  margin-bottom: 8px;
-  font-size: 24px;
-  font-weight: 600;
+  margin-bottom: 20px;
 }
 
 .buttonWrap {
@@ -109,6 +140,7 @@
 }
 
 .buttonWrap .badge {
+  @include inline-flexbox(center, center);
   position: absolute;
   top: -10px;
   right: -10px;
@@ -116,31 +148,177 @@
   color: #fdfdfd;
   border: solid 1px #ffffff;
   border-radius: 50%;
-  padding: 5px 10px;
   font-size: 12px;
+  width: 18px;
+  height: 18px;
 }
 
 .sportsButton {
-  padding: 10px 20px;
-  border: none;
+  display: inline-flex;
+  padding: 6px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   border-radius: 8px;
-  background-color: white;
-  color: #000000;
-  cursor: pointer;
+  border: 1px solid #bbb8b8;
+  background: #fff;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22.4px;
+  letter-spacing: 0.4px;
 }
 
 .selectedSportsButton {
-  background-color: #111111;
+  background: #111;
   color: #fdfdfd;
 }
-
-.initialComplete {
-  margin-top: 100px;
-  margin-bottom: 26px;
+.initial-additional-container {
+  width: 788px;
+  height: 116px;
+  border-radius: 16px;
+  background: #fbfbfb;
+  padding: 32px 32px;
+  margin-top: 32px;
+}
+.submitButton {
+  margin-top: 60px;
   padding: 14px 16px;
   color: #ffffff;
   background-color: #111111;
   font-size: 20px;
   font-weight: 600;
   border-radius: 8px;
+}
+
+.initial-additional-container {
+  display: flex;
+  margin: 20px 0;
+}
+
+.initial-additional-left {
+  width: 362px;
+  border-right: 1px solid #d7d7d7;
+}
+.initial-additional-right {
+  margin-left: 30px;
+}
+.initial-additional-left,
+.initial-additional-right {
+  @include inline-flexbox(start, start);
+  gap: 27px;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+}
+
+.initial-additional-left-age-container {
+  display: flex;
+  padding: 6px 12px;
+  @include inline-flexbox(between, center);
+  gap: 33px;
+  border-radius: 12px;
+  border: 1px solid #bbb8b8;
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  position: relative;
+  min-width: 89px;
+}
+
+.initial-additional-left-age-select {
+  margin-top: -2px;
+}
+
+.age-list {
+  width: 89px;
+  height: 150px;
+  border-radius: 8px;
+  border: 1px solid #bbb8b8;
+  padding: 8px 4px;
+  background: #fdfdfd;
+  position: absolute;
+  overflow-y: auto;
+  margin: 0;
+  z-index: 1;
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  left: 0;
+  margin-top: 185px;
+}
+
+.age-item {
+  cursor: pointer;
+  height: 28px;
+  margin-left: 3px;
+}
+.age-item:hover {
+  background: #999999;
+  color: white;
+}
+.age-item.selected-age {
+  background: #74b0d9;
+  color: white;
+  text-decoration-line: underline;
+}
+
+.initial-additional-right-gender-radio {
+  @include column-flexbox(start, center);
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.initial-additional-right-gender-radio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  margin-top: 4px;
+}
+.initial-additional-right-gender-radio-box {
+  @include inline-flexbox(center, center);
+}
+.initial-additional-right-gender-radio-button {
+  appearance: none;
+  margin-right: 8px;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #c0c0c0;
+  outline: none;
+  cursor: pointer;
+  &:checked {
+    background-color: #74b0d9;
+    border: 3px solid white;
+    box-shadow: 0 0 0 1.6px #74b0d9;
+  }
 }

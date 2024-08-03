@@ -505,7 +505,7 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   };
   return (
     <div className="club-filter-container">
-      {console.log(
+      {/* {console.log(
         '태그 : ',
         selectedTags,
         '날짜 : ',
@@ -520,7 +520,7 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
         minMember,
         '최대인원 : ',
         maxMember
-      )}
+      )} */}
       <div className="club-filter-left-container">
         <div className="club-filter-select-container">
           <div className="club-filter-selected">{selectedSort}</div>
