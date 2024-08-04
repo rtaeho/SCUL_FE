@@ -18,7 +18,9 @@ const Auth = () => {
     if (code && storedProvider) {
       const fetchTokens = async () => {
         try {
-          const res = await axios.get(`/oauth2/${storedProvider}?code=${code}`);
+          const res = await axios.get(
+            `/api/oauth2/${storedProvider}?code=${code}`
+          );
           const { access_token, refresh_token, is_member } = res.data;
           console.log(
             res.data,
