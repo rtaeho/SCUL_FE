@@ -559,7 +559,7 @@ const Post = () => {
     try {
       setIsLike(!isLike);
       const likeChange = isLike ? -1 : 1;
-      await axios.post(`/api/post/${post_id}/like`, { change: likeChange }); // 실제 API 엔드포인트에 맞게 수정
+      await axios.post(`/api/post/${postId}/like`, { change: likeChange }); // 실제 API 엔드포인트에 맞게 수정
       setPostData((prevData) => ({
         ...prevData,
         likeCount: prevData.likeCount + likeChange,
@@ -590,7 +590,7 @@ const Post = () => {
   const updateComment = async (updatedContent, commentIndex) => {
     try {
       await axios.put(
-        `/api/post/${post_id}/comment/${postData.comments[commentIndex].id}`,
+        `/api/post/${postId}/comment/${postData.comments[commentIndex].id}`,
         { content: updatedContent }
       );
       setPostData((prevPost) => {
