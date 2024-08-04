@@ -627,8 +627,6 @@ const Post = () => {
   //   // 표시할 게시글 목록
   //   const displayPosts = [previousPost, nextPost].filter((post) => post !== null);
 
-  const className = `${modalReport ? 'report-modal-back' : ''}`;
-
   return (
     <div className="Post">
       <div className="post-content-wrap">
@@ -645,7 +643,10 @@ const Post = () => {
             <div className="post-title">{mockPost.title}</div>
           </div>
           <div className="post-title-2">
-            <button className="post-profile_btn" onClick={() => nav('/myPage')}>
+            <button
+              className="post-profile_btn"
+              onClick={() => nav(`/mypage/${mockPost.nickname}`)}
+            >
               {mockPost.profileImg ? (
                 <img
                   src={mockPost.profileImg}

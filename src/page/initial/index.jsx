@@ -3,6 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ReactComponent as Select } from '../../assets/images/AgeSelect.svg';
 
+const sports = [
+  '축구',
+  '야구',
+  '농구',
+  '볼링',
+  '배드민턴',
+  '클라이밍',
+  '복싱',
+  '테니스',
+  '사이클',
+  '골프',
+  '수영',
+  '런닝',
+  '발레',
+  '필라테스',
+  '등산',
+  '크로스핏',
+  '탁구',
+  '요가',
+];
+
 const Initial = () => {
   const navigate = useNavigate();
   const [selectedButtons, setSelectedButtons] = useState([]);
@@ -14,27 +35,6 @@ const Initial = () => {
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const [showAgeDropdown, setShowAgeDropdown] = useState(false);
-
-  const sports = [
-    '축구',
-    '야구',
-    '농구',
-    '볼링',
-    '배드민턴',
-    '클라이밍',
-    '복싱',
-    '테니스',
-    '사이클',
-    '골프',
-    '수영',
-    '런닝',
-    '발레',
-    '필라테스',
-    '등산',
-    '크로스핏',
-    '탁구',
-    '요가',
-  ];
 
   const validateNickname = (name) => {
     if (!/^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{3,12}$/.test(name)) {

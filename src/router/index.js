@@ -125,7 +125,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'mypage',
+        path: 'mypage/:username',
         element: (
           <Suspense fallback={<Loading />}>
             <MyPage />
