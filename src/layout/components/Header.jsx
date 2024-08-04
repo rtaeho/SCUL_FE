@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as SoccerIcon } from '../../assets/images/Soccer.svg';
 import { ReactComponent as Select } from '../../assets/images/Select.svg';
 import { ReactComponent as Review } from '../../assets/images/Review.svg';
-import { ReactComponent as Mypage } from '../../assets/images/Mypage.svg';
+import { ReactComponent as MyPage } from '../../assets/images/Mypage.svg';
 import { ReactComponent as Logout } from '../../assets/images/Logout.svg';
 import { ReactComponent as Information } from '../../assets/images/Information.svg';
 import { ReactComponent as Free } from '../../assets/images/Free.svg';
@@ -290,8 +290,8 @@ const Header = () => {
               </div>
               <ul className="header-nav-profile-dropdown-list-container">
                 <li className="header-nav-profile-dropdown-list">
-                  <div onClick={() => navigate('/my-page')}>
-                    <Mypage />
+                  <div onClick={() => navigate('/mypage')}>
+                    <MyPage />
                     마이 페이지
                   </div>
                 </li>

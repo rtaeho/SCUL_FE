@@ -12,7 +12,7 @@ const CreatePost = lazy(() => import('../page/createPost'));
 const Post = lazy(() => import('../page/post'));
 const ClubPost = lazy(() => import('../page/clubPost'));
 const CreateClub = lazy(() => import('../page/createClub'));
-
+const MyPage = lazy(() => import('../page/myPage'));
 const Loading = () => <>로딩중입니다.</>;
 
 const router = createBrowserRouter([
@@ -121,6 +121,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <Initial />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'mypage',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <MyPage />
           </Suspense>
         ),
       },

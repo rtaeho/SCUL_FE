@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as Kakao } from '../../assets/images/Kakao.svg';
 import { ReactComponent as Google } from '../../assets/images/Google.svg';
 import { useNavigate } from 'react-router-dom';
@@ -6,15 +6,19 @@ import axios from 'axios';
 
 const Auth = () => {
   const navigate = useNavigate();
+  const [provider, setProvider] = useState(localStorage.getItem('provider'));
 
   // 리디렉션 후 URL에서 code 파라미터 추출 및 처리
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
-    if (code) {
+    const storedProvider = localStorage.getItem('provider');
+    console.log(code, storedProvider);
+
+    if (code && storedProvider) {
       const fetchTokens = async () => {
         try {
-          const res = await axios.get(`/oauth2/google?code=${code}`);
+          const res = await axios.get(`/oauth2/${storedProvider}?code=${code}`);
           const { access_token, refresh_token, is_member } = res.data;
           console.log(
             res.data,
@@ -31,7 +35,6 @@ const Auth = () => {
           if (is_member) {
             navigate('/main');
           } else {
-            localStorage.setItem('userCode', code);
             navigate('/initial');
           }
         } catch (error) {
@@ -43,12 +46,10 @@ const Auth = () => {
     }
   }, [navigate]);
 
-  const handleLogin = (provider) => {
-    if (provider === 'google') {
-      window.location.href = `http://ec2-43-200-254-45.ap-northeast-2.compute.amazonaws.com:8080/oauth2/google/redirect`;
-    } else if (provider === 'kakao') {
-      window.location.href = `http://ec2-43-200-254-45.ap-northeast-2.compute.amazonaws.com:8080/oauth2/kakao/redirect`;
-    }
+  const handleLogin = (auth) => {
+    setProvider(auth);
+    localStorage.setItem('provider', auth);
+    window.location.href = `http://ec2-43-200-254-45.ap-northeast-2.compute.amazonaws.com:8080/oauth2/${auth}/redirect`;
   };
 
   return (
@@ -57,13 +58,13 @@ const Auth = () => {
       <div className="wrap">
         <button onClick={() => handleLogin('kakao')} className="kakaoLogin">
           <Kakao className="kLogo" />
-          카카오로 로그인
+          카카오로 로그인{provider === 'kakao' && <h1>최근 로그인!</h1>}
         </button>
       </div>
       <div className="wrap">
         <button onClick={() => handleLogin('google')} className="googleLogin">
           <Google className="gLogo" />
-          구글로 로그인
+          구글로 로그인{provider === 'google' && <h1>최근 로그인!</h1>}
         </button>
       </div>
     </div>

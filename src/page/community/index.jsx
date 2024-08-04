@@ -6,9 +6,10 @@ import { ReactComponent as ViewsIcon } from '../../assets/images/ViewsIcon.svg';
 import { ReactComponent as LikesIcon } from '../../assets/images/LikesIcon.svg';
 import { ReactComponent as NextIcon } from '../../assets/images/Next.svg';
 import DefaultPostImg from '../../assets/images/DefaultPostImg.jpg';
+import axios from 'axios';
 
 const tags = {
-  free: ['전체'],
+  free: ['전체', '자유'],
   review: ['전체', '소모임', '용품', '운동', '시설'],
   info: ['전체', '대회', '경기 일정', '경기 결과'],
 };
@@ -59,13 +60,13 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
 
   const handleSearchOptionChange = (searchOption) => {
     setSelectedSearchOption(searchOption);
+    setSearchKeyword('');
     setSearchDropdownVisible(false);
   };
 
   const handleSearchChange = (event) => {
     setSearchKeyword(event.target.value);
   };
-
   const handleSearchSubmit = (event) => {
     if (event.key === 'Enter') {
       onSearch({
@@ -191,7 +192,7 @@ const timeForm = (date) => {
   const months = Math.floor(diff / 2592000000);
   const years = Math.floor(diff / 31536000000);
 
-  if (minutes < 1) return "지금";
+  if (minutes < 1) return '지금';
   if (hours < 1) return `${minutes}분 전`;
   if (days < 1) return `${hours}시간 전`;
   if (weeks < 1) return `${days}일 전`;
@@ -207,7 +208,7 @@ const Postlist = ({ posts, onDetail }) => {
     <div className="board-postlist-container">
       <ul className="board-postist">
         {posts.map((post, index) => (
-          <li key={post.id} className="board-postlist-postitem-container" onClick={() => { onDetail(post.id) }}>
+          <li key={post.id} className="board-postlist-postitem-container">
             {post.isAd ? (
               <div className="board-postlist-postitem-ad">
                 <img
@@ -242,22 +243,28 @@ const Postlist = ({ posts, onDetail }) => {
               <div className="board-postlist-postitem-post">
                 <img
                   src={post.imageUrl || DefaultPostImg}
-                  alt={post.title}
+                  alt={'img'}
                   className="board-postlist-postitem-postimage"
                 />
                 <div className="board-postlist-postitem-postbox">
                   <div className="board-postlist-postitem-postbox-titlebox">
                     <div className="board-postlist-postitem-postbox-titlebox-tag">
-                      {post.tag}
+                      {post.tagName}
                     </div>
-                    <div className="board-postlist-postitem-postbox-titlebox-title">
-                      {post.title}
+                    <div
+                      className="board-postlist-postitem-postbox-titlebox-title"
+                      onClick={() => {
+                        onDetail(post.postId);
+                      }}
+                    >
+                      {console.log(post.postId)}
+                      {post.postTitle}
                     </div>
-                    {post.comments > 0 && (
-                      <div className="board-postlist-postitem-postbox-titlebox-comments">
-                        {post.comments}
-                      </div>
-                    )}
+                    {/* {post.commentCount > 0 && ( */}
+                    <div className="board-postlist-postitem-postbox-titlebox-comments">
+                      {post.commentCount}
+                    </div>
+                    {/* )} */}
                   </div>
                   <div className="board-postlist-postitem-infobox">
                     <div className="board-postlist-postitem-infobox-nickname">
@@ -270,15 +277,15 @@ const Postlist = ({ posts, onDetail }) => {
                     <div className="board-postlist-postitem-infobxo-dot">·</div>
                     <ViewsIcon className="board-postlist-postitem-infobox-view-icon" />
                     <div className="postViboard-postlist-postitem-infobox-view">
-                      {post.views}{' '}
+                      {post.postView}{' '}
                     </div>
                     <div className="board-postlist-postitem-infobxo-dot">·</div>
                     <LikesIcon className="board-postlist-postitem-infobox-like-icon" />
-                    {post.likes > 0 && (
-                      <div className="board-postlist-postitem-infobox-like">
-                        {post.likes}
-                      </div>
-                    )}
+                    {/* {post.likeCount > 0 && ( */}
+                    <div className="board-postlist-postitem-infobox-like">
+                      {post.likeCount}
+                    </div>
+                    {/* )} */}
                   </div>
                 </div>
               </div>
@@ -362,24 +369,14 @@ const Community = () => {
   const { sport } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
-
+  const [sortMethod, setSortMethod] = useState('최신 순');
+  const [selectedTag, setSelectedTag] = useState('전체');
+  const [searchType, setSearchType] = useState('제목');
+  const [searchContent, setSearchContent] = useState('');
+  const [totalPages, setTotalPages] = useState(1);
   // 현재 게시판에 맞는 태그 배열 선택
   const currentTags = tags[board] || [];
   // 총 페이지 수를 게시물 수로 계산
-  const totalPages = Math.ceil(100 / 14); // 총 30개의 목업 데이터와 한 페이지에 14개씩
-
-  // 목업 데이터
-  const mockPosts = Array.from({ length: 100 }, (_, i) => ({
-    id: i + 1,
-    imageUrl: '',
-    title: `게시글 제목 ${i + 1}`,
-    tag: '태그',
-    nickname: `작성자 ${i + 1}`,
-    createdAt: new Date().toISOString(),
-    views: Math.floor(Math.random() * 1000),
-    likes: Math.floor(Math.random() * 100),
-    comments: Math.floor(Math.random() * 50),
-  }));
 
   // 광고 목업 데이터
   const adData = {
@@ -396,23 +393,76 @@ const Community = () => {
     const startIdx = (currentPage - 1) * 14;
     const endIdx = startIdx + 14;
     const postsWithAd = [
-      ...mockPosts.slice(startIdx, startIdx + 4),
+      ...posts.slice(startIdx, startIdx + 4),
       adData,
-      ...mockPosts.slice(startIdx + 4, endIdx),
+      ...posts.slice(startIdx + 4, endIdx),
     ];
     setPosts(postsWithAd);
-    //fetchPosts();
   }, [currentPage]);
 
-  const fetchPosts = async (filterParams) => {
-    // API 호출 로직 추가
-    // const response = await fetch('/api/posts', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ page: currentPage, ...filterParams }),
-    // });
-    // const data = await response.json();
-    // setPosts(data.posts);
+  const fetchPosts = async () => {
+    const page = currentPage;
+    const selectedSports = JSON.parse(localStorage.getItem('selectedSport'));
+    const sportsName = selectedSports?.name || '';
+
+    try {
+      const response = await axios.post('/posts/list', {
+        sportsName,
+        boardName,
+        tagName: selectedTag,
+        sortMethod,
+        searchType,
+        searchContent,
+        page,
+      });
+      console.log(response.data);
+      // API 응답에서 게시물 데이터와 전체 게시물 수 추출
+      const fetchedData = response.data;
+      const totalPosts = fetchedData.totalPosts || 100; // 전체 게시물 수
+      const postsArray = fetchedData.posts || []; // 게시물 배열
+
+      const totalPages = Math.ceil(totalPosts / 14); // 총 페이지 수 계산
+      setTotalPages(totalPages); // totalPages 상태 업데이트
+
+      // PostListDto 형태로 변환
+      const postListDto = postsArray.map((post) => ({
+        postId: post.postId,
+        nickname: post.nickname,
+        tagName: post.tagName,
+        postTitle: post.postTitle,
+        createdAt: new Date(post.createdAt), // ISO 문자열을 Date 객체로 변환
+        likeCount: post.likeCount,
+        postView: post.postView,
+        commentCount: post.commentCount,
+        imageUrl: post.imageUrl,
+      }));
+
+      // 페이지에 맞는 게시물 목록을 필터링 및 광고 삽입
+      const startIdx = (page - 1) * 14;
+      const endIdx = startIdx + 14;
+      const postsWithAd = [
+        ...postListDto.slice(startIdx, startIdx + 4),
+        adData,
+        ...postListDto.slice(startIdx + 4, endIdx),
+      ];
+
+      setPosts(postsWithAd);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      // 에러 발생 시 기본 상태로 설정하거나 사용자에게 에러 메시지 표시
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, [board, currentPage, sortMethod, selectedTag, searchType, searchContent]);
+
+  const handleSearch = ({ sort, tag, searchOption, keyword }) => {
+    setSortMethod(sort);
+    setSelectedTag(tag);
+    setSearchType(searchOption);
+    setSearchContent(keyword);
+    setCurrentPage(1); // 검색 필터 변경 시 페이지를 1로 초기화
   };
 
   const handleWriteClick = () => {
@@ -420,10 +470,10 @@ const Community = () => {
     window.location.href = `${baseUrl}/createpost/${sport.toLowerCase()}`;
   };
 
-  const handlePostClick = (id) => {
+  const handlePostClick = (postId) => {
     const baseUrl = window.location.origin;
-    window.location.href = `${baseUrl}/post/${board.toLowerCase()}/${sport.toLowerCase()}/${id}`;
-  }
+    window.location.href = `${baseUrl}/post/${board.toLowerCase()}/${sport.toLowerCase()}/${postId}`;
+  };
 
   const handlePageChange = (page) => {
     if (page > 0 && page <= totalPages) {
@@ -432,23 +482,22 @@ const Community = () => {
   };
 
   const handleFilterChange = (filterParams) => {
-    fetchPosts(filterParams);
+    setSortMethod(filterParams.sort);
+    setSelectedTag(filterParams.tag);
+    setSearchType(filterParams.searchOption);
+    setSearchContent(filterParams.keyword);
   };
 
   const handleTagChange = (filterParams) => {
-    fetchPosts(filterParams);
-  };
-
-  const handleSearch = (searchParams) => {
-    fetchPosts(searchParams);
+    setSelectedTag(filterParams.tag);
   };
 
   const boardName =
     board === 'free'
       ? '자유 게시판'
       : board === 'review'
-        ? '후기 게시판'
-        : '정보 게시판';
+      ? '후기 게시판'
+      : '정보 게시판';
 
   return (
     <div className="board-container">
