@@ -12,7 +12,7 @@
   flex-direction: column;
 }
 
-.CreatePost>h1 {
+.CreatePost > h1 {
   color: #111111;
   font-size: 20px;
   font-weight: 700;
@@ -26,6 +26,7 @@
   background-color: #fdfdfd;
   border-radius: 8px;
   border: 1px solid #efefef;
+  margin-bottom: 20px;
 }
 
 .setDropdown {
@@ -116,8 +117,8 @@
   margin-top: 16px;
   padding: 8px 14px;
   width: 100%;
-  border-radius: 8px;
-  border: 1px solid #bbb8b8;
+  border-radius: 12px;
+ border: 1px solid #bbb8b8;
   font-size: 14px;
 }
 
@@ -143,11 +144,31 @@
   @include inline-flexbox(center);
 }
 
+.quill.sc-braxZu.kAtQKC {
+  background-color: #fdfdfd;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+}
+
+.ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid #c2c2c2 !important;
+}
+
+.ql-container.ql-snow {
+  border: none !important;
+}
+
 .ql-editor {
   min-height: 300px;
 }
 
-.quill>.ql-container>.ql-editor.ql-blank::before {
+.quill > .ql-container {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
   font-size: 16px;
   font-weight: 400;
   font-style: normal;

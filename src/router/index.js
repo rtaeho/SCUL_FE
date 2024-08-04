@@ -92,7 +92,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'policy',
+        path: 'policy/:id',
         element: (
           <Suspense fallback={<Loading />}>
             <Policy />
