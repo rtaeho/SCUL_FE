@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { ReactComponent as ViewsIcon } from '../../assets/images/ViewsIcon.svg';
 import { ReactComponent as LikesIcon_Red } from '../../assets/images/LikesIcon_Red.svg';
 import { ReactComponent as ChatIcon } from '../../assets/images/ChatIcon.svg';
@@ -486,7 +485,7 @@ const ReportModal = ({ toggleReportModal, nickname, content }) => {
 
 const Post = () => {
   const nav = useNavigate();
-  const { sport, post_id } = useParams(); // post_id를 URL에서 가져옵니다
+  const { sport, board, postId } = useParams(); // Extract parameters from URL에서 가져옵니다
   const [postData, setPostData] = useState(null);
   const [isLike, setIsLike] = useState(false);
   const [isFollow, setIsFollow] = useState(false);
@@ -495,19 +494,30 @@ const Post = () => {
   const [reportInfo, setReportInfo] = useState({ nickname: '', content: '' });
   const currentUserNickname = '스트로베리'; // 임시 현재 유저 닉네임
 
+  // Log postId to check if it is being extracted correctly
+  useEffect(() => {
+    console.log('postId:', postId);
+  }, [postId]);
+
+  // Fetch post data
   useEffect(() => {
     const fetchPostData = async () => {
-      try {
-        const response = await axios.get(`/api/post/${post_id}`);
-        setPostData(response.data);
-      } catch (error) {
-        console.error('포스트 데이터 로드 오류:', error);
+      if (postId) {
+        // Ensure postId is defined before making the API call
+        try {
+          const response = await axios.get(`/api/post/${postId}`);
+          console.log('Post data:', response.data); // Log the response data
+          setPostData(response.data);
+        } catch (error) {
+          console.error('Failed to fetch post data:', error);
+        }
+      } else {
+        console.error('Post ID is not defined');
       }
     };
 
     fetchPostData();
-  }, [post_id]);
-
+  }, [postId]);
   const boardName = postData
     ? postData.boardName === 'free'
       ? '자유'
