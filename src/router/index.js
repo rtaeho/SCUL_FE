@@ -101,7 +101,15 @@ const router = createBrowserRouter([
       },
 
       {
-        path: 'auth',
+        path: 'auth/kakao',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Auth />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'auth/google',
         element: (
           <Suspense fallback={<Loading />}>
             <Auth />
