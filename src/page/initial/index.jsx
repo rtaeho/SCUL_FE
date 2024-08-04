@@ -151,7 +151,6 @@ const Initial = () => {
         {showError && !isUnique && (
           <div className="message">이미 존재하는 닉네임입니다.</div>
         )}
-        {console.log('중간콘솔 : ', inputClass)}
         {showError && isUnique && inputClass === 'success' && (
           <div className="successMessage">사용 가능한 닉네임입니다.</div>
         )}
