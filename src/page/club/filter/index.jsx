@@ -21,6 +21,63 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   const [selectedSubLocation, setSelectedSubLocation] = useState('전체');
   const [locationDropdownVisible, setLocationDropdownVisible] = useState(false);
   const locationRef = useRef(null);
+  const [selectedCostOption, setSelectedCostOption] = useState('');
+  const [minCost, setMinCost] = useState('');
+  const [maxCost, setMaxCost] = useState('');
+  const [costDropdownVisible, setCostDropdownVisible] = useState(false);
+  const [selectedMemberOption, setSelectedMemberOption] = useState('');
+  const [minMember, setMinMember] = useState('');
+  const [maxMember, setMaxMember] = useState('');
+  const [memberDropdownVisible, setMemberDropdownVisible] = useState(false);
+
+  const formatingDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+  // 필터 파라미터 적용 함수
+  const applyFilters = () => {
+    const filterParams = {
+      club_status: selectedSort ? selectedSort : '',
+      club_place: selectedLocation !== '전체' ? selectedLocation : '',
+      club_date: selectedTags.includes('날짜')
+        ? formatingDate(selectedDate)
+        : '',
+      club_min_cost: minCost || '', // 필요시 상태 추가
+      club_max_cost: maxCost || '', // 필요시 상태 추가
+      participants_min_count: minMember || '', // 필요시 상태 추가
+      participants_max_count: maxMember || '', // 필요시 상태 추가
+      search_condition: selectedSearchOption,
+      search_text: searchKeyword,
+    };
+    onFilterChange(filterParams);
+  };
+
+  // 검색어 입력 시 엔터 키 처리
+  const handleSearchKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      onSearch({
+        search_condition: selectedSearchOption,
+        search_text: searchKeyword,
+      });
+      applyFilters();
+    }
+  };
+
+  // 필터링 값 변경 시 applyFilters 호출
+  useEffect(() => {
+    applyFilters();
+  }, [
+    selectedSort,
+    selectedLocation,
+    selectedDate,
+    minCost,
+    maxCost,
+    minMember,
+    maxMember,
+  ]);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (locationRef.current && !locationRef.current.contains(event.target)) {
@@ -397,10 +454,6 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
     setSelectedSubLocation(subLocation);
   };
   // 필터 - 비용
-  const [selectedCostOption, setSelectedCostOption] = useState('');
-  const [minCost, setMinCost] = useState('');
-  const [maxCost, setMaxCost] = useState('');
-  const [costDropdownVisible, setCostDropdownVisible] = useState(false);
 
   const handleCostOptionChange = (option) => {
     setSelectedCostOption(option);
@@ -454,10 +507,6 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
     }
   };
   // 필터 - 모집인원
-  const [selectedMemberOption, setSelectedMemberOption] = useState('');
-  const [minMember, setMinMember] = useState('');
-  const [maxMember, setMaxMember] = useState('');
-  const [memberDropdownVisible, setMemberDropdownVisible] = useState(false);
 
   const handleMemberOptionChange = (option) => {
     setSelectedMemberOption(option);
@@ -505,22 +554,6 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   };
   return (
     <div className="club-filter-container">
-      {/* {console.log(
-        '태그 : ',
-        selectedTags,
-        '날짜 : ',
-        selectedDate,
-        '장소 : ',
-        selectedLocation,
-        '최소비용 : ',
-        minCost,
-        '최대비용 : ',
-        maxCost,
-        '최소인원 : ',
-        minMember,
-        '최대인원 : ',
-        maxMember
-      )} */}
       <div className="club-filter-left-container">
         <div className="club-filter-select-container">
           <div className="club-filter-selected">{selectedSort}</div>
@@ -807,7 +840,6 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
                       checked={selectedMemberOption === '직접 입력'}
                       onChange={() => handleMemberOptionChange('직접 입력')}
                     />
-                    {console.log(minMember, maxMember)}
                     <span>직접 입력</span>
                   </label>
                   <div className="club-filter-cost-custom-input">
@@ -881,7 +913,7 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
               type="text"
               value={searchKeyword}
               onChange={handleSearchChange}
-              onKeyDown={handleSearchSubmit}
+              onKeyDown={handleSearchKeyPress}
               placeholder="검색어를 입력해 주세요"
             />
           </div>

@@ -208,11 +208,11 @@ const Postlist = ({ posts, onDetail }) => {
     <div className="board-postlist-container">
       <ul className="board-postist">
         {posts.map((post, index) => (
-          <li key={post.id} className="board-postlist-postitem-container">
-            {post.isAd ? (
+          <li key={post.post_id} className="board-postlist-postitem-container">
+            {post.is_ad ? (
               <div className="board-postlist-postitem-ad">
                 <img
-                  src={post.imageUrl || DefaultPostImg}
+                  src={post.image_url || DefaultPostImg}
                   alt="adimg"
                   className="board-postlist-postitem-adimage"
                 />
@@ -220,10 +220,10 @@ const Postlist = ({ posts, onDetail }) => {
                 <div className="board-postlist-ad-adbox">
                   <div className="board-postlist-ad-adbox-titlebox">
                     <div className="board-postlist-ad-adbox-titlebox-tag">
-                      {post.tag}
+                      {post.tag_name}
                     </div>
                     <div className="board-postlist-ad-adbox-titlebox-title">
-                      {post.title}
+                      {post.post_title}
                     </div>
                   </div>
                   <div className="board-postlist-ad-adbox-infobox">
@@ -242,29 +242,26 @@ const Postlist = ({ posts, onDetail }) => {
             ) : (
               <div className="board-postlist-postitem-post">
                 <img
-                  src={post.imageUrl || DefaultPostImg}
+                  src={post.image_url || DefaultPostImg}
                   alt={'img'}
                   className="board-postlist-postitem-postimage"
                 />
                 <div className="board-postlist-postitem-postbox">
                   <div className="board-postlist-postitem-postbox-titlebox">
                     <div className="board-postlist-postitem-postbox-titlebox-tag">
-                      {post.tagName}
+                      {post.tag_name}
                     </div>
                     <div
                       className="board-postlist-postitem-postbox-titlebox-title"
                       onClick={() => {
-                        onDetail(post.postId);
+                        onDetail(post.post_id);
                       }}
                     >
-                      {console.log(post.postId)}
-                      {post.postTitle}
+                      {post.post_title}
                     </div>
-                    {/* {post.commentCount > 0 && ( */}
                     <div className="board-postlist-postitem-postbox-titlebox-comments">
-                      {post.commentCount}
+                      {post.comment_count}
                     </div>
-                    {/* )} */}
                   </div>
                   <div className="board-postlist-postitem-infobox">
                     <div className="board-postlist-postitem-infobox-nickname">
@@ -272,20 +269,18 @@ const Postlist = ({ posts, onDetail }) => {
                     </div>
                     <div className="board-postlist-postitem-infobxo-dot">·</div>
                     <div className="board-postlist-postitem-infobox-time">
-                      {timeForm(post.createdAt)}
+                      {timeForm(post.created_at)}
                     </div>
                     <div className="board-postlist-postitem-infobxo-dot">·</div>
                     <ViewsIcon className="board-postlist-postitem-infobox-view-icon" />
                     <div className="postViboard-postlist-postitem-infobox-view">
-                      {post.postView}{' '}
+                      {post.post_view}{' '}
                     </div>
                     <div className="board-postlist-postitem-infobxo-dot">·</div>
                     <LikesIcon className="board-postlist-postitem-infobox-like-icon" />
-                    {/* {post.likeCount > 0 && ( */}
                     <div className="board-postlist-postitem-infobox-like">
-                      {post.likeCount}
+                      {post.like_count}
                     </div>
-                    {/* )} */}
                   </div>
                 </div>
               </div>
@@ -299,7 +294,6 @@ const Postlist = ({ posts, onDetail }) => {
     </div>
   );
 };
-
 // 페이지네이션 컴포넌트
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const maxPagesToShow = 5;
@@ -381,9 +375,9 @@ const Community = () => {
   // 광고 목업 데이터
   const adData = {
     id: 'ad1',
-    isAd: true,
-    tag: '광고',
-    title: '나랑 스껄할래?',
+    is_ad: true,
+    tag_name: '광고',
+    post_title: '나랑 스껄할래?',
     nickname: '스컬스컬',
     link: 'https://s-cul.com',
   };
@@ -406,19 +400,19 @@ const Community = () => {
     const sportsName = selectedSports?.name || '';
 
     try {
-      const response = await axios.post('/api/posts/list', {
-        sportsName,
-        boardName,
-        tagName: selectedTag,
-        sortMethod,
-        searchType,
-        searchContent,
-        page,
+      const response = await axios.post('/postlist', {
+        sports_name: sportsName,
+        board_name: boardName,
+        tag_name: selectedTag,
+        sort_method: sortMethod,
+        search_type: searchType,
+        search_content: searchContent,
+        page: page,
       });
-      console.log(response.data);
+
       // API 응답에서 게시물 데이터와 전체 게시물 수 추출
       const fetchedData = response.data;
-      const totalPosts = fetchedData.totalPosts || 100; // 전체 게시물 수
+      const totalPosts = fetchedData.total_posts || 100; // 전체 게시물 수
       const postsArray = fetchedData.posts || []; // 게시물 배열
 
       const totalPages = Math.ceil(totalPosts / 14); // 총 페이지 수 계산
@@ -426,15 +420,15 @@ const Community = () => {
 
       // PostListDto 형태로 변환
       const postListDto = postsArray.map((post) => ({
-        postId: post.postId,
+        post_id: post.post_id,
         nickname: post.nickname,
-        tagName: post.tagName,
-        postTitle: post.postTitle,
-        createdAt: new Date(post.createdAt), // ISO 문자열을 Date 객체로 변환
-        likeCount: post.likeCount,
-        postView: post.postView,
-        commentCount: post.commentCount,
-        imageUrl: post.imageUrl,
+        tag_name: post.tag_name,
+        post_title: post.post_title,
+        created_at: new Date(post.created_at), // ISO 문자열을 Date 객체로 변환
+        like_count: post.like_count,
+        post_view: post.post_view,
+        comment_count: post.comment_count,
+        image_url: post.image_url,
       }));
 
       // 페이지에 맞는 게시물 목록을 필터링 및 광고 삽입
@@ -452,7 +446,6 @@ const Community = () => {
       // 에러 발생 시 기본 상태로 설정하거나 사용자에게 에러 메시지 표시
     }
   };
-
   useEffect(() => {
     fetchPosts();
   }, [board, currentPage, sortMethod, selectedTag, searchType, searchContent]);
