@@ -63,6 +63,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'createClub/:sport/:club_id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreateClub />
+          </Suspense>
+        ),
+      },
+      {
         path: 'community/:board/:sport',
         element: (
           <Suspense fallback={<Loading />}>
@@ -72,6 +80,14 @@ const router = createBrowserRouter([
       },
       {
         path: 'createPost/:sport',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreatePost />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'createPost/:sport/:post_id',
         element: (
           <Suspense fallback={<Loading />}>
             <CreatePost />
@@ -136,7 +152,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'post/:board/:sport/:id',
+        path: 'post/:board/:sport/:post_id',
         element: (
           <Suspense fallback={<Loading />}>
             <Post />

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import ReactQuill, { Quill, quillRef } from 'react-quill';
+import { useNavigate, useParams } from 'react-router-dom';
+import ReactQuill, { Quill } from 'react-quill';
 import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
 import DatePicker from 'react-datepicker';
@@ -14,7 +14,13 @@ import { AdjustInput } from './input/index';
 import { ReactComponent as CalendarPrev } from '../../assets/images/CalendarPrev.svg';
 import { ReactComponent as CalendarNext } from '../../assets/images/CalendarNext.svg';
 import { ko } from 'date-fns/locale/ko';
-
+const formatingDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 //지역
 const locations = {
   전체: ['전체'],
@@ -294,32 +300,6 @@ const StyledReactQuill = styled(ReactQuill)`
 
 //Firebase Storage로 이미지 처리하기
 //참고 :: https://yhuj79.github.io/React/230214/
-const imageHandler = () => {
-  //에디터에서 이미지 버튼을 클릭하면 핸들러 시작
-
-  const input = document.createElement('input');
-
-  input.setAttribute('type', 'file');
-  input.setAttribute('accept', 'image/*');
-  input.click();
-
-  input.addEventListener('change', async () => {
-    console.log('온체인지');
-    const file = input.files[0];
-    const formData = new FormData();
-    formData.append('img', file);
-    try {
-      const result = await axios.post('http://localhost:3000/img', formData);
-      console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
-      const IMG_URL = result.data.url;
-      const editor = quillRef.current.getEditor();
-      const range = editor.getSelection();
-      editor.insertEmbed(range.index, 'image', IMG_URL);
-    } catch (error) {
-      console.log('이미지 업로드 실패:', error);
-    }
-  });
-};
 
 const formatDate = (date) => {
   return date ? format(date, 'MM.dd', { locale: ko }) : '날짜 선택';
@@ -331,6 +311,7 @@ const CreateClub = () => {
 
   const [members, setMembers] = useState('');
   const [expense, setExpense] = useState('');
+  const [files, setFiles] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showEndDatePicker, setShowEndDatePicker] = useState(false);
   const [endDate, setEndDate] = useState(null);
@@ -339,11 +320,11 @@ const CreateClub = () => {
   const [selectedCityItem, setSelectedCityItem] = useState(null);
   const [selectedDistrictItem, setSelectedDistrictItem] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
-
   const [content, setContent] = useState('');
   const titleRef = useRef(null);
   const [startDate, setStartDate] = useState(null);
-  const { sport } = useParams();
+  const { sport, clubId } = useParams();
+  const nav = useNavigate();
 
   // 사이트 탈주 알림
   useEffect(() => {
@@ -387,7 +368,17 @@ const CreateClub = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
+  const handleFileChange = (event) => {
+    const newFiles = Array.from(event.target.files).map((file) => ({
+      file,
+      url: URL.createObjectURL(file),
+      isNew: true,
+    }));
+    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+  };
+  const handleFileDelete = (index) => {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
   // 숫자만 입력받도록 정규식 사용
   const handleMembersChange = (value) => {
     setMembers(value);
@@ -431,8 +422,11 @@ const CreateClub = () => {
   const handleContentChange = (value) => {
     setContent(value);
   };
+  /*
 
+*/
   const handleSubmit = async () => {
+    // Validation
     if (!members) {
       alert('인원을 입력해 주세요');
       return;
@@ -476,11 +470,58 @@ const CreateClub = () => {
       alert('소모임 참가용 오픈 채팅 링크를 입력해 주세요');
       return;
     }
+    // Create a FormData object
+    const formData = new FormData();
+    const selectedSports = JSON.parse(localStorage.getItem('selectedSport'));
+    const sportsName = selectedSports?.name || '';
 
-    let redirectUrl = `/club/${sport.toLowerCase()}`;
-    window.location.href = redirectUrl;
+    // Append additional club data to the FormData object
+    formData.append('clubName', titleRef.current.value);
+    formData.append('clubContent', content);
+    formData.append('clubPlace', `${selectedCity} ${selectedDistrict}`);
+    formData.append('clubDate', formatingDate(startDate));
+    formData.append('clubEndDate', formatingDate(endDate));
+    formData.append('clubTotalNumber', members);
+    formData.append('clubCost', expense);
+    formData.append('clubQnaLink', openChatLink);
+    formData.append('clubParticipateLink', participantLink);
+    formData.append('sportsName', sportsName);
+    files.forEach((file) => {
+      if (file.isNew) {
+        formData.append('clubImage', file.file);
+      } else {
+        formData.append('imageUrls', file.url);
+      }
+    });
+    console.log('날짜 : ', startDate);
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+    const accessToken = localStorage.getItem('accessToken');
+    try {
+      if (clubId) {
+        await axios.put(`/club/${clubId}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        alert('게시글이 성공적으로 수정되었습니다.');
+      } else {
+        await axios.post('/club', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        alert('게시글이 성공적으로 등록되었습니다.');
+        nav(-1);
+      }
+    } catch (error) {
+      console.error('게시글 등록 실패:', error);
+      alert('게시글 등록에 실패했습니다.');
+    }
   };
-
   const renderCustomHeader = ({ date, decreaseMonth, increaseMonth }) => (
     <div className="custom-header">
       <button onClick={decreaseMonth} className="custom-nav-button-prev">
@@ -655,7 +696,19 @@ const CreateClub = () => {
           placeholder="내용을 입력해 주세요"
         />
       </div>
-
+      <input type="file" multiple onChange={handleFileChange} />
+      <div className="uploadedFiles">
+        {files.map((file, index) => (
+          <div key={index} className="fileItem">
+            <img
+              src={file.url}
+              alt={`file preview ${index}`}
+              className="filePreview"
+            />
+            <button onClick={() => handleFileDelete(index)}>삭제</button>
+          </div>
+        ))}
+      </div>
       <div className="createBtn">
         <button className="create" onClick={handleSubmit}>
           소모임 등록
@@ -684,15 +737,6 @@ CreateClub.modules = {
     ],
     ['link', 'image', 'video'],
   ],
-  imageDrop: true,
-
-  imageResize: {
-    modules: ['Resize'],
-
-    handlers: {
-      image: imageHandler,
-    },
-  },
 };
 
 CreateClub.formats = [

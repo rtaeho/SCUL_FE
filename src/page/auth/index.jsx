@@ -13,7 +13,6 @@ const Auth = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     const storedProvider = localStorage.getItem('provider');
-    console.log(code, storedProvider);
 
     if (code && storedProvider) {
       const fetchTokens = async () => {
@@ -22,13 +21,6 @@ const Auth = () => {
             `/api/oauth2/${storedProvider}?code=${code}`
           );
           const { access_token, refresh_token, is_member } = res.data;
-          console.log(
-            res.data,
-            'access:',
-            access_token,
-            'refresh:',
-            refresh_token
-          );
           if (access_token && refresh_token) {
             localStorage.setItem('accessToken', access_token);
             localStorage.setItem('refreshToken', refresh_token);
