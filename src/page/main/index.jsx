@@ -170,7 +170,7 @@ const Main = () => {
   const handlePostClick = (board, id) => {
     const baseUrl = window.location.origin;
     window.location.href = `${baseUrl}/post/${board}/${sport.toLowerCase()}/${id}`;
-  }
+  };
 
   const nextSlide = () => {
     setCurrent(current === images.length - 1 ? 0 : current + 1);

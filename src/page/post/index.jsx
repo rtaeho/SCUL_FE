@@ -614,9 +614,11 @@ const Post = () => {
     .filter((post) => post.board === boardName)
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
+
   const className = `${modalReport ? 'report-modal-back' : ''}`;
 
   if (!postData) return <div>Loading...</div>; // 데이터 로딩 중일 때 표시할 컴포넌트
+
   return (
     <div className="Post">
       <div className="post-content-wrap">
