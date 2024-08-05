@@ -9,10 +9,13 @@ const Initial = lazy(() => import('../page/initial'));
 const Club = lazy(() => import('../page/club'));
 const Policy = lazy(() => import('../page/policy'));
 const CreatePost = lazy(() => import('../page/createPost'));
+const CreateInquiry = lazy(() => import('../page/createInquiry'));
 const Post = lazy(() => import('../page/post'));
 const ClubPost = lazy(() => import('../page/clubPost'));
 const CreateClub = lazy(() => import('../page/createClub'));
 const MyPage = lazy(() => import('../page/myPage'));
+const Inquiry = lazy(() => import('../page/inquiry'));
+const InquiryPost = lazy(() => import('../page/inquiryPost'));
 const Loading = () => <>로딩중입니다.</>;
 
 const router = createBrowserRouter([
@@ -76,6 +79,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'createInquiry',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreateInquiry />
+          </Suspense>
+        ),
+      },
+      {
         path: 'club/:sport',
         element: (
           <Suspense fallback={<Loading />}>
@@ -129,6 +140,22 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <MyPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'inquiry',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Inquiry />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'inquiryPost/:id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <InquiryPost />
           </Suspense>
         ),
       },
