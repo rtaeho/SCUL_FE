@@ -61,7 +61,7 @@ const Header = () => {
     setNotifications(true);
     localStorage.setItem(
       'accessToken',
-      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmbnNsMTAyNjI2QGdtYWlsLmNvbSIsImV4cCI6MTcyMzM4MTg0MH0.jfcuujARcY8pTr0yg_xD_FGhFtxvFis2c0NiOgGGsouhhUbiKmpCOtGC28QLZB8EX0R179-hh-4uHjucHgYLFA'
+      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyeW91MTQwMjM5N0BnbWFpbC5jb20iLCJleHAiOjE3MjM0NzA3NTN9.OlcgpekIyKRe-C3I2D9GbcVgR981T8lYYYOlhy3Q-uU7LNk16FfOlf5UvS5etlsQFaZaRHsVp8S0sgSAvum6iA'
     );
     const sportsList = [
       { name: '축구', englishName: 'Soccer' },

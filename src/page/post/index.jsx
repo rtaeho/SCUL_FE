@@ -429,6 +429,7 @@ const Post = () => {
       });
       console.log('Post data:', response.data); // 응답 데이터를 로그로 출력
       setPostData(response.data);
+      response.data.is_like ? setIsLike(true) : setIsLike(false);
     } catch (error) {
       console.error('Failed to fetch post data:', error);
     }
@@ -470,7 +471,8 @@ const Post = () => {
       try {
         await axios.delete(`/comment/${comment_id}`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
           },
         });
         alert('댓글이 성공적으로 삭제되었습니다.');
@@ -565,12 +567,14 @@ const Post = () => {
     try {
       await axios.delete(`/posts/${post_id}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
         },
       });
       nav(-1); // 포스트 삭제 후 이전 화면으로 이동
       alert('게시글이 성공적으로 삭제되었습니다.');
     } catch (error) {
+      console.log(post_id);
       console.error('게시글 삭제 오류:', error);
       alert('게시글 삭제에 실패했습니다.');
     }
@@ -621,7 +625,7 @@ const Post = () => {
           }
         );
         console.log('팔로우 성공');
-        response.data.is_like ? setIsFollow(true) : setIsFollow(false);
+        response.data.is_follow ? setIsFollow(true) : setIsFollow(false);
       }
       fetchPostData();
     } catch (error) {
@@ -642,7 +646,6 @@ const Post = () => {
           },
         });
         console.log('좋아요 취소 성공');
-        response.data.is_like ? setIsLike(true) : setIsLike(false);
       } else {
         // 현재 좋아요가 되어있지 않을 경우, 좋아요를 추가합니다 (POST 요청)
         const response = await axios.post(
@@ -656,8 +659,8 @@ const Post = () => {
           }
         );
         console.log('좋아요 설정 성공');
-        response.data.is_like ? setIsLike(true) : setIsLike(false);
       }
+
       // 좋아요 상태를 UI에서 업데이트
       fetchPostData();
     } catch (error) {
@@ -712,7 +715,6 @@ const Post = () => {
   const filteredPosts = mockPosts
     .filter((post) => post.board === board_name)
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
 
   const className = `${modalReport ? 'report-modal-back' : ''}`;
   const [comments, setComments] = useState([]);
@@ -817,6 +819,7 @@ const Post = () => {
         <div className="post-btn">
           <div className="post-btn1">
             <button className="post-likes" onClick={toggleLikes}>
+              {console.log(isLike)}
               {isLike ? (
                 <LikesIcon_Red_Full className="likes-redIcon" />
               ) : (
