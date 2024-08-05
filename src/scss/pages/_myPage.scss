@@ -10,6 +10,7 @@
   font-style: normal;
   padding: 32px 32px;
 }
+
 .mypage-title {
   font-size: 20px;
   font-weight: 700;
@@ -58,16 +59,19 @@
   gap: 12px;
   user-select: none;
 }
+
 .mypage-profile-info-namebox {
   @include inline-flexbox(start, center);
   gap: 20px;
 }
+
 .mypage-profile-info-name {
   font-size: 24px;
   font-weight: 600;
   letter-spacing: -0.6px;
   line-height: 33.6px;
 }
+
 .mypage-profile-info-edit {
   color: #fdfdfd;
   font-size: 12px;
@@ -80,10 +84,12 @@
   user-select: none;
   cursor: pointer;
 }
+
 .mypage-profile-info-sportsbox {
   @include inline-flexbox(start, center);
   gap: 6px;
 }
+
 .mypage-profile-info-sport-icon {
   background-color: #111;
   border: 2px solid #111;
@@ -91,12 +97,14 @@
   width: 22px;
   height: 22px;
 }
+
 .mypage-profile-info-sport-name {
   font-size: 16px;
   font-weight: 600;
   line-height: 22.4px;
   letter-spacing: -0.4px;
 }
+
 .mypage-profile-info-activitybox {
   @include inline-flexbox(start, center);
   gap: 16px;
@@ -113,11 +121,13 @@
   line-height: 22.4px;
   letter-spacing: -0.4px;
 }
+
 .mypage-profile-info-activity-followingnumber,
 .mypage-profile-info-activity-followernumber,
 .mypage-profile-info-activity-clubnumber {
   color: #74b0d9;
 }
+
 .mypage-detail-container {
   width: 100%;
   border-radius: 20px;
@@ -127,6 +137,7 @@
   @include inline-flexbox(start, start);
   padding: 16px 16px;
 }
+
 .mypage-detail-left-container {
   @include column-flexbox(start, start);
   margin-right: 14px;
@@ -142,6 +153,7 @@
   width: 90px;
   user-select: none;
 }
+
 .mypage-detail-left-list-selected {
   @include inline-flexbox(start, center);
   padding: 10px 16px;
@@ -153,6 +165,7 @@
   background: #ddd;
   width: 90px;
 }
+
 .mypage-detail-right-container {
   border-radius: 20px;
   border: 1px solid #efefef;
@@ -176,6 +189,7 @@
   letter-spacing: -0.3px;
   gap: 6px;
 }
+
 .tag-list {
   @include inline-flexbox(center, center);
   padding: 5px 10px;
@@ -186,6 +200,7 @@
   user-select: none;
   cursor: pointer;
 }
+
 .tag-list-selected {
   @include inline-flexbox(center, center);
   padding: 5px 10px;
@@ -217,6 +232,7 @@
   @include inline-flexbox(between, center);
   padding: 8px 8px;
   user-select: none;
+
   &:not(:last-child) {
     border-bottom: 1px solid #d7d7d7;
   }
@@ -228,6 +244,7 @@
   margin-right: 4px;
   white-space: nowrap;
 }
+
 .contents-post-details,
 .contents-post-box {
   @include inline-flexbox(start, center);
@@ -249,6 +266,7 @@
   letter-spacing: -0.35px;
   white-space: nowrap;
 }
+
 .contents-post-title {
   color: #000;
   font-family: Pretendard;
@@ -268,6 +286,7 @@
   line-clamp: 1;
   box-orient: vertical;
 }
+
 .contents-post-comments-count {
   color: #1ad2a6;
   font-family: Pretendard;
@@ -309,6 +328,7 @@
   @include inline-flexbox(between, center);
   padding: 8px 8px;
   user-select: none;
+
   &:not(:last-child) {
     border-bottom: 1px solid #d7d7d7;
   }
@@ -373,6 +393,7 @@
   width: 100%;
   padding: 8px 8px;
   user-select: none;
+
   &:not(:last-child) {
     border-bottom: 1px solid #d7d7d7;
   }
@@ -408,14 +429,17 @@
   width: 60%;
   @include inline-flexbox(center);
 }
+
 .contents-club-head-2 {
   width: 10%;
   @include inline-flexbox(center);
 }
+
 .contents-club-head-3 {
   width: 20%;
   @include inline-flexbox(center);
 }
+
 .contents-club-head-4 {
   width: 10%;
   @include inline-flexbox(center);
@@ -479,6 +503,7 @@
   font-weight: 400;
   @include inline-flexbox(center);
 }
+
 .contents-club-leader {
   width: 20%;
   color: #888;
@@ -563,6 +588,7 @@
   font-weight: 500;
   margin-bottom: 6px;
 }
+
 .following-item-sport-svg {
   width: 14px;
   height: 14px;
@@ -586,6 +612,7 @@
   color: #111;
   white-space: nowrap;
 }
+
 .following-item-stats span {
   color: #74b0d9;
   font-size: 12px;
@@ -649,6 +676,7 @@
   color: #74b0d9;
   margin-right: 3px;
 }
+
 .notification-content-date {
   font-size: 12px;
   font-weight: 400;
@@ -671,6 +699,7 @@
   pointer-events: none;
   color: #999;
 }
+
 .notification-item.read .notification-content,
 .notification-item.read .notification-content-title,
 .notification-item.read .notification-content-title span {
@@ -687,6 +716,7 @@
   color: #888888;
   font-size: 12px;
   font-weight: 400;
+  cursor: pointer;
 }
 
 .notification-content-src span {
@@ -736,21 +766,21 @@
   justify-content: space-between;
 }
 
-.request-head > h1 {
+.request-head>h1 {
   color: #000000;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 32px;
 }
 
-.request-head > button {
+.request-head>button {
   background-color: #fdfdfd;
   transform: translateY(-17px);
 }
 
-.request-nickname > p,
-.request-content > p,
-.request-reason > p {
+.request-nickname>p,
+.request-content>p,
+.request-reason>p {
   font-size: 16px;
   font-weight: 600;
   margin-right: 16px;

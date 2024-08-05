@@ -179,8 +179,8 @@ const RequestModal = ({
   const handleRequestAllow = () => {
     const isConfirmed = window.confirm(
       '소모임 신청을 수락하시겠습니까?\n' +
-        nickname +
-        ' 님에게 소모임 참가용 오픈채팅방 주소가 전달됩니다.'
+      nickname +
+      ' 님에게 소모임 참가용 오픈채팅방 주소가 전달됩니다.'
     );
 
     if (isConfirmed) {
@@ -193,8 +193,8 @@ const RequestModal = ({
   const handleRequestDeny = () => {
     const isConfirmed = window.confirm(
       '소모임 신청을 거절하시겠습니까?\n' +
-        nickname +
-        '의 재신청 및 참가 불가합니다.'
+      nickname +
+      '의 재신청 및 참가 불가합니다.'
     );
     if (isConfirmed) {
       alert(nickname + ' 의 소모임 신청이 거절되었습니다.');
@@ -609,6 +609,7 @@ const generateMockNotifications = (numNotifications) => {
   const notificationTypes = ['댓글', '소모임신청', '소모임수락', '소모임마감'];
   const names = ['홍길동', '김철수', '이영희', '박영수'];
   const genders = ['남', '여'];
+  const isCloseEarly = [true, false];
 
   for (let i = 0; i < numNotifications; i++) {
     const type =
@@ -620,6 +621,7 @@ const generateMockNotifications = (numNotifications) => {
       age: Math.floor(Math.random() * 60) + 20, // 20에서 80 사이의 나이
       sport: sports[Math.floor(Math.random() * sports.length)],
       board: boards[Math.floor(Math.random() * boards.length)],
+      close: isCloseEarly[Math.floor(Math.random() * isCloseEarly.length)],
       notificationType: type,
       postTitle: `게시글 제목 ${i + 1}`,
       notificationDate: new Date(
@@ -645,6 +647,34 @@ const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   const endIndex = startIndex + postsPerPage;
   const currentPosts = posts.slice(startIndex, endIndex);
   const totalPages = Math.ceil(posts.length / postsPerPage);
+  const nav = useNavigate();
+
+  const sportTypeMapping = {
+    '축구': 'soccer',
+    '농구': 'basketball',
+    '야구': 'baseball',
+    '볼링': 'bowling',
+    '배드민턴': 'badminton',
+    '클라이밍': 'climbing',
+    '복싱': 'boxing',
+    '테니스': 'tennis',
+    '사이클': 'cycling',
+    '골프': 'golf',
+    '수영': 'swimming',
+    '런닝': 'running',
+    '필라테스': 'pilates',
+    '등산': 'hiking',
+    '크로스핏': 'crossfit',
+    '탁구': 'tabletennis',
+    '요가': 'yoga',
+  };
+
+  const boardTypeMapping = {
+    '자유': 'free',
+    '후기': 'review',
+    '정보': 'info',
+  }
+
 
   if (posts.length === 0) {
     return (
@@ -657,43 +687,51 @@ const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   return (
     <div>
       <div className="contents-post-container">
-        {currentPosts.map((post) => (
-          <div key={post.id} className="contents-post-list-container">
-            <div className="contents-post-details">
-              {post.imgType === true ? (
-                <PostImg className="contents-post-icon" />
-              ) : (
-                <PostNoImg className="contents-post-icon" />
-              )}
-
-              <div
-                className="contents-post-box"
-                onClick={() => {
-                  // 해당 post로 이동
-                }}
-              >
-                {post.boardType === '문의/신고' ? (
-                  ''
+        {currentPosts.map((post) => {
+          const translatedSportType = sportTypeMapping[post.sportType];
+          const translatedBoardType = boardTypeMapping[post.boardType];
+          return (
+            <div key={post.id} className="contents-post-list-container">
+              <div className="contents-post-details">
+                {post.imgType === true ? (
+                  <PostImg className="contents-post-icon" />
                 ) : (
-                  <div className="contents-post-sport">[{post.sportType}]</div>
+                  <PostNoImg className="contents-post-icon" />
                 )}
 
-                <div className="contents-post-board">[{post.boardType}]</div>
-                <div className="contents-post-title">{post.title}</div>
-              </div>
-              {post.comments > 0 && (
-                <div className="contents-post-comments-count">
-                  {post.comments}
+                <div
+                  className="contents-post-box"
+                  onClick={() => {
+                    if (post.boardType === '문의/신고') {
+                      nav(`/inquiry/${post.id}`);
+                    } else {
+                      nav(`/post/${translatedBoardType}/${translatedSportType}/${post.id}`);
+                    }
+                  }}
+                >
+                  {post.boardType === '문의/신고' ? (
+                    ''
+                  ) : (
+                    <div className="contents-post-sport">[{post.sportType}]</div>
+                  )}
+
+                  <div className="contents-post-board">[{post.boardType}]</div>
+                  <div className="contents-post-title">{post.title}</div>
                 </div>
-              )}
-            </div>
-            <div className="contents-post-info">
-              <div className="contents-post-time">
-                {timeForm(post.createdAt)}
+                {post.comments > 0 && (
+                  <div className="contents-post-comments-count">
+                    {post.comments}
+                  </div>
+                )}
+              </div>
+              <div className="contents-post-info">
+                <div className="contents-post-time">
+                  {timeForm(post.createdAt)}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       {totalPages > 1 && (
         <Pagination
@@ -711,6 +749,34 @@ const Comments = ({ comments, currentPage, postsPerPage, onPageChange }) => {
   const endIndex = startIndex + postsPerPage;
   const currentComments = comments.slice(startIndex, endIndex);
   const totalPages = Math.ceil(comments.length / postsPerPage);
+  const nav = useNavigate();
+
+  const sportTypeMapping = {
+    '축구': 'soccer',
+    '농구': 'basketball',
+    '야구': 'baseball',
+    '볼링': 'bowling',
+    '배드민턴': 'badminton',
+    '클라이밍': 'climbing',
+    '복싱': 'boxing',
+    '테니스': 'tennis',
+    '사이클': 'cycling',
+    '골프': 'golf',
+    '수영': 'swimming',
+    '런닝': 'running',
+    '필라테스': 'pilates',
+    '등산': 'hiking',
+    '크로스핏': 'crossfit',
+    '탁구': 'tabletennis',
+    '요가': 'yoga',
+  };
+
+  const boardTypeMapping = {
+    '자유': 'free',
+    '후기': 'review',
+    '정보': 'info',
+  }
+
 
   if (comments.length === 0) {
     return (
@@ -723,27 +789,31 @@ const Comments = ({ comments, currentPage, postsPerPage, onPageChange }) => {
   return (
     <div>
       <div className="contents-comment-container">
-        {currentComments.map((comment) => (
-          <div key={comment.id} className="contents-comment-list-container">
-            <div className="contents-comment-list-container-1">
-              <div className="contents-comment">{comment.comment}</div>
-              <div className="contents-comment-post">
-                <div className="contents-comment-post-sport">
-                  [{comment.sportType}]
-                </div>
-                <div className="contents-comment-post-board">
-                  [{comment.boardType}]
-                </div>
-                <div className="contents-comment-post-title">
-                  {comment.title}
+        {currentComments.map((comment) => {
+          const translatedSportType = sportTypeMapping[comment.sportType];
+          const translatedBoardType = boardTypeMapping[comment.boardType];
+          return (
+            <div key={comment.id} className="contents-comment-list-container">
+              <div className="contents-comment-list-container-1" onClick={() => { nav(`/post/${translatedBoardType}/${translatedSportType}/${comment.id}`) }} >
+                <div className="contents-comment">{comment.comment}</div>
+                <div className="contents-comment-post">
+                  <div className="contents-comment-post-sport">
+                    [{comment.sportType}]
+                  </div>
+                  <div className="contents-comment-post-board">
+                    [{comment.boardType}]
+                  </div>
+                  <div className="contents-comment-post-title">
+                    {comment.title}
+                  </div>
                 </div>
               </div>
+              <div className="contents-comment-list-container-2">
+                {timeForm(comment.createdAt)}
+              </div>
             </div>
-            <div className="contents-comment-list-container-2">
-              {timeForm(comment.createdAt)}
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       {totalPages > 1 && (
         <Pagination
@@ -766,6 +836,27 @@ const ParticipatedClub = ({
   const endIndex = startIndex + postsPerPage;
   const currentPosts = posts.slice(startIndex, endIndex);
   const totalPages = Math.ceil(posts.length / postsPerPage);
+  const nav = useNavigate();
+
+  const sportTypeMapping = {
+    '축구': 'soccer',
+    '농구': 'basketball',
+    '야구': 'baseball',
+    '볼링': 'bowling',
+    '배드민턴': 'badminton',
+    '클라이밍': 'climbing',
+    '복싱': 'boxing',
+    '테니스': 'tennis',
+    '사이클': 'cycling',
+    '골프': 'golf',
+    '수영': 'swimming',
+    '런닝': 'running',
+    '필라테스': 'pilates',
+    '등산': 'hiking',
+    '크로스핏': 'crossfit',
+    '탁구': 'tabletennis',
+    '요가': 'yoga',
+  };
 
   if (posts.length === 0) {
     return (
@@ -790,30 +881,33 @@ const ParticipatedClub = ({
           <div className="contents-club-head-3">소모임장</div>
           <div className="contents-club-head-4">참여날짜</div>
         </div>
-        {currentPosts.map((post) => (
-          <div key={post.id} className="contents-club-list-container">
-            <div className="contents-club-details">
-              <div
-                className="contents-club-box"
-                onClick={() => {
-                  // 해당 post로 이동
-                }}
-              >
-                {post.imgType === true ? (
-                  <PostImg className="contents-post-icon" />
-                ) : (
-                  <PostNoImg className="contents-post-icon" />
-                )}
-                <div className="contents-club-sport">[{post.sportType}]</div>
-                <div className="contents-club-title">{post.title}</div>
+        {currentPosts.map((post) => {
+          const translatedSportType = sportTypeMapping[post.sportType];
+          return (
+            <div key={post.id} className="contents-club-list-container">
+              <div className="contents-club-details">
+                <div
+                  className="contents-club-box"
+                  onClick={() => {
+                    nav(`/clubpost/${translatedSportType}/${post.id}`)
+                  }}
+                >
+                  {post.imgType === true ? (
+                    <PostImg className="contents-post-icon" />
+                  ) : (
+                    <PostNoImg className="contents-post-icon" />
+                  )}
+                  <div className="contents-club-sport">[{post.sportType}]</div>
+                  <div className="contents-club-title">{post.title}</div>
+                </div>
               </div>
-            </div>
 
-            <div className="contents-club-location">{post.locationType}</div>
-            <div className="contents-club-leader">{post.nickname}</div>
-            <div className="contents-club-time">{timeForm(post.date)}</div>
-          </div>
-        ))}
+              <div className="contents-club-location">{post.locationType}</div>
+              <div className="contents-club-leader">{post.nickname}</div>
+              <div className="contents-club-time">{timeForm(post.date)}</div>
+            </div>
+          )
+        })}
       </div>
       {totalPages > 1 && (
         <Pagination
@@ -831,6 +925,33 @@ const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   const endIndex = startIndex + postsPerPage;
   const currentPosts = posts.slice(startIndex, endIndex);
   const totalPages = Math.ceil(posts.length / postsPerPage);
+  const nav = useNavigate();
+
+  const sportTypeMapping = {
+    '축구': 'soccer',
+    '농구': 'basketball',
+    '야구': 'baseball',
+    '볼링': 'bowling',
+    '배드민턴': 'badminton',
+    '클라이밍': 'climbing',
+    '복싱': 'boxing',
+    '테니스': 'tennis',
+    '사이클': 'cycling',
+    '골프': 'golf',
+    '수영': 'swimming',
+    '런닝': 'running',
+    '필라테스': 'pilates',
+    '등산': 'hiking',
+    '크로스핏': 'crossfit',
+    '탁구': 'tabletennis',
+    '요가': 'yoga',
+  };
+
+  const boardTypeMapping = {
+    '자유': 'free',
+    '후기': 'review',
+    '정보': 'info',
+  }
 
   if (posts.length === 0) {
     return (
@@ -843,44 +964,44 @@ const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   return (
     <div>
       <div className="contents-post-container">
-        {currentPosts.map((post) => (
-          <div key={post.id} className="contents-post-list-container">
-            <div className="contents-post-details">
-              {post.imgType === true ? (
-                <PostImg className="contents-post-icon" />
-              ) : (
-                <PostNoImg className="contents-post-icon" />
-              )}
-
-              <div
-                className="contents-post-box"
-                onClick={() => {
-                  // 해당 post로 이동
-                }}
-              >
-                {post.boardType === '문의/신고' ? (
-                  ''
+        {currentPosts.map((post) => {
+          const translatedSportType = sportTypeMapping[post.sportType];
+          const translatedBoardType = boardTypeMapping[post.boardType];
+          return (
+            <div key={post.id} className="contents-post-list-container">
+              <div className="contents-post-details">
+                {post.imgType === true ? (
+                  <PostImg className="contents-post-icon" />
                 ) : (
-                  <div className="contents-post-sport">[{post.sportType}]</div>
+                  <PostNoImg className="contents-post-icon" />
                 )}
 
-                <div className="contents-post-board">[{post.boardType}]</div>
-                <div className="contents-post-title">{post.title}</div>
-              </div>
-              {post.comments > 0 && (
-                <div className="contents-post-comments-count">
-                  {post.comments}
+                <div
+                  className="contents-post-box"
+                  onClick={() => {
+                    nav(`/post/${translatedBoardType}/${translatedSportType}/${post.id}`)
+                  }}
+                >
+
+                  <div className="contents-post-sport">[{post.sportType}]</div>
+                  <div className="contents-post-board">[{post.boardType}]</div>
+                  <div className="contents-post-title">{post.title}</div>
                 </div>
-              )}
-            </div>
-            <div className="contents-post-info">
-              <div className="contents-post-writer">{post.nickname}</div>·
-              <div className="contents-post-time">
-                {timeForm(post.createdAt)}
+                {post.comments > 0 && (
+                  <div className="contents-post-comments-count">
+                    {post.comments}
+                  </div>
+                )}
+              </div>
+              <div className="contents-post-info">
+                <div className="contents-post-writer">{post.nickname}</div>·
+                <div className="contents-post-time">
+                  {timeForm(post.createdAt)}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       {totalPages > 1 && (
         <Pagination
@@ -982,6 +1103,7 @@ const Following = ({ userName }) => {
   const endIndex = startIndex + followsPerPage;
   const currentFollows = follows.slice(startIndex, endIndex);
   const totalPages = Math.ceil(follows.length / followsPerPage);
+  const nav = useNavigate();
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -1007,7 +1129,7 @@ const Following = ({ userName }) => {
       </div>
       <div className="following-list">
         {currentFollows.map((follow) => (
-          <div key={follow.id} className="following-item">
+          <div key={follow.id} className="following-item" onClick={() => { nav(`/mypage/${follow.nickname}`) }}>
             <div className="following-item-profile">
               {follow.profileImage ? (
                 <img src={follow.profileImage} alt={follow.nickname} />
@@ -1055,6 +1177,7 @@ const Follower = ({ userName }) => {
   const endIndex = startIndex + followsPerPage;
   const currentFollows = follows.slice(startIndex, endIndex);
   const totalPages = Math.ceil(follows.length / followsPerPage);
+  const nav = useNavigate();
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -1080,7 +1203,7 @@ const Follower = ({ userName }) => {
       </div>
       <div className="following-list">
         {currentFollows.map((follow) => (
-          <div key={follow.id} className="following-item">
+          <div key={follow.id} className="following-item" onClick={() => { nav(`/mypage/${follow.nickname}`) }}>
             <div className="following-item-profile">
               {follow.profileImage ? (
                 <img src={follow.profileImage} alt={follow.nickname} />
@@ -1128,6 +1251,7 @@ const Notification = () => {
   const notificationsPerPage = 5;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const nav = useNavigate();
 
   const handleTagClick = (tag) => {
     setSelectedTag(tag);
@@ -1192,6 +1316,35 @@ const Notification = () => {
     setCurrentPage(page);
   };
 
+  const sportTypeMapping = {
+    '축구': 'soccer',
+    '농구': 'basketball',
+    '야구': 'baseball',
+    '볼링': 'bowling',
+    '배드민턴': 'badminton',
+    '클라이밍': 'climbing',
+    '복싱': 'boxing',
+    '테니스': 'tennis',
+    '사이클': 'cycling',
+    '골프': 'golf',
+    '수영': 'swimming',
+    '런닝': 'running',
+    '필라테스': 'pilates',
+    '등산': 'hiking',
+    '크로스핏': 'crossfit',
+    '탁구': 'tabletennis',
+    '요가': 'yoga',
+  };
+
+  const boardTypeMapping = {
+    '자유': 'free',
+    '후기': 'review',
+    '정보': 'info',
+  }
+
+  console.log(notifications); // 디버깅: notification 객체의 값을 출력하여 확인
+
+
   return (
     <div>
       <Tags
@@ -1210,164 +1363,169 @@ const Notification = () => {
       {currentNotifications.length === 0 ? (
         <div className="no-notifications">알림이 없습니다</div>
       ) : (
-        currentNotifications.map((notification) => (
-          <div
-            key={notification.id}
-            className={`notification-item ${
-              notification.isRead ? 'read' : 'unread'
-            }`}
-          >
-            <div className="notification-content">
-              {notification.notificationType === '댓글' && (
-                <div>
-                  <div className="notification-content-head">
-                    <div className="notification-content-title">
-                      <span>{notification.nickname}</span> 님이 게시글에 댓글을
-                      작성했습니다
+        currentNotifications.map((notification) => {
+          const translatedSportType = sportTypeMapping[notification.sport];
+          const translatedBoardType = boardTypeMapping[notification.board];
+          return (
+            <div
+              key={notification.id}
+              className={`notification-item ${notification.isRead ? 'read' : 'unread'
+                }`}
+            >
+              <div className="notification-content">
+                {notification.notificationType === '댓글' && (
+                  <div onClick={() => { nav(`/post/${translatedBoardType}/${translatedSportType}/${notification.id}`) }}>
+                    <div className="notification-content-head">
+                      <div className="notification-content-title">
+                        <span>{notification.nickname}</span> 님이 게시글에 댓글을
+                        작성했습니다
+                      </div>
+                      <div className="notification-content-date">
+                        {timeForm(notification.notificationDate)}
+                      </div>
                     </div>
-                    <div className="notification-content-date">
-                      {timeForm(notification.notificationDate)}
+                    <div className="notification-contents">
+                      {notification.commentContent}
                     </div>
-                  </div>
-                  <div className="notification-contents">
-                    {notification.commentContent}
-                  </div>
-                  <div className="notification-content-3">
-                    <div className="notification-content-src">
-                      <span>
-                        [{notification.sport}][{notification.board}]
-                      </span>
-                      {notification.postTitle}
-                    </div>
-                    <div className="notification-actions">
-                      {!notification.isRead && (
-                        <button onClick={() => markAsRead(notification.id)}>
-                          읽음
+                    <div className="notification-content-3">
+                      <div className="notification-content-src">
+                        <span>
+                          [{notification.sport}][{notification.board}]
+                        </span>
+                        {notification.postTitle}
+                      </div>
+                      <div className="notification-actions">
+                        {!notification.isRead && (
+                          <button onClick={() => markAsRead(notification.id)}>
+                            읽음
+                          </button>
+                        )}
+                        <button
+                          onClick={() => deleteNotification(notification.id)}
+                        >
+                          삭제
                         </button>
-                      )}
-                      <button
-                        onClick={() => deleteNotification(notification.id)}
-                      >
-                        삭제
-                      </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-              {notification.notificationType === '소모임신청' && (
-                <div>
-                  <div className="notification-content-head">
-                    <div className="notification-content-title">
-                      <span>{notification.nickname}</span> 님이 소모임 신청을
-                      보냈습니다
+                )}
+                {notification.notificationType === '소모임신청' && (
+                  <div>
+                    <div className="notification-content-head">
+                      <div className="notification-content-title">
+                        <span>{notification.nickname}</span> 님이 소모임 신청을
+                        보냈습니다
+                      </div>
+                      <div className="notification-content-date">
+                        {timeForm(notification.notificationDate)}
+                      </div>
                     </div>
-                    <div className="notification-content-date">
-                      {timeForm(notification.notificationDate)}
+                    <div
+                      className={`notification-contents ${notification.isProcessed ? 'disabled' : ''
+                        }`}
+                      onClick={() => {
+                        if (!notification.isProcessed) {
+                          markAsRead(notification.id);
+                          openModal(notification);
+                        }
+                      }}
+                    >
+                      <span>[클릭]</span> 자기소개 보러 가기
+                    </div>
+                    <div className="notification-content-3">
+                      <div className="notification-content-src" onClick={() => { nav(`/clubpost/${translatedSportType}/${notification.id}`) }}>
+                        <span>[{notification.sport}]</span>{' '}
+                        {notification.postTitle}
+                      </div>
+                      <div className="notification-actions">
+                        {!notification.isRead && (
+                          <button onClick={() => markAsRead(notification.id)}>
+                            읽음
+                          </button>
+                        )}
+                        <button
+                          onClick={() => deleteNotification(notification.id)}
+                        >
+                          삭제
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div
-                    className={`notification-contents ${
-                      notification.isProcessed ? 'disabled' : ''
-                    }`}
-                    onClick={() => {
-                      if (!notification.isProcessed) {
-                        markAsRead(notification.id);
-                        openModal(notification);
+                )}
+                {notification.notificationType === '소모임수락' && (
+                  <div>
+                    <div className="notification-content-head">
+                      <div className="notification-content-title">
+                        <span>{notification.nickname}</span> 님이 소모임 신청을
+                        수락했습니다
+                      </div>
+                      <div className="notification-content-date">
+                        {timeForm(notification.notificationDate)}
+                      </div>
+                    </div>
+                    <div className="notification-contents">
+                      <span>[클릭]</span> 오픈 채팅방 참여하러 가기
+                    </div>
+                    <div className="notification-content-3">
+                      <div className="notification-content-src" onClick={() => { nav(`/clubpost/${translatedSportType}/${notification.id}`) }}>
+                        <span>[{notification.sport}]</span>{' '}
+                        {notification.postTitle}
+                      </div>
+                      <div className="notification-actions">
+                        {!notification.isRead && (
+                          <button onClick={() => markAsRead(notification.id)}>
+                            읽음
+                          </button>
+                        )}
+                        <button
+                          onClick={() => deleteNotification(notification.id)}
+                        >
+                          삭제
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {notification.notificationType === '소모임마감' && (
+                  <div onClick={() => { nav(`/clubpost/${translatedSportType}/${notification.id}`) }}>
+                    <div className="notification-content-head">
+                      <div className="notification-content-title">
+                        <div>소모임이 마감되었습니다.</div>
+                      </div>
+                      <div className="notification-content-date">
+                        {timeForm(notification.notificationDate)}
+                      </div>
+                    </div>
+                    <div className="notification-contents">
+                      {notification.close
+                        ? `${notification.nickname}님이 소모임을 마감했습니다.`
+                        : '마감 예정일이 지나 소모임이 마감되었습니다.'
                       }
-                    }}
-                  >
-                    <span>[클릭]</span> 자기소개 보러 가기
-                  </div>
-                  <div className="notification-content-3">
-                    <div className="notification-content-src">
-                      <span>[{notification.sport}]</span>{' '}
-                      {notification.postTitle}
                     </div>
-                    <div className="notification-actions">
-                      {!notification.isRead && (
-                        <button onClick={() => markAsRead(notification.id)}>
-                          읽음
+                    <div className="notification-content-3">
+                      <div className="notification-content-src">
+                        <span>[{notification.sport}]</span>{' '}
+                        {notification.postTitle}
+                      </div>
+                      <div className="notification-actions">
+                        {!notification.isRead && (
+                          <button onClick={() => markAsRead(notification.id)}>
+                            읽음
+                          </button>
+                        )}
+                        <button
+                          onClick={() => deleteNotification(notification.id)}
+                        >
+                          삭제
                         </button>
-                      )}
-                      <button
-                        onClick={() => deleteNotification(notification.id)}
-                      >
-                        삭제
-                      </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-              {notification.notificationType === '소모임수락' && (
-                <div>
-                  <div className="notification-content-head">
-                    <div className="notification-content-title">
-                      <span>{notification.nickname}</span> 님이 소모임 신청을
-                      수락했습니다
-                    </div>
-                    <div className="notification-content-date">
-                      {timeForm(notification.notificationDate)}
-                    </div>
-                  </div>
-                  <div className="notification-contents">
-                    <span>[클릭]</span> 오픈 채팅방 참여하러 가기
-                  </div>
-                  <div className="notification-content-3">
-                    <div className="notification-content-src">
-                      <span>[{notification.sport}]</span>{' '}
-                      {notification.postTitle}
-                    </div>
-                    <div className="notification-actions">
-                      {!notification.isRead && (
-                        <button onClick={() => markAsRead(notification.id)}>
-                          읽음
-                        </button>
-                      )}
-                      <button
-                        onClick={() => deleteNotification(notification.id)}
-                      >
-                        삭제
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {notification.notificationType === '소모임마감' && (
-                <div>
-                  <div className="notification-content-head">
-                    <div className="notification-content-title">
-                      <div>소모임이 마감되었습니다.</div>
-                    </div>
-                    <div className="notification-content-date">
-                      {timeForm(notification.notificationDate)}
-                    </div>
-                  </div>
-                  <div className="notification-contents">
-                    마감 예정일이 지나 소모임이 마감되었습니다.
-                  </div>
-                  <div className="notification-content-3">
-                    <div className="notification-content-src">
-                      <span>[{notification.sport}]</span>{' '}
-                      {notification.postTitle}
-                    </div>
-                    <div className="notification-actions">
-                      {!notification.isRead && (
-                        <button onClick={() => markAsRead(notification.id)}>
-                          읽음
-                        </button>
-                      )}
-                      <button
-                        onClick={() => deleteNotification(notification.id)}
-                      >
-                        삭제
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        ))
+          )
+        })
       )}
       {totalPages > 1 && (
         <Pagination
@@ -1658,11 +1816,10 @@ const MyPage = () => {
               {sports.map((button) => (
                 <div key={button} className="buttonWrap">
                   <button
-                    className={`sportsButton ${
-                      selectedButtons.includes(button)
-                        ? 'selectedSportsButton'
-                        : ''
-                    }`}
+                    className={`sportsButton ${selectedButtons.includes(button)
+                      ? 'selectedSportsButton'
+                      : ''
+                      }`}
                     onClick={() => handleBtnClick(button)}
                   >
                     {button}
@@ -1760,11 +1917,10 @@ const MyPage = () => {
             {['활동 내역', '팔로잉', '팔로워', '알림'].map((activity) => (
               <li
                 key={activity}
-                className={`mypage-detail-left-list ${
-                  selectedActivity === activity
-                    ? 'mypage-detail-left-list-selected'
-                    : ''
-                }`}
+                className={`mypage-detail-left-list ${selectedActivity === activity
+                  ? 'mypage-detail-left-list-selected'
+                  : ''
+                  }`}
                 onClick={() => handleActivityClick(activity)}
               >
                 {activity}
@@ -1773,9 +1929,8 @@ const MyPage = () => {
           </ul>
         </div>
         <div
-          className={`mypage-detail-right-container ${
-            selectedActivity === '활동 내역' ? 'selected-activity' : ''
-          }`}
+          className={`mypage-detail-right-container ${selectedActivity === '활동 내역' ? 'selected-activity' : ''
+            }`}
         >
           {selectedActivity === '활동 내역' && <Activity />}
           {selectedActivity === '팔로잉' && (
