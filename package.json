@@ -10,6 +10,7 @@
     "@xeger/quill-image-actions": "^0.7.2",
     "@xeger/quill-image-formats": "^0.7.2",
     "axios": "^1.7.2",
+    "customize-cra": "^1.0.0",
     "date-fns": "^3.6.0",
     "dompurify": "^3.1.6",
     "js-cookie": "^3.0.5",
@@ -19,6 +20,7 @@
     "quill-image-resize-module-react": "^3.0.0",
     "quill-image-resize-module-ts": "^3.0.3",
     "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
@@ -60,6 +62,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+
   },
   "proxy": "http://ec2-43-200-254-45.ap-northeast-2.compute.amazonaws.com:8080"
 }
+

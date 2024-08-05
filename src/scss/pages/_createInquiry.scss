@@ -1,0 +1,78 @@
+.inquiry-setting {
+    display: flex;
+    gap: 10px;
+    background-color: #fdfdfd;
+    border: 1px solid #efefef;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.set-TagBtn {
+    position: relative;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: start;
+    border-radius: 12px;
+    border: 1px solid #bbb8b8;
+    background-color: #fdfdfd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.set-TagBtn {
+    width: 206px;
+    flex-shrink: 0;
+}
+
+.inquiry-set-menu {
+    display: block;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    border: 1px solid #bbb8b8;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    width: 206px;
+}
+
+.inquiry-set-menu div {
+    padding: 12px 16px;
+    cursor: pointer;
+}
+
+.inquiry-set-menu div:hover {
+    background-color: #74b0d9;
+    text-decoration: underline;
+    color: #fdfdfd;
+}
+
+.inquiry-set-menu div:hover:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.inquiry-set-menu div:hover:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+.inquiry-set-title {
+    flex: 1;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: start;
+    border-radius: 12px;
+    border: 1px solid #bbb8b8;
+    color: #111;
+    background-color: #fdfdfd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

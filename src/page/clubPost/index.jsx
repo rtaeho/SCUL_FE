@@ -238,7 +238,7 @@ const ClubPost = () => {
         <div className="club-post-head-1">
           <button
             className="club-post-profile_btn"
-            onClick={() => nav('/myPage')}
+            onClick={() => nav(`/mypage/${mockClub.nickname}`)}
           >
             {mockClub.profileImg ? (
               <img

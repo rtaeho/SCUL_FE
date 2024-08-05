@@ -713,6 +713,7 @@ const Post = () => {
     .filter((post) => post.board === board_name)
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
+
   const className = `${modalReport ? 'report-modal-back' : ''}`;
   const [comments, setComments] = useState([]);
   const commentInputRef = useRef(null);
@@ -751,6 +752,7 @@ const Post = () => {
   };
 
   if (!postData) return <div>Loading...</div>; // 데이터 로딩 중일 때 표시할 컴포넌트
+
   return (
     <div className="Post">
       <div className="post-content-wrap">
