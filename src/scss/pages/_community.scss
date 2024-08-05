@@ -244,7 +244,6 @@
   cursor: pointer;
 }
 
-
 .board-postlist-postitem-postimage {
   display: inline;
   width: 42px;
@@ -407,6 +406,7 @@
   height: 28px;
   @include inline-flexbox(center, center);
   cursor: pointer;
+  user-select: none;
 }
 
 .board-pagination-selectedpage {
@@ -423,6 +423,7 @@
   height: 28px;
   @include inline-flexbox(center, center);
   cursor: pointer;
+  user-select: none;
 }
 
 .board-pagination-nexticon-box {
