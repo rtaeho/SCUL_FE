@@ -118,7 +118,7 @@
   padding: 8px 14px;
   width: 100%;
   border-radius: 12px;
- border: 1px solid #bbb8b8;
+  border: 1px solid #bbb8b8;
   font-size: 14px;
 }
 
@@ -173,4 +173,37 @@
   font-weight: 400;
   font-style: normal;
   color: #888888;
+}
+.uploadedFiles {
+  display: flex;
+  flex-wrap: wrap; /* 이미지가 컨테이너를 벗어나지 않도록 줄바꿈 */
+  gap: 10px; /* 이미지 사이의 간격 */
+  width: 100%;
+  box-sizing: border-box; /* 패딩과 테두리를 포함하여 전체 너비 계산 */
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 200px;
+}
+
+.filePreview {
+  max-width: 100%; /* 컨테이너의 너비를 넘지 않도록 설정 */
+  max-height: 150px; /* 이미지의 최대 높이 설정 */
+  object-fit: contain; /* 이미지 비율을 유지하면서 컨테이너에 맞게 조정 */
+  border: 1px solid #ddd; /* 선택 사항: 이미지에 테두리 추가 */
+  border-radius: 4px; /* 선택 사항: 이미지 모서리를 둥글게 처리 */
+}
+
+.fileItem button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 2px 6px;
 }
