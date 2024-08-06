@@ -24,6 +24,7 @@ import { ReactComponent as PostNoImg } from '../../assets/images/PostNoImg.svg';
 import { ReactComponent as NextIcon } from '../../assets/images/Next.svg';
 import { ReactComponent as DefaultProfile } from '../../assets/images/DefaultProfile.svg';
 import { ReactComponent as GreenCheckIcon } from '../../assets/images/GreenCheckIcon.svg';
+import axios from 'axios';
 
 const sportsList = [
   { name: '축구', englishName: 'Soccer' },
@@ -64,9 +65,6 @@ const sportIcons = {
   TableTennis: TableTennisIcon,
   Yoga: YogaIcon,
 };
-
-const sportName = '축구';
-const userName = '도라산너구리';
 
 const renderSportIcon = (sport) => {
   const englishName = sportsList.find((s) => s.name === sport)?.englishName;
@@ -179,8 +177,8 @@ const RequestModal = ({
   const handleRequestAllow = () => {
     const isConfirmed = window.confirm(
       '소모임 신청을 수락하시겠습니까?\n' +
-      nickname +
-      ' 님에게 소모임 참가용 오픈채팅방 주소가 전달됩니다.'
+        nickname +
+        ' 님에게 소모임 참가용 오픈채팅방 주소가 전달됩니다.'
     );
 
     if (isConfirmed) {
@@ -193,8 +191,8 @@ const RequestModal = ({
   const handleRequestDeny = () => {
     const isConfirmed = window.confirm(
       '소모임 신청을 거절하시겠습니까?\n' +
-      nickname +
-      '의 재신청 및 참가 불가합니다.'
+        nickname +
+        '의 재신청 및 참가 불가합니다.'
     );
     if (isConfirmed) {
       alert(nickname + ' 의 소모임 신청이 거절되었습니다.');
@@ -650,31 +648,30 @@ const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   const nav = useNavigate();
 
   const sportTypeMapping = {
-    '축구': 'soccer',
-    '농구': 'basketball',
-    '야구': 'baseball',
-    '볼링': 'bowling',
-    '배드민턴': 'badminton',
-    '클라이밍': 'climbing',
-    '복싱': 'boxing',
-    '테니스': 'tennis',
-    '사이클': 'cycling',
-    '골프': 'golf',
-    '수영': 'swimming',
-    '런닝': 'running',
-    '필라테스': 'pilates',
-    '등산': 'hiking',
-    '크로스핏': 'crossfit',
-    '탁구': 'tabletennis',
-    '요가': 'yoga',
+    축구: 'soccer',
+    농구: 'basketball',
+    야구: 'baseball',
+    볼링: 'bowling',
+    배드민턴: 'badminton',
+    클라이밍: 'climbing',
+    복싱: 'boxing',
+    테니스: 'tennis',
+    사이클: 'cycling',
+    골프: 'golf',
+    수영: 'swimming',
+    런닝: 'running',
+    필라테스: 'pilates',
+    등산: 'hiking',
+    크로스핏: 'crossfit',
+    탁구: 'tabletennis',
+    요가: 'yoga',
   };
 
   const boardTypeMapping = {
-    '자유': 'free',
-    '후기': 'review',
-    '정보': 'info',
-  }
-
+    자유: 'free',
+    후기: 'review',
+    정보: 'info',
+  };
 
   if (posts.length === 0) {
     return (
@@ -705,14 +702,18 @@ const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
                     if (post.boardType === '문의/신고') {
                       nav(`/inquiry/${post.id}`);
                     } else {
-                      nav(`/post/${translatedBoardType}/${translatedSportType}/${post.id}`);
+                      nav(
+                        `/post/${translatedBoardType}/${translatedSportType}/${post.id}`
+                      );
                     }
                   }}
                 >
                   {post.boardType === '문의/신고' ? (
                     ''
                   ) : (
-                    <div className="contents-post-sport">[{post.sportType}]</div>
+                    <div className="contents-post-sport">
+                      [{post.sportType}]
+                    </div>
                   )}
 
                   <div className="contents-post-board">[{post.boardType}]</div>
@@ -730,7 +731,7 @@ const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
       {totalPages > 1 && (
@@ -752,31 +753,30 @@ const Comments = ({ comments, currentPage, postsPerPage, onPageChange }) => {
   const nav = useNavigate();
 
   const sportTypeMapping = {
-    '축구': 'soccer',
-    '농구': 'basketball',
-    '야구': 'baseball',
-    '볼링': 'bowling',
-    '배드민턴': 'badminton',
-    '클라이밍': 'climbing',
-    '복싱': 'boxing',
-    '테니스': 'tennis',
-    '사이클': 'cycling',
-    '골프': 'golf',
-    '수영': 'swimming',
-    '런닝': 'running',
-    '필라테스': 'pilates',
-    '등산': 'hiking',
-    '크로스핏': 'crossfit',
-    '탁구': 'tabletennis',
-    '요가': 'yoga',
+    축구: 'soccer',
+    농구: 'basketball',
+    야구: 'baseball',
+    볼링: 'bowling',
+    배드민턴: 'badminton',
+    클라이밍: 'climbing',
+    복싱: 'boxing',
+    테니스: 'tennis',
+    사이클: 'cycling',
+    골프: 'golf',
+    수영: 'swimming',
+    런닝: 'running',
+    필라테스: 'pilates',
+    등산: 'hiking',
+    크로스핏: 'crossfit',
+    탁구: 'tabletennis',
+    요가: 'yoga',
   };
 
   const boardTypeMapping = {
-    '자유': 'free',
-    '후기': 'review',
-    '정보': 'info',
-  }
-
+    자유: 'free',
+    후기: 'review',
+    정보: 'info',
+  };
 
   if (comments.length === 0) {
     return (
@@ -794,7 +794,14 @@ const Comments = ({ comments, currentPage, postsPerPage, onPageChange }) => {
           const translatedBoardType = boardTypeMapping[comment.boardType];
           return (
             <div key={comment.id} className="contents-comment-list-container">
-              <div className="contents-comment-list-container-1" onClick={() => { nav(`/post/${translatedBoardType}/${translatedSportType}/${comment.id}`) }} >
+              <div
+                className="contents-comment-list-container-1"
+                onClick={() => {
+                  nav(
+                    `/post/${translatedBoardType}/${translatedSportType}/${comment.id}`
+                  );
+                }}
+              >
                 <div className="contents-comment">{comment.comment}</div>
                 <div className="contents-comment-post">
                   <div className="contents-comment-post-sport">
@@ -812,7 +819,7 @@ const Comments = ({ comments, currentPage, postsPerPage, onPageChange }) => {
                 {timeForm(comment.createdAt)}
               </div>
             </div>
-          )
+          );
         })}
       </div>
       {totalPages > 1 && (
@@ -839,23 +846,23 @@ const ParticipatedClub = ({
   const nav = useNavigate();
 
   const sportTypeMapping = {
-    '축구': 'soccer',
-    '농구': 'basketball',
-    '야구': 'baseball',
-    '볼링': 'bowling',
-    '배드민턴': 'badminton',
-    '클라이밍': 'climbing',
-    '복싱': 'boxing',
-    '테니스': 'tennis',
-    '사이클': 'cycling',
-    '골프': 'golf',
-    '수영': 'swimming',
-    '런닝': 'running',
-    '필라테스': 'pilates',
-    '등산': 'hiking',
-    '크로스핏': 'crossfit',
-    '탁구': 'tabletennis',
-    '요가': 'yoga',
+    축구: 'soccer',
+    농구: 'basketball',
+    야구: 'baseball',
+    볼링: 'bowling',
+    배드민턴: 'badminton',
+    클라이밍: 'climbing',
+    복싱: 'boxing',
+    테니스: 'tennis',
+    사이클: 'cycling',
+    골프: 'golf',
+    수영: 'swimming',
+    런닝: 'running',
+    필라테스: 'pilates',
+    등산: 'hiking',
+    크로스핏: 'crossfit',
+    탁구: 'tabletennis',
+    요가: 'yoga',
   };
 
   if (posts.length === 0) {
@@ -889,7 +896,7 @@ const ParticipatedClub = ({
                 <div
                   className="contents-club-box"
                   onClick={() => {
-                    nav(`/clubpost/${translatedSportType}/${post.id}`)
+                    nav(`/clubpost/${translatedSportType}/${post.id}`);
                   }}
                 >
                   {post.imgType === true ? (
@@ -906,7 +913,7 @@ const ParticipatedClub = ({
               <div className="contents-club-leader">{post.nickname}</div>
               <div className="contents-club-time">{timeForm(post.date)}</div>
             </div>
-          )
+          );
         })}
       </div>
       {totalPages > 1 && (
@@ -928,30 +935,30 @@ const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   const nav = useNavigate();
 
   const sportTypeMapping = {
-    '축구': 'soccer',
-    '농구': 'basketball',
-    '야구': 'baseball',
-    '볼링': 'bowling',
-    '배드민턴': 'badminton',
-    '클라이밍': 'climbing',
-    '복싱': 'boxing',
-    '테니스': 'tennis',
-    '사이클': 'cycling',
-    '골프': 'golf',
-    '수영': 'swimming',
-    '런닝': 'running',
-    '필라테스': 'pilates',
-    '등산': 'hiking',
-    '크로스핏': 'crossfit',
-    '탁구': 'tabletennis',
-    '요가': 'yoga',
+    축구: 'soccer',
+    농구: 'basketball',
+    야구: 'baseball',
+    볼링: 'bowling',
+    배드민턴: 'badminton',
+    클라이밍: 'climbing',
+    복싱: 'boxing',
+    테니스: 'tennis',
+    사이클: 'cycling',
+    골프: 'golf',
+    수영: 'swimming',
+    런닝: 'running',
+    필라테스: 'pilates',
+    등산: 'hiking',
+    크로스핏: 'crossfit',
+    탁구: 'tabletennis',
+    요가: 'yoga',
   };
 
   const boardTypeMapping = {
-    '자유': 'free',
-    '후기': 'review',
-    '정보': 'info',
-  }
+    자유: 'free',
+    후기: 'review',
+    정보: 'info',
+  };
 
   if (posts.length === 0) {
     return (
@@ -979,10 +986,11 @@ const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
                 <div
                   className="contents-post-box"
                   onClick={() => {
-                    nav(`/post/${translatedBoardType}/${translatedSportType}/${post.id}`)
+                    nav(
+                      `/post/${translatedBoardType}/${translatedSportType}/${post.id}`
+                    );
                   }}
                 >
-
                   <div className="contents-post-sport">[{post.sportType}]</div>
                   <div className="contents-post-board">[{post.boardType}]</div>
                   <div className="contents-post-title">{post.title}</div>
@@ -1000,7 +1008,7 @@ const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
       {totalPages > 1 && (
@@ -1096,27 +1104,51 @@ const Activity = () => {
 
 const Following = ({ userName }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const followsPerPage = 10;
-  const follows = generateMockFollows(20); // 목업 데이터 생성
-
-  const startIndex = (currentPage - 1) * followsPerPage;
-  const endIndex = startIndex + followsPerPage;
-  const currentFollows = follows.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(follows.length / followsPerPage);
+  const [follows, setFollows] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const nav = useNavigate();
+
+  useEffect(() => {
+    fetchFollows();
+  }, [currentPage]);
+
+  const fetchFollows = async () => {
+    const accessToken = localStorage.getItem('acceessToken');
+    try {
+      const response = await axios.get(
+        'follow/following',
+        {
+          user_nick_name: userName,
+          page_num: currentPage,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
+          },
+        }
+      );
+      const { data } = response;
+      setFollows(data.follows);
+      setTotalPages(data.totalPages);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching follows:', error);
+    }
+  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  if (follows.length === 0) {
+  if (!follows) {
     return (
       <div className="no-followers">
         <div className="following-head">
           <span>{userName}</span>
-          <div>님을 팔로우 중인 멤버</div>
+          <div>님이 팔로우 중인 멤버</div>
         </div>
-        <p> 팔로우 중인 유저가 없습니다</p>
+        <p>팔로우 중인 유저가 없습니다</p>
       </div>
     );
   }
@@ -1128,29 +1160,35 @@ const Following = ({ userName }) => {
         <div>님을 팔로우 중인 멤버</div>
       </div>
       <div className="following-list">
-        {currentFollows.map((follow) => (
-          <div key={follow.id} className="following-item" onClick={() => { nav(`/mypage/${follow.nickname}`) }}>
+        {follows.map((follow) => (
+          <div
+            key={follow.userId}
+            className="following-item"
+            onClick={() => {
+              nav(`/mypage/${follow.nickName}`);
+            }}
+          >
             <div className="following-item-profile">
-              {follow.profileImage ? (
-                <img src={follow.profileImage} alt={follow.nickname} />
+              {follow.userImageUrl ? (
+                <img src={follow.userImageUrl} alt={follow.nickName} />
               ) : (
                 <ProfileImage />
               )}
             </div>
             <div className="following-item-info">
-              <div className="following-item-nickname">{follow.nickname}</div>
+              <div className="following-item-nickname">{follow.nickName}</div>
               <div className="following-item-sport">
                 <div className="following-item-sport-svg">
-                  {renderSportIcon(follow.sport)}
+                  {renderSportIcon(follow.favoriteSports)}
                 </div>
-                {follow.sport}
+                {follow.favoriteSports}
               </div>
               <div className="following-item-stats">
                 <div className="following-item-stats-1">
-                  팔로워 <span>{follow.followers}</span>
+                  팔로워 <span>{follow.followerNumber}</span>
                 </div>
                 <div className="following-item-stats-1">
-                  팔로잉 <span>{follow.following}</span>
+                  팔로잉 <span>{follow.followingNumber}</span>
                 </div>
               </div>
             </div>
@@ -1170,25 +1208,48 @@ const Following = ({ userName }) => {
 
 const Follower = ({ userName }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const followsPerPage = 10;
-  const follows = generateMockFollows(50); // 목업 데이터 생성
-
-  const startIndex = (currentPage - 1) * followsPerPage;
-  const endIndex = startIndex + followsPerPage;
-  const currentFollows = follows.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(follows.length / followsPerPage);
+  const [follows, setFollows] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const nav = useNavigate();
+
+  useEffect(() => {
+    fetchFollows();
+  }, [currentPage]);
+
+  const fetchFollows = async () => {
+    const accessToken = localStorage.getItem('acceessToken');
+    try {
+      const response = await axios.get(
+        'follow/follower',
+        {
+          user_nick_name: userName,
+          page_num: currentPage,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
+          },
+        }
+      );
+      const { data } = response;
+      setFollows(data.follows);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.error('Error fetching followers:', error);
+    }
+  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  if (follows.length === 0) {
+  if (!follows) {
     return (
       <div className="no-followers">
         <div className="following-head">
           <span>{userName}</span>
-          <div>님이 팔로우 중인 멤버</div>
+          <div>님을 팔로우 중인 멤버</div>
         </div>
         <p>팔로우 중인 유저가 없습니다</p>
       </div>
@@ -1202,29 +1263,35 @@ const Follower = ({ userName }) => {
         <div>님이 팔로우 중인 멤버</div>
       </div>
       <div className="following-list">
-        {currentFollows.map((follow) => (
-          <div key={follow.id} className="following-item" onClick={() => { nav(`/mypage/${follow.nickname}`) }}>
+        {follows.map((follow) => (
+          <div
+            key={follow.userId}
+            className="following-item"
+            onClick={() => {
+              nav(`/mypage/${follow.nickName}`);
+            }}
+          >
             <div className="following-item-profile">
-              {follow.profileImage ? (
-                <img src={follow.profileImage} alt={follow.nickname} />
+              {follow.userImageUrl ? (
+                <img src={follow.userImageUrl} alt={follow.nickName} />
               ) : (
                 <ProfileImage />
               )}
             </div>
             <div className="following-item-info">
-              <div className="following-item-nickname">{follow.nickname}</div>
+              <div className="following-item-nickname">{follow.nickName}</div>
               <div className="following-item-sport">
                 <div className="following-item-sport-svg">
-                  {renderSportIcon(follow.sport)}
+                  {renderSportIcon(follow.favoriteSports)}
                 </div>
-                {follow.sport}
+                {follow.favoriteSports}
               </div>
               <div className="following-item-stats">
                 <div className="following-item-stats-1">
-                  팔로워 <span>{follow.followers}</span>
+                  팔로워 <span>{follow.followerNumber}</span>
                 </div>
                 <div className="following-item-stats-1">
-                  팔로잉 <span>{follow.following}</span>
+                  팔로잉 <span>{follow.followingNumber}</span>
                 </div>
               </div>
             </div>
@@ -1317,33 +1384,32 @@ const Notification = () => {
   };
 
   const sportTypeMapping = {
-    '축구': 'soccer',
-    '농구': 'basketball',
-    '야구': 'baseball',
-    '볼링': 'bowling',
-    '배드민턴': 'badminton',
-    '클라이밍': 'climbing',
-    '복싱': 'boxing',
-    '테니스': 'tennis',
-    '사이클': 'cycling',
-    '골프': 'golf',
-    '수영': 'swimming',
-    '런닝': 'running',
-    '필라테스': 'pilates',
-    '등산': 'hiking',
-    '크로스핏': 'crossfit',
-    '탁구': 'tabletennis',
-    '요가': 'yoga',
+    축구: 'soccer',
+    농구: 'basketball',
+    야구: 'baseball',
+    볼링: 'bowling',
+    배드민턴: 'badminton',
+    클라이밍: 'climbing',
+    복싱: 'boxing',
+    테니스: 'tennis',
+    사이클: 'cycling',
+    골프: 'golf',
+    수영: 'swimming',
+    런닝: 'running',
+    필라테스: 'pilates',
+    등산: 'hiking',
+    크로스핏: 'crossfit',
+    탁구: 'tabletennis',
+    요가: 'yoga',
   };
 
   const boardTypeMapping = {
-    '자유': 'free',
-    '후기': 'review',
-    '정보': 'info',
-  }
+    자유: 'free',
+    후기: 'review',
+    정보: 'info',
+  };
 
   console.log(notifications); // 디버깅: notification 객체의 값을 출력하여 확인
-
 
   return (
     <div>
@@ -1369,16 +1435,23 @@ const Notification = () => {
           return (
             <div
               key={notification.id}
-              className={`notification-item ${notification.isRead ? 'read' : 'unread'
-                }`}
+              className={`notification-item ${
+                notification.isRead ? 'read' : 'unread'
+              }`}
             >
               <div className="notification-content">
                 {notification.notificationType === '댓글' && (
-                  <div onClick={() => { nav(`/post/${translatedBoardType}/${translatedSportType}/${notification.id}`) }}>
+                  <div
+                    onClick={() => {
+                      nav(
+                        `/post/${translatedBoardType}/${translatedSportType}/${notification.id}`
+                      );
+                    }}
+                  >
                     <div className="notification-content-head">
                       <div className="notification-content-title">
-                        <span>{notification.nickname}</span> 님이 게시글에 댓글을
-                        작성했습니다
+                        <span>{notification.nickname}</span> 님이 게시글에
+                        댓글을 작성했습니다
                       </div>
                       <div className="notification-content-date">
                         {timeForm(notification.notificationDate)}
@@ -1421,8 +1494,9 @@ const Notification = () => {
                       </div>
                     </div>
                     <div
-                      className={`notification-contents ${notification.isProcessed ? 'disabled' : ''
-                        }`}
+                      className={`notification-contents ${
+                        notification.isProcessed ? 'disabled' : ''
+                      }`}
                       onClick={() => {
                         if (!notification.isProcessed) {
                           markAsRead(notification.id);
@@ -1433,7 +1507,14 @@ const Notification = () => {
                       <span>[클릭]</span> 자기소개 보러 가기
                     </div>
                     <div className="notification-content-3">
-                      <div className="notification-content-src" onClick={() => { nav(`/clubpost/${translatedSportType}/${notification.id}`) }}>
+                      <div
+                        className="notification-content-src"
+                        onClick={() => {
+                          nav(
+                            `/clubpost/${translatedSportType}/${notification.id}`
+                          );
+                        }}
+                      >
                         <span>[{notification.sport}]</span>{' '}
                         {notification.postTitle}
                       </div>
@@ -1467,7 +1548,14 @@ const Notification = () => {
                       <span>[클릭]</span> 오픈 채팅방 참여하러 가기
                     </div>
                     <div className="notification-content-3">
-                      <div className="notification-content-src" onClick={() => { nav(`/clubpost/${translatedSportType}/${notification.id}`) }}>
+                      <div
+                        className="notification-content-src"
+                        onClick={() => {
+                          nav(
+                            `/clubpost/${translatedSportType}/${notification.id}`
+                          );
+                        }}
+                      >
                         <span>[{notification.sport}]</span>{' '}
                         {notification.postTitle}
                       </div>
@@ -1487,7 +1575,13 @@ const Notification = () => {
                   </div>
                 )}
                 {notification.notificationType === '소모임마감' && (
-                  <div onClick={() => { nav(`/clubpost/${translatedSportType}/${notification.id}`) }}>
+                  <div
+                    onClick={() => {
+                      nav(
+                        `/clubpost/${translatedSportType}/${notification.id}`
+                      );
+                    }}
+                  >
                     <div className="notification-content-head">
                       <div className="notification-content-title">
                         <div>소모임이 마감되었습니다.</div>
@@ -1499,8 +1593,7 @@ const Notification = () => {
                     <div className="notification-contents">
                       {notification.close
                         ? `${notification.nickname}님이 소모임을 마감했습니다.`
-                        : '마감 예정일이 지나 소모임이 마감되었습니다.'
-                      }
+                        : '마감 예정일이 지나 소모임이 마감되었습니다.'}
                     </div>
                     <div className="notification-content-3">
                       <div className="notification-content-src">
@@ -1524,7 +1617,7 @@ const Notification = () => {
                 )}
               </div>
             </div>
-          )
+          );
         })
       )}
       {totalPages > 1 && (
@@ -1553,25 +1646,54 @@ const MyPage = () => {
   const nav = useNavigate();
   const { username } = useParams();
   const [selectedActivity, setSelectedActivity] = useState('활동 내역');
-  const [mockUser, setMockUser] = useState({
-    id: 1,
+  const [user, setUser] = useState({
+    id: null,
     profileImage: <ProfileImage />,
-    nickname: username,
-    sport: ['축구', '농구', '야구'],
-    follower: 35,
-    following: 27,
-    club: 5,
+    nickname: '',
+    sport: '',
+    follower: 0,
+    following: 0,
+    club: 0,
   });
-
   const [isFollow, setIsFollow] = useState(false);
   const [isModified, setIsModified] = useState(false);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    if (fileInputRef.current === null) {
-      console.error('fileInputRef is null');
-    }
-  }, [fileInputRef]);
+    const fetchUserData = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        console.log(username);
+        const response = await axios.get(`/mypage/header/${username}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
+          },
+        });
+        const {
+          nickname,
+          top_priority_sports_name,
+          follower_num,
+          followed_num,
+          participating_club_num,
+          user_profile_image_url,
+        } = response.data;
+        console.log(response.data);
+        // 상태 업데이트
+        setUser({
+          profileImage: user_profile_image_url || <ProfileImage />,
+          nickname: nickname,
+          sport: top_priority_sports_name,
+          follower: follower_num,
+          following: followed_num,
+          club: participating_club_num,
+        });
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [username]);
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
@@ -1581,7 +1703,7 @@ const MyPage = () => {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
-      setMockUser((prevUser) => ({
+      setUser((prevUser) => ({
         ...prevUser,
         profileImage: <img src={reader.result} alt="Profile" />,
       }));
@@ -1607,8 +1729,8 @@ const MyPage = () => {
   const [isUnique, setIsUnique] = useState(true);
   const [showError, setShowError] = useState(false);
   const [inputClass, setInputClass] = useState('');
-  const [nickname, setNickname] = useState(mockUser.nickname);
-  const [selectedButtons, setSelectedButtons] = useState(mockUser.sport);
+  const [nickname, setNickname] = useState(user.nickname);
+  const [selectedButtons, setSelectedButtons] = useState(user.sport);
 
   const sports = [
     '축구',
@@ -1632,12 +1754,11 @@ const MyPage = () => {
   ];
 
   useEffect(() => {
-    setNickname(mockUser.nickname);
-    setSelectedButtons(mockUser.sport);
-  }, [mockUser]);
+    setNickname(user.nickname);
+    setSelectedButtons(user.sport);
+  }, [user]);
 
-  // 이미 존재하는 닉네임 예시
-  const existingNicknames = ['user1', 'user2', 'user3'];
+  const existingNicknames = ['user1', 'user2', 'user3']; // 실제 데이터로 대체
 
   const validateNickname = (name) => {
     if (!/^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{3,12}$/.test(name)) {
@@ -1662,8 +1783,8 @@ const MyPage = () => {
 
   const handleChange = (e) => {
     setNickname(e.target.value);
-    setInputClass(''); // 입력 변경시 클래스 초기화
-    setShowError(false); // 에러 메시지 초기화
+    setInputClass('');
+    setShowError(false);
   };
 
   const handleCheckNickname = () => {
@@ -1671,7 +1792,6 @@ const MyPage = () => {
     if (validateNickname(nickname)) {
       checkNicknameUnique(nickname);
     } else {
-      // 불가능한 닉네임일경우, 중복검사실행안함
       setIsUnique(true);
     }
   };
@@ -1695,13 +1815,12 @@ const MyPage = () => {
     return selectedButtons.indexOf(button) + 1;
   };
 
-  //설정완료 중복확인여부체크
   const handleComplete = () => {
     if (inputClass !== 'success') {
       alert('중복확인을 완료해야 합니다');
       return;
     }
-    setMockUser((prevUser) => ({
+    setUser((prevUser) => ({
       ...prevUser,
       nickname: nickname,
       sport: selectedButtons,
@@ -1710,7 +1829,7 @@ const MyPage = () => {
     nav(`/mypage/${nickname}`);
   };
 
-  if (isModified === true) {
+  if (isModified) {
     return (
       <div className="mypage-container">
         <div className="mypage-title">마이페이지</div>
@@ -1718,10 +1837,10 @@ const MyPage = () => {
           <div className="mypage-modified-profile-container">
             <div>
               <div className="mypage-profile-image-wrap">
-                {mockUser.profileImage === null ? (
+                {user.profileImage === null ? (
                   <DefaultProfile className="mypage-profile-image" />
                 ) : (
-                  mockUser.profileImage
+                  user.profileImage
                 )}
                 <input
                   type="file"
@@ -1739,14 +1858,12 @@ const MyPage = () => {
             </div>
             <div className="mypage-profile-info-container">
               <div className="mypage-profile-info-namebox">
-                <div className="mypage-profile-info-name">
-                  {mockUser.nickname}
-                </div>
+                <div className="mypage-profile-info-name">{user.nickname}</div>
               </div>
               <div className="mypage-profile-info-sportsbox">
-                {renderSportIcon(sportName)}
+                {renderSportIcon(user.sport)}
                 <div className="mypage-profile-info-sport-name">
-                  {sportName}
+                  {user.sport}
                 </div>
               </div>
               <div className="mypage-profile-info-activitybox">
@@ -1755,16 +1872,15 @@ const MyPage = () => {
                     팔로잉
                   </div>
                   <div className="mypage-profile-info-activity-followingnumber">
-                    {mockUser.following}
+                    {user.following}
                   </div>
-                  <div></div>
                 </div>
                 <div className="mypage-profile-info-activity-followerbox">
                   <div className="mypage-profile-info-activity-follower">
                     팔로워
                   </div>
                   <div className="mypage-profile-info-activity-followernumber">
-                    {mockUser.follower}
+                    {user.follower}
                   </div>
                 </div>
                 <div className="mypage-profile-info-activity-clubbox">
@@ -1772,7 +1888,7 @@ const MyPage = () => {
                     참여한 소모임 수
                   </div>
                   <div className="mypage-profile-info-activity-clubnumber">
-                    {mockUser.club}
+                    {user.club}
                   </div>
                 </div>
               </div>
@@ -1789,12 +1905,8 @@ const MyPage = () => {
                 value={nickname}
                 onChange={handleChange}
                 className={`${inputClass} ${isFocused ? 'focused' : ''}`}
-                onFocus={() => {
-                  setIsFocused(true);
-                }}
-                onBlur={() => {
-                  setIsFocused(false);
-                }}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
               />
               <button className="redund" onClick={handleCheckNickname}>
                 중복확인
@@ -1816,10 +1928,11 @@ const MyPage = () => {
               {sports.map((button) => (
                 <div key={button} className="buttonWrap">
                   <button
-                    className={`sportsButton ${selectedButtons.includes(button)
-                      ? 'selectedSportsButton'
-                      : ''
-                      }`}
+                    className={`sportsButton ${
+                      selectedButtons.includes(button)
+                        ? 'selectedSportsButton'
+                        : ''
+                    }`}
                     onClick={() => handleBtnClick(button)}
                   >
                     {button}
@@ -1849,17 +1962,17 @@ const MyPage = () => {
       <div className="mypage-title">마이페이지</div>
       <div className="mypage-profile-container">
         <div className="mypage-profile-image-wrap">
-          {mockUser.profileImage === null ? (
+          {user.profileImage === null ? (
             <DefaultProfile className="mypage-profile-image" />
           ) : (
-            mockUser.profileImage
+            user.profileImage
           )}
         </div>
         <div className="mypage-profile-info-container">
           <div className="mypage-profile-info-namebox">
-            <div className="mypage-profile-info-name">{mockUser.nickname}</div>
+            <div className="mypage-profile-info-name">{user.nickname}</div>
             <div>
-              {mockUser.nickname === userName ? (
+              {user.nickname === username ? (
                 <button
                   className="mypage-profile-info-edit"
                   onClick={toggleModifying}
@@ -1877,10 +1990,8 @@ const MyPage = () => {
             </div>
           </div>
           <div className="mypage-profile-info-sportsbox">
-            {renderSportIcon(mockUser.sport[0])}
-            <div className="mypage-profile-info-sport-name">
-              {mockUser.sport[0]}
-            </div>
+            {renderSportIcon(user.sport)}
+            <div className="mypage-profile-info-sport-name">{user.sport}</div>
           </div>
           <div className="mypage-profile-info-activitybox">
             <div className="mypage-profile-info-activity-followingbox">
@@ -1888,16 +1999,15 @@ const MyPage = () => {
                 팔로잉
               </div>
               <div className="mypage-profile-info-activity-followingnumber">
-                {mockUser.following}
+                {user.following}
               </div>
-              <div></div>
             </div>
             <div className="mypage-profile-info-activity-followerbox">
               <div className="mypage-profile-info-activity-follower">
                 팔로워
               </div>
               <div className="mypage-profile-info-activity-followernumber">
-                {mockUser.follower}
+                {user.follower}
               </div>
             </div>
             <div className="mypage-profile-info-activity-clubbox">
@@ -1905,7 +2015,7 @@ const MyPage = () => {
                 참여한 소모임 수
               </div>
               <div className="mypage-profile-info-activity-clubnumber">
-                {mockUser.club}
+                {user.club}
               </div>
             </div>
           </div>
@@ -1917,10 +2027,11 @@ const MyPage = () => {
             {['활동 내역', '팔로잉', '팔로워', '알림'].map((activity) => (
               <li
                 key={activity}
-                className={`mypage-detail-left-list ${selectedActivity === activity
-                  ? 'mypage-detail-left-list-selected'
-                  : ''
-                  }`}
+                className={`mypage-detail-left-list ${
+                  selectedActivity === activity
+                    ? 'mypage-detail-left-list-selected'
+                    : ''
+                }`}
                 onClick={() => handleActivityClick(activity)}
               >
                 {activity}
@@ -1929,15 +2040,16 @@ const MyPage = () => {
           </ul>
         </div>
         <div
-          className={`mypage-detail-right-container ${selectedActivity === '활동 내역' ? 'selected-activity' : ''
-            }`}
+          className={`mypage-detail-right-container ${
+            selectedActivity === '활동 내역' ? 'selected-activity' : ''
+          }`}
         >
           {selectedActivity === '활동 내역' && <Activity />}
           {selectedActivity === '팔로잉' && (
-            <Following userName={mockUser.nickname} />
+            <Following userName={user.nickname} />
           )}
           {selectedActivity === '팔로워' && (
-            <Follower userName={mockUser.nickname} />
+            <Follower userName={user.nickname} />
           )}
           {selectedActivity === '알림' && <Notification />}
         </div>
@@ -1945,5 +2057,4 @@ const MyPage = () => {
     </div>
   );
 };
-
 export default MyPage;

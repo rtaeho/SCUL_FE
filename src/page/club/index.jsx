@@ -49,15 +49,15 @@ const Clublist = ({ clubs, onDetail }) => {
                 {club.club_name}
               </div>
               <div className="club-clublist-clubitem-clubbox-date">
-                <Calendar className="club-clublist-clubitem-clubbox-date-icon" />
+                <Calendar className="club-clublist-clubbox-date-icon" />
                 {formatDate(club.club_date)}
               </div>
-              <div className="club-clublist-clubitem-clubbox-member">
-                <Personnel className="club-clublist-clubitem-clubbox-member-icon" />
+              <div className="club-clublist-clubbox-member">
+                <Personnel className="club-clublist-clubbox-member-icon" />
                 {club.club_participate_number}/{club.club_total_number}명
               </div>
-              <div className="club-clublist-clubitem-clubbox-location">
-                <Pin className="club-clublist-clubitem-clubbox-location-icon" />
+              <div className="club-clublist-clubbox-location">
+                <Pin className="club-clublist-clubbox-location-icon" />
                 {club.club_place}
               </div>
             </div>
@@ -138,31 +138,46 @@ const Club = () => {
   const [clubs, setClubs] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [filters, setFilters] = useState({});
-
-  // 게시판별 태그 배열 정의
-  const tags = {
-    free: ['전체', '소모임', '용품', '운동', '시설'],
-    review: ['전체', '리뷰', '추천', '경험담'],
-    info: ['전체', '공지', '이벤트', '문의'],
+  const sportMap = {
+    Soccer: 1,
+    Baseball: 2,
+    Basketball: 3,
+    Bowling: 4,
+    Badminton: 5,
+    Climbing: 6,
+    Boxing: 7,
+    Tennis: 8,
+    Cycling: 9,
+    Golf: 10,
+    Swimming: 11,
+    Running: 12,
+    Ballet: 13,
+    Pilates: 14,
+    Hiking: 15,
+    Crossfit: 16,
+    TableTennis: 17,
+    Yoga: 18,
   };
-
-  // 현재 게시판에 맞는 태그 배열 선택
-  const currentTags = tags[club] || [];
 
   useEffect(() => {
     fetchClubs();
   }, [currentPage, filters]);
 
   const fetchClubs = async () => {
-    // try {
-    //   const response = await axios.post(`/api/club/sports/search/1`, {
-    //     ...filters,
-    //   });
-    //   setClubs(response.data.clubs);
-    //   setTotalPages(Math.ceil(response.data.total / 8));
-    // } catch (error) {
-    //   console.error('Error fetching clubs:', error);
-    // }
+    const selectedSports = JSON.parse(localStorage.getItem('selectedSport'));
+    const sportsName = selectedSports?.englishName || '';
+    const sport_id = sportMap[sportsName];
+    try {
+      const response = await axios.post(`/api/club/sports/search/${sport_id}`, {
+        ...filters,
+        page: currentPage - 1, // 페이지 번호 추가
+      });
+      setClubs(response.data.clubs); // clubs 필드에서 데이터 추출
+      console.log('response:', response.data);
+      setTotalPages(response.data.total_page_count); // total_page_count 필드에서 총 페이지 수 추출
+    } catch (error) {
+      console.error('Error fetching clubs:', error);
+    }
   };
 
   const handleWriteClick = () => {
@@ -178,6 +193,7 @@ const Club = () => {
   const handlePageChange = (page) => {
     if (page > 0 && page <= totalPages) {
       setCurrentPage(page);
+      fetchClubs(); // 페이지 변경 시 데이터 새로고침
     }
   };
 
@@ -203,7 +219,6 @@ const Club = () => {
         <WriteButton onWrite={handleWriteClick} />
       </div>
       <Filter
-        tags={currentTags}
         onFilterChange={handleFilterChange}
         onTagChange={handleTagChange}
         onSearch={handleSearch}
@@ -217,5 +232,4 @@ const Club = () => {
     </div>
   );
 };
-
 export default Club;
