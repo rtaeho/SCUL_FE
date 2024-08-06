@@ -1,42 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import { ReactComponent as SoccerIcon } from '../../assets/images/Soccer.svg';
 import { ReactComponent as Select } from '../../assets/images/Select.svg';
 import { ReactComponent as Review } from '../../assets/images/Review.svg';
-import { ReactComponent as Mypage } from '../../assets/images/Mypage.svg';
+import { ReactComponent as MyPage } from '../../assets/images/Mypage.svg';
 import { ReactComponent as Logout } from '../../assets/images/Logout.svg';
 import { ReactComponent as Information } from '../../assets/images/Information.svg';
 import { ReactComponent as Free } from '../../assets/images/Free.svg';
+import { ReactComponent as More } from '../../assets/images/More.svg';
 import { ReactComponent as DefaultProfile } from '../../assets/images/DefaultProfile.svg';
 import { ReactComponent as BasketballIcon } from '../../assets/images/Basketball.svg';
 import { ReactComponent as BaseballIcon } from '../../assets/images/Baseball.svg';
 import { ReactComponent as BadmintonIcon } from '../../assets/images/Badminton.svg';
 import { ReactComponent as Alert } from '../../assets/images/Alert.svg';
-import { ReactComponent as More } from '../../assets/images/More.svg';
+import { ReactComponent as BowlingIcon } from '../../assets/images/Bowling.svg';
+import { ReactComponent as ClimbingIcon } from '../../assets/images/Climbing.svg';
+import { ReactComponent as BoxingIcon } from '../../assets/images/Boxing.svg';
+import { ReactComponent as TennisIcon } from '../../assets/images/Tennis.svg';
+import { ReactComponent as CyclingIcon } from '../../assets/images/Cycle.svg';
+import { ReactComponent as GolfIcon } from '../../assets/images/Golf.svg';
+import { ReactComponent as SwimmingIcon } from '../../assets/images/Swimming.svg';
+import { ReactComponent as RunningIcon } from '../../assets/images/Running.svg';
+import { ReactComponent as PilatesIcon } from '../../assets/images/Pilates.svg';
+import { ReactComponent as HikingIcon } from '../../assets/images/Hiking.svg';
+import { ReactComponent as CrossFitIcon } from '../../assets/images/CrossFit.svg';
+import { ReactComponent as TableTennisIcon } from '../../assets/images/TableTennis.svg';
+import { ReactComponent as YogaIcon } from '../../assets/images/Yoga.svg';
 
 const sportIcons = {
   Soccer: SoccerIcon, // 축구 아이콘
   Baseball: BaseballIcon, // 야구 아이콘
   Basketball: BasketballIcon, // 농구 아이콘
   Badminton: BadmintonIcon, // 배드민턴 아이콘
-  Bowling: BowlingIcon,     // 볼링 아이콘
-  // Climbing: ClimbingIcon,   // 클라이밍 아이콘
-  // Boxing: BoxingIcon,       // 복싱 아이콘
-  // Tennis: TennisIcon,       // 테니스 아이콘
-  // Cycling: CyclingIcon,     // 사이클 아이콘
-  // Golf: GolfIcon,           // 골프 아이콘
-  // Swimming: SwimmingIcon,   // 수영 아이콘
-  // Running: RunningIcon,     // 런닝 아이콘
-  // Ballet: BalletIcon,       // 발레 아이콘
-  // Pilates: PilatesIcon,     // 필라테스 아이콘
-  // Hiking: HikingIcon,       // 등산 아이콘
-  // CrossFit: CrossFitIcon,   // 크로스핏 아이콘
-  // TableTennis: TableTennisIcon, // 탁구 아이콘
-  // Yoga: YogaIcon            // 요가 아이콘
+  Bowling: BowlingIcon, // 볼링 아이콘
+  Climbing: ClimbingIcon, // 클라이밍 아이콘
+  Boxing: BoxingIcon, // 복싱 아이콘
+  Tennis: TennisIcon, // 테니스 아이콘
+  Cycling: CyclingIcon, // 사이클 아이콘
+  Golf: GolfIcon, // 골프 아이콘
+  Swimming: SwimmingIcon, // 수영 아이콘
+  Running: RunningIcon, // 런닝 아이콘
+  Pilates: PilatesIcon, // 필라테스 아이콘
+  Hiking: HikingIcon, // 등산 아이콘
+  CrossFit: CrossFitIcon, // 크로스핏 아이콘
+  TableTennis: TableTennisIcon, // 탁구 아이콘
+  Yoga: YogaIcon, // 요가 아이콘
 };
+
 const Header = () => {
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [profileImage, setProfileImage] = useState(null);
   const [notifications, setNotifications] = useState(false);
   const [sports, setSports] = useState([]);
@@ -45,9 +60,6 @@ const Header = () => {
   const [showMoreSports, setShowMoreSports] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    setLoggedIn(token);
-
     setProfileImage(null);
     setNotifications(true);
 
@@ -64,14 +76,12 @@ const Header = () => {
       { name: '골프', englishName: 'Golf' },
       { name: '수영', englishName: 'Swimming' },
       { name: '런닝', englishName: 'Running' },
-      { name: '발레', englishName: 'Ballet' },
       { name: '필라테스', englishName: 'Pilates' },
       { name: '등산', englishName: 'Hiking' },
       { name: '크로스핏', englishName: 'CrossFit' },
-      { name: '탁구', englishName: 'Table Tennis' },
+      { name: '탁구', englishName: 'TableTennis' },
       { name: '요가', englishName: 'Yoga' },
     ];
-
     setSports(sportsList);
 
     const savedSport = JSON.parse(localStorage.getItem('selectedSport'));
@@ -84,17 +94,25 @@ const Header = () => {
     }
   }, []);
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('accessToken');
   useEffect(() => {
-    setLoggedIn(token);
+    if (token) {
+      setLoggedIn(true);
+    }
   }, [token]);
 
   const goHome = () => {
     navigate('/main');
   };
 
+  const handleNavigate = (id) => {
+    nav(`/auth/${id}`);
+  };
+
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('selectedSport');
     alert('Logged out!');
     setLoggedIn(false);
     setProfileImage(null);
@@ -273,8 +291,8 @@ const Header = () => {
               </div>
               <ul className="header-nav-profile-dropdown-list-container">
                 <li className="header-nav-profile-dropdown-list">
-                  <div onClick={() => navigate('/my-page')}>
-                    <Mypage />
+                  <div onClick={() => navigate('/mypage')}>
+                    <MyPage />
                     마이 페이지
                   </div>
                 </li>
@@ -294,8 +312,8 @@ const Header = () => {
             </li>
           ) : (
             <li className="header-nav-list">
-              <div onClick={() => navigate('/auth')}>로그인</div> /
-              <div onClick={() => navigate('/auth')}>회원가입</div>
+              <div onClick={handleNavigate(0)}>로그인</div> /
+              <div onClick={handleNavigate(1)}>회원가입</div>
             </li>
           )}
         </ul>
