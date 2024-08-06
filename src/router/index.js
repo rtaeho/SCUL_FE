@@ -17,19 +17,29 @@ const MyPage = lazy(() => import('../page/myPage'));
 const Inquiry = lazy(() => import('../page/inquiry'));
 const InquiryPost = lazy(() => import('../page/inquiryPost'));
 const Loading = () => {
-  return (<div class="loading">
-    <div class="droplet_spinner">
-      <div class="droplet"></div>
-      <div class="droplet"></div>
-      <div class="droplet"></div>
+  return (
+    <div class="loading">
+      <div class="droplet_spinner">
+        <div class="droplet"></div>
+        <div class="droplet"></div>
+        <div class="droplet"></div>
+      </div>
     </div>
-  </div>);
+  );
 };
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
+      {
+        path: '/',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Main />
+          </Suspense>
+        ),
+      },
       {
         path: 'main/:sport',
         element: (

@@ -110,7 +110,7 @@ const Header = () => {
   };
 
   const handleNavigate = (id) => {
-    nav(`/auth/${id}`);
+    navigate(`/auth/${id}`);
   };
 
   const logout = () => {
@@ -165,8 +165,9 @@ const Header = () => {
         </div>
         {showDropdown && (
           <div
-            className={`header-sports-dropdown-contents-container ${showMoreSports ? 'expanded' : ''
-              }`}
+            className={`header-sports-dropdown-contents-container ${
+              showMoreSports ? 'expanded' : ''
+            }`}
           >
             {sports
               .filter((sport) => sport.name !== selectedSport.name)
@@ -222,9 +223,10 @@ const Header = () => {
                 <div
                   onClick={() =>
                     navigate(
-                      `/community/free/${selectedSport
-                        ? selectedSport.englishName.toLowerCase()
-                        : 'soccer'
+                      `/community/free/${
+                        selectedSport
+                          ? selectedSport.englishName.toLowerCase()
+                          : 'soccer'
                       }`
                     )
                   }
@@ -237,9 +239,10 @@ const Header = () => {
                 <div
                   onClick={() =>
                     navigate(
-                      `/community/review/${selectedSport
-                        ? selectedSport.englishName.toLowerCase()
-                        : 'soccer'
+                      `/community/review/${
+                        selectedSport
+                          ? selectedSport.englishName.toLowerCase()
+                          : 'soccer'
                       }`
                     )
                   }
@@ -252,9 +255,10 @@ const Header = () => {
                 <div
                   onClick={() =>
                     navigate(
-                      `/community/info/${selectedSport
-                        ? selectedSport.englishName.toLowerCase()
-                        : 'soccer'
+                      `/community/info/${
+                        selectedSport
+                          ? selectedSport.englishName.toLowerCase()
+                          : 'soccer'
                       }`
                     )
                   }
@@ -268,9 +272,10 @@ const Header = () => {
             <div
               onClick={() =>
                 navigate(
-                  `/club/${selectedSport
-                    ? selectedSport.englishName.toLowerCase()
-                    : 'soccer'
+                  `/club/${
+                    selectedSport
+                      ? selectedSport.englishName.toLowerCase()
+                      : 'soccer'
                   }`
                 )
               }
