@@ -168,10 +168,13 @@ const Club = () => {
     const sportsName = selectedSports?.englishName || '';
     const sport_id = sportMap[sportsName];
     try {
-      const response = await axios.post(`/api/club/sports/search/${sport_id}`, {
-        ...filters,
-        page: currentPage - 1, // 페이지 번호 추가
-      });
+      const response = await axios.post(
+        `/api/api/club/sports/search/${sport_id}`,
+        {
+          ...filters,
+          page: currentPage - 1, // 페이지 번호 추가
+        }
+      );
       setClubs(response.data.clubs); // clubs 필드에서 데이터 추출
       setTotalPages(response.data.total_page_count); // total_page_count 필드에서 총 페이지 수 추출
     } catch (error) {

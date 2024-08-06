@@ -9,120 +9,10 @@ import banner6 from '../../assets/images/banner6.jpg';
 import banner7 from '../../assets/images/banner7.jpg';
 import banner8 from '../../assets/images/banner8.jpg';
 import banner9 from '../../assets/images/banner9.jpg';
+import axios from 'axios';
 
 //배너 mockdata
 const images = [banner5, banner6, banner7, banner8, banner9];
-
-//게시글 mockdata
-const mockPosts = [
-  {
-    id: 1,
-    board: 'info',
-    boardName: '정보',
-    title: '게시글 1',
-    createdAt: '2024-07-01T12:00:00Z',
-    likes: 10,
-    views: 100,
-    comments: 5,
-    nickname: '작성자1',
-  },
-  {
-    id: 2,
-    board: 'free',
-    boardName: '자유',
-    title: '제목이예용',
-    createdAt: '2024-05-27T21:29:00Z',
-    likes: 20,
-    views: 50,
-    comments: 0,
-    nickname: '작성자2',
-  },
-  {
-    id: 3,
-    board: 'review',
-    boardName: '후기',
-    title: '게시글!ㅎ',
-    createdAt: '2024-03-03T12:00:00Z',
-    likes: 5,
-    views: 200,
-    comments: 12,
-    nickname: '작성자3',
-  },
-  {
-    id: 4,
-    board: 'info',
-    boardName: '정보',
-    title: '게시글 3',
-    createdAt: '2024-07-20T19:21:00Z',
-    likes: 20,
-    views: 30,
-    comments: 48,
-    nickname: '작성자12',
-  },
-  {
-    id: 5,
-    board: 'free',
-    boardName: '자유',
-    title: '게시글입니다',
-    createdAt: '2024-07-23T15:20:00Z',
-    likes: 0,
-    views: 3,
-    comments: 2,
-    nickname: '작성자12321',
-  },
-];
-
-//소모임 mockdata
-const mockClubs = [
-  {
-    id: 1,
-    title: '축구할사람',
-    date: '2024-08-01',
-    capacity: 10,
-    location: '서울시 강남구',
-    createdAt: '2024-07-03T12:00:00Z',
-  },
-  {
-    id: 2,
-    title: '축구 경기 관람',
-    date: '2024-08-05',
-    capacity: 20,
-    location: '경기도 수원시 영통구',
-    createdAt: '2024-07-20T12:00:00Z',
-  },
-  {
-    id: 3,
-    title: '함께 축구장 ㄱㄱ?',
-    date: '2024-08-12',
-    capacity: 15,
-    location: '경기도 과천시',
-    createdAt: '2024-07-27T12:00:00Z',
-  },
-  {
-    id: 4,
-    title: '제목이 길어지면 어떻게 될지 봐야해요',
-    date: '2024-08-20',
-    capacity: 12,
-    location: '경기도 안양시 만안구',
-    createdAt: '2024-07-18T12:00:00Z',
-  },
-  {
-    id: 5,
-    title: '어쩌라고요',
-    date: '2024-08-25',
-    capacity: 8,
-    location: '서울시 동작구',
-    createdAt: '2024-07-04T12:00:00Z',
-  },
-  {
-    id: 6,
-    title: '축구할사람을 찾아요',
-    date: '2024-08-06',
-    capacity: 20,
-    location: '서울시 서초구',
-    createdAt: '2024-06-28T12:00:00Z',
-  },
-];
 
 //실제 배너배열
 // const bannerImages = [];
@@ -134,8 +24,88 @@ const Main = () => {
   const [latestPosts, setLatestPosts] = useState([]);
   const [popularPosts, setPopularPosts] = useState([]);
   const [latestClubs, setLatestClubs] = useState([]);
-  const [selectedSport, setSelectedSport] = useState(null);
+  const selectedSports = JSON.parse(localStorage.getItem('selectedSport'));
+  const sportsName = selectedSports?.name || '';
 
+  const fetchLatestPosts = async () => {
+    try {
+      const response = await axios.get(`/api/recent-posts/${sportsName}`);
+      console.log('반환', response.data);
+      const data = response.data.map((post) => ({
+        id: post.post_id,
+        nickname: post.nickname,
+        boardName: post.tag_name,
+        title: post.post_title,
+        createdAt: post.created_at,
+        likes: post.like_count,
+        views: post.post_view,
+        comments: post.comment_count,
+        imageUrl: post.image_url,
+      }));
+
+      // 변환된 데이터를 상태에 설정
+      setLatestPosts(data);
+    } catch (error) {
+      console.error('최신 게시글 패치 오류:', error);
+    }
+  };
+  const fetchPopularPosts = async () => {
+    try {
+      const response = await axios.get(`/api/hot-posts/${sportsName}`);
+      console.log('반환', response.data);
+      const data = response.data.map((post) => ({
+        id: post.post_id,
+        nickname: post.nickname,
+        boardName: post.tag_name,
+        title: post.post_title,
+        createdAt: post.created_at,
+        likes: post.like_count,
+        views: post.post_view,
+        comments: post.comment_count,
+        imageUrl: post.image_url,
+      }));
+      setPopularPosts(data);
+      console.log('qksghks1', response.data);
+    } catch (error) {
+      console.error('인기 게시글 패치 오류:', error);
+    }
+  };
+  const sportMap = {
+    soccer: 1,
+    baseball: 2,
+    basketball: 3,
+    bowling: 4,
+    badminton: 5,
+    climbing: 6,
+    boxing: 7,
+    tennis: 8,
+    cycling: 9,
+    golf: 10,
+    swimming: 11,
+    running: 12,
+    ballet: 13,
+    pilates: 14,
+    hiking: 15,
+    crossfit: 16,
+    tabletennis: 17,
+    yoga: 18,
+  };
+
+  const fetchLatestClubs = async () => {
+    try {
+      const sport_id = sportMap[sport];
+      console.log(sport);
+      const response = await axios.get(`/api/api/club/sports/${sport_id}`);
+      setLatestClubs(response.data);
+    } catch (error) {
+      console.error('클럽 게시글 패치 오류:', error);
+    }
+  };
+  useEffect(() => {
+    fetchLatestClubs();
+    fetchLatestPosts();
+    fetchPopularPosts();
+  }, []);
   //***ㅡㅡㅡ ↓↓ API ↓↓ ㅡㅡㅡ***//
 
   //작동하는지는? 몰?루
@@ -182,23 +152,6 @@ const Main = () => {
   };
 
   //***ㅡㅡㅡ ↓↓ mockdata ↓↓ ㅡㅡㅡ***//
-
-  useEffect(() => {
-    const sortedByLatest = [...mockPosts]
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      .slice(0, 5);
-    setLatestPosts(sortedByLatest);
-
-    const sortedByLikes = [...mockPosts]
-      .sort((a, b) => b.likes - a.likes)
-      .slice(0, 5);
-    setPopularPosts(sortedByLikes);
-
-    const sortedByLatestClub = [...mockClubs].sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    );
-    setLatestClubs(sortedByLatestClub);
-  }, []);
 
   //***ㅡㅡㅡ ↑↑ mockdata ↑↑ ㅡㅡㅡ***//
 

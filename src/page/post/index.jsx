@@ -392,7 +392,7 @@ const Post = () => {
     const userId = localStorage.getItem('userId');
     try {
       const response = await axios.get(
-        `/api/posts?postId=${post_id}&&userId=${userId}`,
+        `/api/api/posts?postId=${post_id}&&userId=${userId}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -408,8 +408,6 @@ const Post = () => {
       console.error('Failed to fetch post data:', error);
     }
   };
-
-
 
   useEffect(() => {
     fetchPostData();
@@ -445,7 +443,7 @@ const Post = () => {
       const accessToken = localStorage.getItem('accessToken');
       console.log('comment_id : ', comment_id);
       try {
-        await axios.delete(`/comment/${comment_id}`, {
+        await axios.delete(`/api/comment/${comment_id}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
@@ -534,8 +532,9 @@ const Post = () => {
   //     : '정보';
   const handlePostReviseClick = () => {
     const baseUrl = window.location.origin;
-    window.location.href = `${baseUrl}/createpost/${sport.toLowerCase()}/${postData.post_id
-      }`;
+    window.location.href = `${baseUrl}/createpost/${sport.toLowerCase()}/${
+      postData.post_id
+    }`;
   };
   const handlePostDelete = async () => {
     const accessToken = localStorage.getItem('accessToken');
@@ -581,7 +580,7 @@ const Post = () => {
       if (isFollow) {
         // 언팔로우 요청 (DELETE 요청)
         const response = await axios.delete(
-          `/follow`, // URL
+          `/api/follow`, // URL
           {
             headers: {
               'Content-Type': 'application/json',
@@ -594,7 +593,7 @@ const Post = () => {
       } else {
         // 현재 팔로우 되어있지 않을 경우, 팔로우를 추가합니다 (POST 요청)
         const response = await axios.post(
-          `/follow`,
+          `/api/follow`,
           { followed_nick_name: postData.nickname },
           {
             headers: {
@@ -616,7 +615,7 @@ const Post = () => {
     try {
       if (isLike) {
         // 현재 좋아요가 되어있을 경우, 좋아요를 취소합니다 (DELETE 요청)
-        const response = await axios.delete(`/like?post_id=${post_id}`, {
+        const response = await axios.delete(`/api/like?post_id=${post_id}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
@@ -626,7 +625,7 @@ const Post = () => {
       } else {
         // 현재 좋아요가 되어있지 않을 경우, 좋아요를 추가합니다 (POST 요청)
         const response = await axios.post(
-          `/like?post_id=${post_id}`,
+          `/api/like?post_id=${post_id}`,
           {},
           {
             headers: {
@@ -669,7 +668,7 @@ const Post = () => {
     try {
       // 댓글 수정 요청을 보냅니다.
       const response = await axios.put(
-        `/comment/${comment_id}`, // URL 경로에 댓글 ID 포함
+        `/api/comment/${comment_id}`, // URL 경로에 댓글 ID 포함
         {
           comment_content: updated_content,
           created_at: updatedAt,
@@ -709,7 +708,7 @@ const Post = () => {
 
     try {
       console.log(commentData.post_id);
-      const response = await axios.post('/comment', commentData, {
+      const response = await axios.post('/api/comment', commentData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
@@ -783,7 +782,9 @@ const Post = () => {
             ))}
           </div>
         </div>
-        <div className='post-ads'><RandomAdComponent /></div>
+        <div className="post-ads">
+          <RandomAdComponent />
+        </div>
         {modal && <Modal />}
         {modalReport && (
           <ReportModal

@@ -123,7 +123,7 @@ const CreatePost = () => {
       const fetchPostData = async () => {
         const accessToken = localStorage.getItem('accessToken');
         try {
-          const response = await axios.get(`/posts/${post_id}`, {
+          const response = await axios.get(`/api/posts/${post_id}`, {
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${accessToken}`,
@@ -231,7 +231,7 @@ const CreatePost = () => {
 
     try {
       if (post_id) {
-        await axios.put(`/posts/${post_id}`, formData, {
+        await axios.put(`/api/posts/${post_id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${accessToken}`,
@@ -239,7 +239,7 @@ const CreatePost = () => {
         });
         alert('게시글이 성공적으로 수정되었습니다.');
       } else {
-        await axios.post('/newpost', formData, {
+        await axios.post('/api/newpost', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${accessToken}`,
