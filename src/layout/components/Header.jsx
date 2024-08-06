@@ -59,7 +59,11 @@ const Header = () => {
   useEffect(() => {
     setProfileImage(null);
     setNotifications(true);
-
+    localStorage.setItem(
+      'accessToken',
+      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyeW91MTQwMjM5N0BnbWFpbC5jb20iLCJleHAiOjE3MjM1MzM0MDB9.syGjKrgOxD6j1Yx0fUlYILKgYUwcbnzrvuz-1T4tRIgrWX_AGNNM1xoJbjCPmqxdxBKoxAZ0JWo_ee-MO0Fp0A'
+    );
+    localStorage.setItem('userId', 1);
     const sportsList = [
       { name: '축구', englishName: 'Soccer' },
       { name: '야구', englishName: 'Baseball' },

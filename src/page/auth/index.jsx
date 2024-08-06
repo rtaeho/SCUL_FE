@@ -26,7 +26,6 @@ const Auth = () => {
             localStorage.setItem('refreshToken', refresh_token);
             localStorage.setItem('userId', res.data.userId);
           }
-          console.log(res.data);
 
           if (is_member) {
             navigate('/main');

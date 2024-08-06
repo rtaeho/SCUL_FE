@@ -231,356 +231,6 @@ const RequestModal = ({
     </div>
   );
 };
-
-// 액티비티 목업 데이터 생성 함수
-const generateMockPosts = (numPosts) => {
-  const getRandomInt = (min, max) =>
-    Math.floor(Math.random() * (max - min + 1)) + min;
-
-  const getRandomArrayElement = (array) =>
-    array[Math.floor(Math.random() * array.length)];
-
-  const generateRandomDate = () => {
-    const start = new Date();
-    const end = new Date();
-    end.setFullYear(start.getFullYear() - 1);
-    return new Date(
-      start.getTime() - Math.random() * (start.getTime() - end.getTime())
-    ).toISOString();
-  };
-
-  const isImg = [true, false];
-
-  const sports = [
-    '축구',
-    '야구',
-    '농구',
-    '볼링',
-    '배드민턴',
-    '클라이밍',
-    '복싱',
-    '테니스',
-    '사이클',
-    '골프',
-    '수영',
-    '런닝',
-    '필라테스',
-    '등산',
-    '크로스핏',
-    '탁구',
-    '요가',
-  ];
-  const activities = ['작성글', '댓글', '참여한 소모임', '좋아요한 글'];
-
-  const boards = ['정보', '자유', '후기', '문의/신고'];
-
-  const posts = [];
-
-  const locations = [
-    '전체',
-    '서울',
-    '강남구',
-    '강동구',
-    '강북구',
-    '강서구',
-    '관악구',
-    '광진구',
-    '구로구',
-    '금천구',
-    '노원구',
-    '도봉구',
-    '동대문구',
-    '동작구',
-    '마포구',
-    '서대문구',
-    '서초구',
-    '성동구',
-    '성북구',
-    '송파구',
-    '양천구',
-    '영등포구',
-    '용산구',
-    '은평구',
-    '종로구',
-    '중구',
-    '중랑구',
-    '부산',
-    '강서구',
-    '금정구',
-    '기장군',
-    '남구',
-    '동구',
-    '동래구',
-    '부산진구',
-    '북구',
-    '사상구',
-    '사하구',
-    '서구',
-    '수영구',
-    '연제구',
-    '영도구',
-    '중구',
-    '해운대구',
-    '대구',
-    '남구',
-    '달서구',
-    '달성군',
-    '동구',
-    '북구',
-    '서구',
-    '수성구',
-    '중구',
-    '인천',
-    '강화군',
-    '계양구',
-    '미추홀구',
-    '남동구',
-    '동구',
-    '부평구',
-    '서구',
-    '연수구',
-    '옹진군',
-    '중구',
-    '광주',
-    '광산구',
-    '남구',
-    '동구',
-    '북구',
-    '서구',
-    '대전',
-    '동구',
-    '서구',
-    '유성구',
-    '중구',
-    '울산',
-    '남구',
-    '동구',
-    '북구',
-    '울주군',
-    '중구',
-    '세종시',
-    '경기도',
-    '가평군',
-    '고양시',
-    '과천시',
-    '광명시',
-    '광주시',
-    '구리시',
-    '군포시',
-    '김포시',
-    '남양주시',
-    '동두천시',
-    '부천시',
-    '성남시',
-    '수원시',
-    '시흥시',
-    '안산시',
-    '안성시',
-    '안양시',
-    '양주시',
-    '양평군',
-    '여주시',
-    '연천군',
-    '오산시',
-    '용인시',
-    '의왕시',
-    '의정부시',
-    '이천시',
-    '파주시',
-    '평택시',
-    '포천시',
-    '하남시',
-    '화성시',
-    '강원도',
-    '강릉시',
-    '고성군',
-    '동해시',
-    '삼척시',
-    '속초시',
-    '양구군',
-    '양양군',
-    '영월군',
-    '원주시',
-    '인제군',
-    '정선군',
-    '철원군',
-    '춘천시',
-    '태백시',
-    '평창군',
-    '홍천군',
-    '화천군',
-    '횡성군',
-    '충청북도',
-    '괴산군',
-    '단양군',
-    '보은군',
-    '영동군',
-    '옥천군',
-    '음성군',
-    '제천시',
-    '증평군',
-    '진천군',
-    '청주시',
-    '충주시',
-    '충청남도',
-    '계룡시',
-    '공주시',
-    '금산군',
-    '논산시',
-    '당진시',
-    '보령시',
-    '부여군',
-    '서산시',
-    '서천군',
-    '아산시',
-    '예산군',
-    '천안시',
-    '청양군',
-    '태안군',
-    '홍성군',
-    '전라북도',
-    '고창군',
-    '군산시',
-    '김제시',
-    '남원시',
-    '무주군',
-    '부안군',
-    '순창군',
-    '완주군',
-    '익산시',
-    '임실군',
-    '장수군',
-    '전주시',
-    '정읍시',
-    '진안군',
-    '전라남도',
-    '강진군',
-    '고흥군',
-    '곡성군',
-    '광양시',
-    '구례군',
-    '나주시',
-    '담양군',
-    '목포시',
-    '무안군',
-    '보성군',
-    '순천시',
-    '신안군',
-    '여수시',
-    '영광군',
-    '영암군',
-    '완도군',
-    '장성군',
-    '장흥군',
-    '진도군',
-    '함평군',
-    '해남군',
-    '화순군',
-    '경상북도',
-    '경산시',
-    '경주시',
-    '고령군',
-    '구미시',
-    '군위군',
-    '김천시',
-    '문경시',
-    '봉화군',
-    '상주시',
-    '성주군',
-    '안동시',
-    '영덕군',
-    '영양군',
-    '영주시',
-    '영천시',
-    '예천군',
-    '울릉군',
-    '울진군',
-    '의성군',
-    '청도군',
-    '청송군',
-    '칠곡군',
-    '포항시',
-    '경상남도',
-    '거제시',
-    '거창군',
-    '고성군',
-    '김해시',
-    '남해군',
-    '밀양시',
-    '사천시',
-    '산청군',
-    '양산시',
-    '의령군',
-    '진주시',
-    '창녕군',
-    '창원시',
-    '통영시',
-    '하동군',
-    '함안군',
-    '함양군',
-    '합천군',
-    '제주도',
-    '서귀포시',
-    '제주시',
-  ];
-
-  for (let i = 0; i < numPosts; i++) {
-    posts.push({
-      id: `${i + 1}`,
-      nickname: `작성자 ${i + 1}`,
-      locationType: getRandomArrayElement(locations),
-      sportType: getRandomArrayElement(sports),
-      boardType: getRandomArrayElement(boards),
-      activityType: getRandomArrayElement(activities),
-      imgType: getRandomArrayElement(isImg),
-      title: `제목 ${i + 1}`,
-      comments: getRandomInt(0, 50),
-      date: generateRandomDate(),
-      createdAt: generateRandomDate(),
-      comment: `댓글내용입니다 ${i + 1}`,
-    });
-  }
-
-  return posts;
-};
-
-//팔로워/팔로잉 목업 데이터
-const generateMockFollows = (numFollows) => {
-  const follows = [];
-  const sports = [
-    '축구',
-    '야구',
-    '농구',
-    '볼링',
-    '배드민턴',
-    '클라이밍',
-    '복싱',
-    '테니스',
-    '사이클',
-    '골프',
-    '수영',
-    '런닝',
-    '필라테스',
-    '등산',
-    '크로스핏',
-    '탁구',
-    '요가',
-  ];
-
-  for (let i = 0; i < numFollows; i++) {
-    follows.push({
-      id: i + 1,
-      profileImage: null, // 프로필 이미지가 없는 경우
-      nickname: `팔로워 ${i + 1}`,
-      sport: sports[i % sports.length],
-      followers: Math.floor(Math.random() * 1000),
-      following: Math.floor(Math.random() * 1000),
-    });
-  }
-
-  return follows;
-};
-
 //알림 목업 데이터
 const generateMockNotifications = (numNotifications) => {
   const notifications = [];
@@ -639,12 +289,7 @@ const generateMockNotifications = (numNotifications) => {
 
   return notifications;
 };
-
-const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const currentPosts = posts.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+const Posts = ({ posts, totalPages, currentPage, onPageChange }) => {
   const nav = useNavigate();
 
   const sportTypeMapping = {
@@ -684,13 +329,13 @@ const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   return (
     <div>
       <div className="contents-post-container">
-        {currentPosts.map((post) => {
-          const translatedSportType = sportTypeMapping[post.sportType];
-          const translatedBoardType = boardTypeMapping[post.boardType];
+        {posts.map((post) => {
+          const translatedSportType = sportTypeMapping[post.sports_name];
+          const translatedBoardType = boardTypeMapping[post.board_name];
           return (
-            <div key={post.id} className="contents-post-list-container">
+            <div key={post.post_id} className="contents-post-list-container">
               <div className="contents-post-details">
-                {post.imgType === true ? (
+                {post.imgType ? (
                   <PostImg className="contents-post-icon" />
                 ) : (
                   <PostNoImg className="contents-post-icon" />
@@ -699,35 +344,32 @@ const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
                 <div
                   className="contents-post-box"
                   onClick={() => {
-                    if (post.boardType === '문의/신고') {
-                      nav(`/inquiry/${post.id}`);
+                    if (post.board_name === '문의/신고') {
+                      nav(`/inquiry/${post.post_id}`);
                     } else {
                       nav(
-                        `/post/${translatedBoardType}/${translatedSportType}/${post.id}`
+                        `/post/${translatedBoardType}/${translatedSportType}/${post.post_id}`
                       );
                     }
                   }}
                 >
-                  {post.boardType === '문의/신고' ? (
-                    ''
-                  ) : (
+                  {post.board_name !== '문의/신고' && (
                     <div className="contents-post-sport">
-                      [{post.sportType}]
+                      [{post.sports_name}]
                     </div>
                   )}
-
-                  <div className="contents-post-board">[{post.boardType}]</div>
-                  <div className="contents-post-title">{post.title}</div>
+                  <div className="contents-post-board">[{post.board_name}]</div>
+                  <div className="contents-post-title">{post.post_title}</div>
                 </div>
-                {post.comments > 0 && (
+                {post.comment_count > 0 && (
                   <div className="contents-post-comments-count">
-                    {post.comments}
+                    {post.comment_count}
                   </div>
                 )}
               </div>
               <div className="contents-post-info">
                 <div className="contents-post-time">
-                  {timeForm(post.createdAt)}
+                  {timeForm(post.created_at)}
                 </div>
               </div>
             </div>
@@ -745,11 +387,7 @@ const Posts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   );
 };
 
-const Comments = ({ comments, currentPage, postsPerPage, onPageChange }) => {
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const currentComments = comments.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(comments.length / postsPerPage);
+const Comments = ({ comments, totalPages, currentPage, onPageChange }) => {
   const nav = useNavigate();
 
   const sportTypeMapping = {
@@ -789,34 +427,36 @@ const Comments = ({ comments, currentPage, postsPerPage, onPageChange }) => {
   return (
     <div>
       <div className="contents-comment-container">
-        {currentComments.map((comment) => {
-          const translatedSportType = sportTypeMapping[comment.sportType];
-          const translatedBoardType = boardTypeMapping[comment.boardType];
+        {comments.map((comment) => {
+          const translatedSportType = sportTypeMapping[comment.sports_name];
+          const translatedBoardType = boardTypeMapping[comment.board_name];
           return (
-            <div key={comment.id} className="contents-comment-list-container">
+            <div className="contents-comment-list-container">
               <div
                 className="contents-comment-list-container-1"
                 onClick={() => {
                   nav(
-                    `/post/${translatedBoardType}/${translatedSportType}/${comment.id}`
+                    `/post/${translatedBoardType}/${translatedSportType}/${comment.post_id}`
                   );
                 }}
               >
-                <div className="contents-comment">{comment.comment}</div>
+                <div className="contents-comment">
+                  {comment.comment_content}
+                </div>
                 <div className="contents-comment-post">
                   <div className="contents-comment-post-sport">
-                    [{comment.sportType}]
+                    [{comment.sports_name}]
                   </div>
                   <div className="contents-comment-post-board">
-                    [{comment.boardType}]
+                    [{comment.board_name}]
                   </div>
                   <div className="contents-comment-post-title">
-                    {comment.title}
+                    {comment.post_title}
                   </div>
                 </div>
               </div>
               <div className="contents-comment-list-container-2">
-                {timeForm(comment.createdAt)}
+                {timeForm(comment.created_at)}
               </div>
             </div>
           );
@@ -833,16 +473,7 @@ const Comments = ({ comments, currentPage, postsPerPage, onPageChange }) => {
   );
 };
 
-const ParticipatedClub = ({
-  posts,
-  currentPage,
-  postsPerPage,
-  onPageChange,
-}) => {
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const currentPosts = posts.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+const ParticipatedClub = ({ clubs, totalPages, currentPage, onPageChange }) => {
   const nav = useNavigate();
 
   const sportTypeMapping = {
@@ -865,7 +496,7 @@ const ParticipatedClub = ({
     요가: 'yoga',
   };
 
-  if (posts.length === 0) {
+  if (clubs.length === 0) {
     return (
       <div className="contents-no-club-list-container">
         <div className="contents-club-head">
@@ -888,30 +519,33 @@ const ParticipatedClub = ({
           <div className="contents-club-head-3">소모임장</div>
           <div className="contents-club-head-4">참여날짜</div>
         </div>
-        {currentPosts.map((post) => {
-          const translatedSportType = sportTypeMapping[post.sportType];
+        {clubs.map((club) => {
+          const translatedSportType = sportTypeMapping[club.sports_name];
           return (
-            <div key={post.id} className="contents-club-list-container">
+            <div key={club.post_id} className="contents-club-list-container">
               <div className="contents-club-details">
                 <div
                   className="contents-club-box"
                   onClick={() => {
-                    nav(`/clubpost/${translatedSportType}/${post.id}`);
+                    nav(`/clubpost/${translatedSportType}/${club.post_id}`);
                   }}
                 >
-                  {post.imgType === true ? (
+                  {club.imgType ? (
                     <PostImg className="contents-post-icon" />
                   ) : (
                     <PostNoImg className="contents-post-icon" />
                   )}
-                  <div className="contents-club-sport">[{post.sportType}]</div>
-                  <div className="contents-club-title">{post.title}</div>
+                  <div className="contents-club-sport">
+                    [{club.sports_name}]
+                  </div>
+                  <div className="contents-club-title">{club.club_name}</div>
                 </div>
               </div>
-
-              <div className="contents-club-location">{post.locationType}</div>
-              <div className="contents-club-leader">{post.nickname}</div>
-              <div className="contents-club-time">{timeForm(post.date)}</div>
+              <div className="contents-club-location">{club.club_place}</div>
+              <div className="contents-club-leader">{club.user_nickname}</div>
+              <div className="contents-club-time">
+                {timeForm(club.club_date)}
+              </div>
             </div>
           );
         })}
@@ -927,11 +561,7 @@ const ParticipatedClub = ({
   );
 };
 
-const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const currentPosts = posts.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+const LikedPosts = ({ posts, totalPages, currentPage, onPageChange }) => {
   const nav = useNavigate();
 
   const sportTypeMapping = {
@@ -971,13 +601,13 @@ const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
   return (
     <div>
       <div className="contents-post-container">
-        {currentPosts.map((post) => {
-          const translatedSportType = sportTypeMapping[post.sportType];
-          const translatedBoardType = boardTypeMapping[post.boardType];
+        {posts.map((post) => {
+          const translatedSportType = sportTypeMapping[post.sports_name];
+          const translatedBoardType = boardTypeMapping[post.board_name];
           return (
-            <div key={post.id} className="contents-post-list-container">
+            <div key={post.post_id} className="contents-post-list-container">
               <div className="contents-post-details">
-                {post.imgType === true ? (
+                {post.post_image ? (
                   <PostImg className="contents-post-icon" />
                 ) : (
                   <PostNoImg className="contents-post-icon" />
@@ -987,24 +617,30 @@ const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
                   className="contents-post-box"
                   onClick={() => {
                     nav(
-                      `/post/${translatedBoardType}/${translatedSportType}/${post.id}`
+                      `/post/${translatedBoardType}/${translatedSportType}/${post.post_id}`
                     );
                   }}
                 >
-                  <div className="contents-post-sport">[{post.sportType}]</div>
-                  <div className="contents-post-board">[{post.boardType}]</div>
-                  <div className="contents-post-title">{post.title}</div>
+                  {' '}
+                  <div className="contents-post-sport">
+                    [{post.sports_name}]
+                  </div>
+                  <div className="contents-post-board">[{post.board_name}]</div>
+                  <div className="contents-post-title">{post.post_title}</div>
                 </div>
-                {post.comments > 0 && (
+                {post.comment_count > 0 && (
                   <div className="contents-post-comments-count">
-                    {post.comments}
+                    {post.comment_count}
                   </div>
                 )}
               </div>
               <div className="contents-post-info">
-                <div className="contents-post-writer">{post.nickname}</div>·
+                <div className="contents-post-writer">
+                  {post.post_author_nickname}
+                </div>
+                ·
                 <div className="contents-post-time">
-                  {timeForm(post.createdAt)}
+                  {timeForm(post.created_at)}
                 </div>
               </div>
             </div>
@@ -1021,16 +657,79 @@ const LikedPosts = ({ posts, currentPage, postsPerPage, onPageChange }) => {
     </div>
   );
 };
-
 const Activity = () => {
   const activityTags = ['작성글', '댓글', '참여한 소모임', '좋아요한 글'];
   const [selectedTag, setSelectedTag] = useState(activityTags[0]);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
-  const posts = generateMockPosts(100); // 목업 데이터 생성
+  const { username } = useParams();
+  const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [clubs, setClubs] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [tagCounts, setTagCounts] = useState({
+    posts: 0,
+    comments: 0,
+    clubs: 0,
+    likes: 0,
+  });
+
+  const tagTranslations = {
+    작성글: 'posts',
+    댓글: 'comments',
+    '참여한 소모임': 'clubs',
+    '좋아요한 글': 'likes',
+  };
+
+  const selectedTagEnglish = tagTranslations[selectedTag];
+  const accessToken = localStorage.getItem('accessToken');
+  const fetchActivityData = async () => {
+    try {
+      const response = await axios.get(
+        `/mypage/activity/${selectedTagEnglish}?page=${currentPage}&&userNickname=${username}`,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      switch (selectedTagEnglish) {
+        case 'posts':
+          setPosts(response.data.posts_list);
+          break;
+        case 'comments':
+          setComments(response.data.comment_list);
+          break;
+        case 'clubs':
+          setClubs(response.data.clubs);
+
+          break;
+        case 'likes':
+          setLikes(response.data.posts_list);
+          break;
+        default:
+          break;
+      }
+      setTagCounts({
+        posts: response.data.total_posts,
+        comments: response.data.total_comments,
+        clubs: response.data.total_participating_clubs,
+        likes: response.data.total_likes,
+      });
+    } catch (error) {
+      console.error('Error fetching activity data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchActivityData();
+  }, [currentPage, selectedTagEnglish, username]);
 
   const getTagCount = (tag) => {
-    return posts.filter((post) => post.activityType === tag).length;
+    const tagKey = tagTranslations[tag];
+    return tagCounts[tagKey];
   };
 
   const handleTagClick = (tag) => {
@@ -1043,15 +742,11 @@ const Activity = () => {
   };
 
   const renderContent = () => {
-    const filteredPosts = posts.filter(
-      (post) => post.activityType === selectedTag
-    );
-
     switch (selectedTag) {
       case '작성글':
         return (
           <Posts
-            posts={filteredPosts}
+            posts={posts}
             currentPage={currentPage}
             postsPerPage={postsPerPage}
             onPageChange={handlePageChange}
@@ -1060,7 +755,7 @@ const Activity = () => {
       case '댓글':
         return (
           <Comments
-            comments={filteredPosts}
+            comments={comments}
             currentPage={currentPage}
             postsPerPage={postsPerPage}
             onPageChange={handlePageChange}
@@ -1069,7 +764,7 @@ const Activity = () => {
       case '참여한 소모임':
         return (
           <ParticipatedClub
-            posts={filteredPosts}
+            clubs={clubs}
             currentPage={currentPage}
             postsPerPage={postsPerPage}
             onPageChange={handlePageChange}
@@ -1078,7 +773,7 @@ const Activity = () => {
       case '좋아요한 글':
         return (
           <LikedPosts
-            posts={filteredPosts}
+            posts={likes}
             currentPage={currentPage}
             postsPerPage={postsPerPage}
             onPageChange={handlePageChange}
@@ -1090,7 +785,7 @@ const Activity = () => {
   };
 
   return (
-    <div>
+    <div className="activity">
       <Tags
         tagList={activityTags}
         selectedTag={selectedTag}
@@ -1106,6 +801,7 @@ const Following = ({ userName }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [follows, setFollows] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const { username } = useParams();
   const nav = useNavigate();
 
   useEffect(() => {
@@ -1113,25 +809,13 @@ const Following = ({ userName }) => {
   }, [currentPage]);
 
   const fetchFollows = async () => {
-    const accessToken = localStorage.getItem('acceessToken');
     try {
       const response = await axios.get(
-        'follow/following',
-        {
-          user_nick_name: userName,
-          page_num: currentPage,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
-          },
-        }
+        `/api/following?userNickname=${username}&&pageNum=${currentPage}`
       );
-      const { data } = response;
-      setFollows(data.follows);
-      setTotalPages(data.totalPages);
-      console.log(response.data);
+      const data = response.data;
+      setFollows(data);
+      console.log('팔로잉 호출 : ', response.data);
     } catch (error) {
       console.error('Error fetching follows:', error);
     }
@@ -1157,38 +841,38 @@ const Following = ({ userName }) => {
     <div className="Following">
       <div className="following-head">
         <span>{userName}</span>
-        <div>님을 팔로우 중인 멤버</div>
+        <div>님이 팔로우 중인 멤버</div>
       </div>
       <div className="following-list">
         {follows.map((follow) => (
           <div
-            key={follow.userId}
+            key={follow.user_id}
             className="following-item"
             onClick={() => {
-              nav(`/mypage/${follow.nickName}`);
+              nav(`/mypage/${follow.nick_name}`);
             }}
           >
             <div className="following-item-profile">
               {follow.userImageUrl ? (
-                <img src={follow.userImageUrl} alt={follow.nickName} />
+                <img src={follow.user_image_url} alt={follow.nick_name} />
               ) : (
                 <ProfileImage />
               )}
             </div>
             <div className="following-item-info">
-              <div className="following-item-nickname">{follow.nickName}</div>
+              <div className="following-item-nickname">{follow.nick_name}</div>
               <div className="following-item-sport">
                 <div className="following-item-sport-svg">
-                  {renderSportIcon(follow.favoriteSports)}
+                  {renderSportIcon(follow.favorite_sports)}
                 </div>
-                {follow.favoriteSports}
+                {follow.favorite_sports}
               </div>
               <div className="following-item-stats">
                 <div className="following-item-stats-1">
-                  팔로워 <span>{follow.followerNumber}</span>
+                  팔로워 <span>{follow.follower_number}</span>
                 </div>
                 <div className="following-item-stats-1">
-                  팔로잉 <span>{follow.followingNumber}</span>
+                  팔로잉 <span>{follow.following_number}</span>
                 </div>
               </div>
             </div>
@@ -1211,30 +895,18 @@ const Follower = ({ userName }) => {
   const [follows, setFollows] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const nav = useNavigate();
-
+  const { username } = useParams();
   useEffect(() => {
     fetchFollows();
   }, [currentPage]);
 
   const fetchFollows = async () => {
-    const accessToken = localStorage.getItem('acceessToken');
     try {
       const response = await axios.get(
-        'follow/follower',
-        {
-          user_nick_name: userName,
-          page_num: currentPage,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
-          },
-        }
+        `/api/follower?userNickname=${username}&&pageNum=${currentPage}`
       );
       const { data } = response;
-      setFollows(data.follows);
-      setTotalPages(data.totalPages);
+      setFollows(data);
     } catch (error) {
       console.error('Error fetching followers:', error);
     }
@@ -1268,30 +940,30 @@ const Follower = ({ userName }) => {
             key={follow.userId}
             className="following-item"
             onClick={() => {
-              nav(`/mypage/${follow.nickName}`);
+              nav(`/mypage/${follow.nick_name}`);
             }}
           >
             <div className="following-item-profile">
-              {follow.userImageUrl ? (
-                <img src={follow.userImageUrl} alt={follow.nickName} />
+              {follow.user_image_url ? (
+                <img src={follow.user_image_url} alt={follow.nick_name} />
               ) : (
                 <ProfileImage />
               )}
             </div>
             <div className="following-item-info">
-              <div className="following-item-nickname">{follow.nickName}</div>
+              <div className="following-item-nickname">{follow.nick_name}</div>
               <div className="following-item-sport">
                 <div className="following-item-sport-svg">
-                  {renderSportIcon(follow.favoriteSports)}
+                  {renderSportIcon(follow.favorite_sports)}
                 </div>
-                {follow.favoriteSports}
+                {follow.favorite_sports}
               </div>
               <div className="following-item-stats">
                 <div className="following-item-stats-1">
-                  팔로워 <span>{follow.followerNumber}</span>
+                  팔로워 <span>{follow.follower_number}</span>
                 </div>
                 <div className="following-item-stats-1">
-                  팔로잉 <span>{follow.followingNumber}</span>
+                  팔로잉 <span>{follow.following_number}</span>
                 </div>
               </div>
             </div>
@@ -1663,12 +1335,17 @@ const MyPage = () => {
     const fetchUserData = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
-        console.log(username);
-        const response = await axios.get(`/mypage/header/${username}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
-          },
-        });
+
+        const userId = localStorage.getItem('userId');
+
+        const response = await axios.get(
+          `/api/header?userId=${userId}&&userNickname=${username}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
+            },
+          }
+        );
         const {
           nickname,
           top_priority_sports_name,
@@ -1677,7 +1354,7 @@ const MyPage = () => {
           participating_club_num,
           user_profile_image_url,
         } = response.data;
-        console.log(response.data);
+
         // 상태 업데이트
         setUser({
           profileImage: user_profile_image_url || <ProfileImage />,

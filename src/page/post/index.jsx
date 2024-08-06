@@ -380,13 +380,17 @@ const Post = () => {
   // Fetch post data including comments
   const fetchPostData = async () => {
     const accessToken = localStorage.getItem('accessToken');
+    const userId = localStorage.getItem('userId');
     try {
-      const response = await axios.get(`/posts/${post_id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await axios.get(
+        `/api/posts?postId=${post_id}&&userId=${userId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       console.log('Post data:', response.data); // 응답 데이터를 로그로 출력
       setPostData(response.data);
       response.data.is_like ? setIsLike(true) : setIsLike(false);
