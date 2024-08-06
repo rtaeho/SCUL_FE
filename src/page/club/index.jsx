@@ -173,7 +173,6 @@ const Club = () => {
         page: currentPage - 1, // 페이지 번호 추가
       });
       setClubs(response.data.clubs); // clubs 필드에서 데이터 추출
-      console.log('response:', response.data);
       setTotalPages(response.data.total_page_count); // total_page_count 필드에서 총 페이지 수 추출
     } catch (error) {
       console.error('Error fetching clubs:', error);

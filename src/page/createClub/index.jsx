@@ -493,10 +493,7 @@ const CreateClub = () => {
         formData.append('imageUrls', file.url);
       }
     });
-    console.log('날짜 : ', startDate);
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
+
     const accessToken = localStorage.getItem('accessToken');
     try {
       if (clubId) {

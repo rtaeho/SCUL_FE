@@ -166,7 +166,6 @@ const ClubPost = () => {
       try {
         const response = await axios.get(`/api/club/${club_id}`);
         setClubData(response.data.club_response);
-        console.log(response.data);
       } catch (error) {
         console.error('Error fetching club data:', error);
       }
@@ -260,7 +259,6 @@ const ClubPost = () => {
               {' '}
               {clubData.user_nickname}
             </span>
-            {console.log('userName:', clubData.user_nickname)}
           </button>
           {clubData.user_nickname === currentUserNickname ? (
             ''
