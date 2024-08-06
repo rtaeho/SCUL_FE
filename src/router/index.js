@@ -16,7 +16,15 @@ const CreateClub = lazy(() => import('../page/createClub'));
 const MyPage = lazy(() => import('../page/myPage'));
 const Inquiry = lazy(() => import('../page/inquiry'));
 const InquiryPost = lazy(() => import('../page/inquiryPost'));
-const Loading = () => <>로딩중입니다.</>;
+const Loading = () => {
+  return (<div class="loading">
+    <div class="droplet_spinner">
+      <div class="droplet"></div>
+      <div class="droplet"></div>
+      <div class="droplet"></div>
+    </div>
+  </div>);
+};
 
 const router = createBrowserRouter([
   {
