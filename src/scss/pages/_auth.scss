@@ -8,6 +8,7 @@
 .wrap {
   margin: 16px auto;
   @include inline-flexbox(center);
+  position: relative;
 }
 
 .h2_wrap {
@@ -29,10 +30,24 @@
 
 .kakaoLogin {
   background-color: #fee500;
+  position: relative;
 }
 
 .googleLogin {
   background-color: #fff;
+  position: relative;
+}
+
+.latestLogin-k,
+.latestLogin-g {
+  position: absolute;
+  color: #fdfdfd;
+  background-color: #555;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  right: 20px;
 }
 
 .kLogo,

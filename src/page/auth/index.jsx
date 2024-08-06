@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { ReactComponent as Kakao } from '../../assets/images/Kakao.svg';
 import { ReactComponent as Google } from '../../assets/images/Google.svg';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ import axios from 'axios';
 const Auth = () => {
   const navigate = useNavigate();
   const [provider, setProvider] = useState(localStorage.getItem('provider'));
+  const { id } = useParams();
 
   // 리디렉션 후 URL에서 code 파라미터 추출 및 처리
   useEffect(() => {
@@ -56,20 +58,46 @@ const Auth = () => {
     window.location.href = authUrl;
   };
 
+  if (id === 1) {
+    return (
+      <div className="Auth">
+        <h2 className="h2_wrap">회원가입</h2>
+        <div className="wrap">
+          <button onClick={() => handleLogin('kakao')} className="kakaoLogin">
+            <Kakao className="kLogo" />
+            카카오로 회원가입
+          </button>
+
+        </div>
+        <div className="wrap">
+          <button onClick={() => handleLogin('google')} className="googleLogin">
+            <Google className="gLogo" />
+            구글로 회원가입
+          </button>
+
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="Auth">
       <h2 className="h2_wrap">로그인</h2>
       <div className="wrap">
         <button onClick={() => handleLogin('kakao')} className="kakaoLogin">
           <Kakao className="kLogo" />
-          카카오로 로그인{provider === 'kakao' && <h1>최근 로그인!</h1>}
+          카카오로 로그인
+          {provider === 'kakao' && <h1 className='latestLogin-k'>최근 로그인</h1>}
         </button>
+
       </div>
       <div className="wrap">
         <button onClick={() => handleLogin('google')} className="googleLogin">
           <Google className="gLogo" />
-          구글로 로그인{provider === 'google' && <h1>최근 로그인!</h1>}
+          구글로 로그인
+          {provider === 'google' && <h1 className='latestLogin-g'>최근 로그인</h1>}
         </button>
+
       </div>
     </div>
   );

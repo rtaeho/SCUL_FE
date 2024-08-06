@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import { ReactComponent as SoccerIcon } from '../../assets/images/Soccer.svg';
 import { ReactComponent as Select } from '../../assets/images/Select.svg';
 import { ReactComponent as Review } from '../../assets/images/Review.svg';
@@ -46,6 +48,7 @@ const sportIcons = {
   TableTennis: TableTennisIcon, // 탁구 아이콘
   Yoga: YogaIcon, // 요가 아이콘
 };
+
 const Header = () => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(true);
@@ -79,7 +82,6 @@ const Header = () => {
       { name: '탁구', englishName: 'TableTennis' },
       { name: '요가', englishName: 'Yoga' },
     ];
-
     setSports(sportsList);
 
     const savedSport = JSON.parse(localStorage.getItem('selectedSport'));
@@ -101,6 +103,10 @@ const Header = () => {
 
   const goHome = () => {
     navigate('/main');
+  };
+
+  const handleNavigate = (id) => {
+    nav(`/auth/${id}`);
   };
 
   const logout = () => {
@@ -155,9 +161,8 @@ const Header = () => {
         </div>
         {showDropdown && (
           <div
-            className={`header-sports-dropdown-contents-container ${
-              showMoreSports ? 'expanded' : ''
-            }`}
+            className={`header-sports-dropdown-contents-container ${showMoreSports ? 'expanded' : ''
+              }`}
           >
             {sports
               .filter((sport) => sport.name !== selectedSport.name)
@@ -213,10 +218,9 @@ const Header = () => {
                 <div
                   onClick={() =>
                     navigate(
-                      `/community/free/${
-                        selectedSport
-                          ? selectedSport.englishName.toLowerCase()
-                          : 'soccer'
+                      `/community/free/${selectedSport
+                        ? selectedSport.englishName.toLowerCase()
+                        : 'soccer'
                       }`
                     )
                   }
@@ -229,10 +233,9 @@ const Header = () => {
                 <div
                   onClick={() =>
                     navigate(
-                      `/community/review/${
-                        selectedSport
-                          ? selectedSport.englishName.toLowerCase()
-                          : 'soccer'
+                      `/community/review/${selectedSport
+                        ? selectedSport.englishName.toLowerCase()
+                        : 'soccer'
                       }`
                     )
                   }
@@ -245,10 +248,9 @@ const Header = () => {
                 <div
                   onClick={() =>
                     navigate(
-                      `/community/info/${
-                        selectedSport
-                          ? selectedSport.englishName.toLowerCase()
-                          : 'soccer'
+                      `/community/info/${selectedSport
+                        ? selectedSport.englishName.toLowerCase()
+                        : 'soccer'
                       }`
                     )
                   }
@@ -262,10 +264,9 @@ const Header = () => {
             <div
               onClick={() =>
                 navigate(
-                  `/club/${
-                    selectedSport
-                      ? selectedSport.englishName.toLowerCase()
-                      : 'soccer'
+                  `/club/${selectedSport
+                    ? selectedSport.englishName.toLowerCase()
+                    : 'soccer'
                   }`
                 )
               }
@@ -311,8 +312,8 @@ const Header = () => {
             </li>
           ) : (
             <li className="header-nav-list">
-              <div onClick={() => navigate('/auth')}>로그인</div> /
-              <div onClick={() => navigate('/auth')}>회원가입</div>
+              <div onClick={handleNavigate(0)}>로그인</div> /
+              <div onClick={handleNavigate(1)}>회원가입</div>
             </li>
           )}
         </ul>
