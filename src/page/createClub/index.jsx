@@ -497,7 +497,7 @@ const CreateClub = () => {
     const accessToken = localStorage.getItem('accessToken');
     try {
       if (clubId) {
-        await axios.put(`/club/${clubId}`, formData, {
+        await axios.put(`/api/club/${clubId}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${accessToken}`,
@@ -505,7 +505,7 @@ const CreateClub = () => {
         });
         alert('게시글이 성공적으로 수정되었습니다.');
       } else {
-        await axios.post('/club', formData, {
+        await axios.post('/api/club', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${accessToken}`,

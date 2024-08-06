@@ -20,7 +20,7 @@ const Auth = () => {
       const fetchTokens = async () => {
         try {
           const res = await axios.get(
-            `/api/oauth2/${storedProvider}?code=${code}`
+            `api/oauth2/${storedProvider}?code=${code}`
           );
           const { access_token, refresh_token, is_member } = res.data;
           if (access_token && refresh_token) {
@@ -66,14 +66,12 @@ const Auth = () => {
             <Kakao className="kLogo" />
             카카오로 회원가입
           </button>
-
         </div>
         <div className="wrap">
           <button onClick={() => handleLogin('google')} className="googleLogin">
             <Google className="gLogo" />
             구글로 회원가입
           </button>
-
         </div>
       </div>
     );
@@ -86,17 +84,19 @@ const Auth = () => {
         <button onClick={() => handleLogin('kakao')} className="kakaoLogin">
           <Kakao className="kLogo" />
           카카오로 로그인
-          {provider === 'kakao' && <h1 className='latestLogin-k'>최근 로그인</h1>}
+          {provider === 'kakao' && (
+            <h1 className="latestLogin-k">최근 로그인</h1>
+          )}
         </button>
-
       </div>
       <div className="wrap">
         <button onClick={() => handleLogin('google')} className="googleLogin">
           <Google className="gLogo" />
           구글로 로그인
-          {provider === 'google' && <h1 className='latestLogin-g'>최근 로그인</h1>}
+          {provider === 'google' && (
+            <h1 className="latestLogin-g">최근 로그인</h1>
+          )}
         </button>
-
       </div>
     </div>
   );

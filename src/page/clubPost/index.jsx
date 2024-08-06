@@ -164,7 +164,7 @@ const ClubPost = () => {
   useEffect(() => {
     const fetchClubData = async () => {
       try {
-        const response = await axios.get(`/api/club/${club_id}`);
+        const response = await axios.get(`/api/api/club/${club_id}`);
         setClubData(response.data.club_response);
       } catch (error) {
         console.error('Error fetching club data:', error);

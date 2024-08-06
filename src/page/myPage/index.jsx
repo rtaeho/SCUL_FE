@@ -811,7 +811,7 @@ const Following = ({ userName }) => {
   const fetchFollows = async () => {
     try {
       const response = await axios.get(
-        `/api/following?userNickname=${username}&&pageNum=${currentPage}`
+        `/api/api/following?userNickname=${username}&&pageNum=${currentPage}`
       );
       const data = response.data;
       setFollows(data);
@@ -903,7 +903,7 @@ const Follower = ({ userName }) => {
   const fetchFollows = async () => {
     try {
       const response = await axios.get(
-        `/api/follower?userNickname=${username}&&pageNum=${currentPage}`
+        `/api/api/follower?userNickname=${username}&&pageNum=${currentPage}`
       );
       const { data } = response;
       setFollows(data);
@@ -1339,7 +1339,7 @@ const MyPage = () => {
         const userId = localStorage.getItem('userId');
 
         const response = await axios.get(
-          `/api/header?userId=${userId}&&userNickname=${username}`,
+          `/api/api/header?userId=${userId}&&userNickname=${username}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`, // 헤더에 토큰 추가
