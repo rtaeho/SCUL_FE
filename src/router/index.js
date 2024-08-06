@@ -31,30 +31,6 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: '/',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Main />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'main',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Main />
-          </Suspense>
-        ),
-      },
-      {
-        path: 'home',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Main />
-          </Suspense>
-        ),
-      },
-      {
         path: 'main/:sport',
         element: (
           <Suspense fallback={<Loading />}>
