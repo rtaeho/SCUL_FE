@@ -1,6 +1,7 @@
 /* club.css */
 .club-container {
   width: 66.7%;
+  min-width: 950px;
   margin: 40px auto;
   border-radius: 16px;
   background: #fbfbfb;
@@ -43,8 +44,22 @@
   border-radius: 32px;
   border: 1px solid #ebebeb;
   background: #fdfdfd;
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  z-index: 10;
 }
-
+.club-filter-left-container {
+  @include inline-flexbox(start, center);
+  gap: 16px;
+}
+.club-filter-right-container {
+  @include inline-flexbox(end, center);
+}
 .club-filter-select-container {
   @include inline-flexbox(center, center);
   position: relative;
@@ -70,7 +85,11 @@
 
 .club-filter-select-dropdown-container {
   position: absolute;
-  top: 33px;
+  top: 100%; /* 태그의 바로 아래에 위치하도록 설정 */
+  left: 50%; /* 태그의 가운데에 맞추기 위해 left 50%로 설정 */
+  transform: translateX(
+    -50%
+  ); /* 드롭다운의 가운데가 태그의 가운데와 맞추도록 조정 */
   display: flex;
   width: 89px;
   padding: 8px 0px;
@@ -100,6 +119,7 @@
 }
 .club-filter-tag-container {
   @include inline-flexbox(center, center);
+  position: relative;
 }
 .club-filter-tag-list-container {
   @include inline-flexbox(between, center);
@@ -116,6 +136,7 @@
   line-height: 19.6px;
   letter-spacing: -0.35px;
   cursor: pointer;
+  position: relative;
 }
 
 .club-filter-tag-list-selected {
@@ -133,11 +154,240 @@
   letter-spacing: -0.35px;
   cursor: pointer;
 }
+//calendar
 .club-filter-calendar-container {
   position: absolute;
   margin-top: 30px;
-  margin-left: -10px;
+  transform: translateX(-46%);
 }
+//location
+.club-filter-location-dropdown-container {
+  position: absolute;
+  margin-top: 310px;
+  transform: translateX(-29%);
+  width: 400px;
+  height: 271px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid #bbb8b8;
+  background: #fdfdfd;
+  @include inline-flexbox(start, start);
+  padding: 16px 16px;
+}
+
+.club-filter-location-left-container,
+.club-filter-location-right-container {
+  flex: 1;
+  padding-right: 8px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.club-filter-location-header {
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  padding-bottom: 15px;
+}
+
+.club-filter-location-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.club-filter-location-item {
+  padding: 8px;
+  cursor: pointer;
+  color: #111;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  height: 23px;
+  @include inline-flexbox(start, center);
+}
+
+.club-filter-location-item-selected {
+  color: #fdfdfd;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16.8px;
+  letter-spacing: -0.3px;
+  padding: 8px;
+  cursor: pointer;
+  background: #74b0d9;
+  text-decoration-line: underline;
+  height: 23px;
+  @include inline-flexbox(start, center);
+  width: 95%;
+}
+
+.club-filter-location-left-container {
+  border-right: 1px solid #c1c1c1;
+  overflow-y: hidden;
+}
+.club-filter-location-right-container {
+  overflow-y: hidden;
+  margin-left: 16px;
+}
+/* 시/도 리스트 컨테이너 */
+.club-filter-location-left-container .club-filter-location-list {
+  max-height: calc(100% - 40px); /* 헤더 공간을 제외한 높이 설정 */
+  overflow-y: auto; /* 시/도 리스트에 스크롤 가능하도록 설정 */
+}
+
+/* 시/군/구 리스트 컨테이너 */
+.club-filter-location-right-container .club-filter-location-list {
+  max-height: calc(100% - 40px); /* 헤더 공간을 제외한 높이 설정 */
+  overflow-y: auto; /* 시/군/구 리스트에 스크롤 가능하도록 설정 */
+}
+/* 스크롤바 기본 디자인 유지, 범위가 보이지 않도록 설정 */
+.club-filter-location-left-container::-webkit-scrollbar,
+.club-filter-location-right-container::-webkit-scrollbar,
+.club-filter-location-list::-webkit-scrollbar {
+  width: 6px; /* 스크롤바의 너비 */
+}
+
+.club-filter-location-left-container::-webkit-scrollbar-track,
+.club-filter-location-right-container::-webkit-scrollbar-track,
+.club-filter-location-list::-webkit-scrollbar-track {
+  background: #c4c4c4;
+  border-radius: 15px;
+}
+
+.club-filter-location-left-container::-webkit-scrollbar-thumb,
+.club-filter-location-right-container::-webkit-scrollbar-thumb,
+.club-filter-location-list::-webkit-scrollbar-thumb {
+  background: #888; /* 손잡이 색상 */
+  border-radius: 15px; /* 모서리 둥글게 설정 */
+}
+
+.club-filter-location-left-container::-webkit-scrollbar-thumb:hover,
+.club-filter-location-right-container::-webkit-scrollbar-thumb:hover,
+.club-filter-location-list::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 손잡이 호버 상태 색상 */
+}
+//cost
+.club-filter-cost-dropdown-container {
+  position: absolute;
+  margin-left: 15%;
+  margin-top: 255px;
+  display: flex;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #bbb8b8;
+  background: #fdfdfd;
+}
+
+.club-filter-cost-option-container {
+  @include column-flexbox(center, start);
+  gap: 12px;
+  color: #111;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 16.8px */
+  letter-spacing: -0.3px;
+}
+
+.club-filter-cost-option {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.club-filter-cost-option input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  position: relative;
+  border: 1px solid #c0c0c0; /* Border color */
+  border-radius: 50%;
+  padding-left: 30px;
+  width: 16px;
+  height: 16px;
+}
+
+.club-filter-cost-option input[type='radio'] + span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 1px solid #c0c0c0; /* Border color */
+  border-radius: 50%;
+  background-color: #fff;
+}
+.club-filter-cost-option input[type='radio']:checked + span::before {
+  background-color: #74b0d9; /* 선택된 상태의 배경 색상 */
+  border: 6px double #74b0d9;
+  border-color: #fff; /* 선택된 상태의 테두리 색상 */
+}
+.club-filter-cost-apply-button {
+  border-radius: 4px;
+  border: 1px solid #c0c0c0;
+  background: var(--icon-default, #f2f2f2);
+  width: 167px;
+  height: 28px;
+  flex-shrink: 0;
+  @include inline-flexbox(center, center);
+  color: var(--kakao-logo, #000);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  letter-spacing: -0.35px;
+}
+.club-filter-cost-custom-input {
+  @include inline-flexbox(between, center);
+  gap: 5px;
+}
+
+.custom-input {
+  width: 64px;
+  height: 25px;
+  border: 1px solid #d7d7d7;
+  color: #555;
+  font-family: Pretendard;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.25px;
+  padding-left: 3px;
+}
+
+.custom-input::placeholder {
+  text-align: right;
+}
+.custom-input::-webkit-outer-spin-button,
+.custom-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.club-filter-member-dropdown-container {
+  position: absolute;
+  margin-left: 50%;
+  margin-top: 255px;
+  display: flex;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #bbb8b8;
+  background: #fdfdfd;
+}
+//search
 .club-filter-search-container {
   @include inline-flexbox(between, center);
   position: relative;
@@ -197,7 +447,7 @@
   border-radius: 20px;
   border: 1px solid #bbb8b8;
   background: #fdfdfd;
-  width: 296px;
+  width: 216px;
   padding: 7px 0px 7px 10px;
   gap: 13px;
 }
@@ -218,149 +468,90 @@
 // postlist
 .club-postlist-container {
   display: flex;
-  width: 896px;
-  @include column-flexbox(center, start);
+  @include column-flexbox(center, center);
   border-radius: 8px;
   border: 1px solid #efefef;
   margin-top: 20px;
 }
 .club-postist {
-  padding: 16px;
-  width: 100%;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4개의 열을 생성 */
+  grid-gap: 18px; /* 항목들 사이의 간격 (옵션) */
+  margin: 16px 16px;
+  z-index: 0;
 }
 
-.club-postlist-postitem-post {
-  @include inline-flexbox(start, center);
+.club-postlist-postitem-container {
+  @include column-flexbox(center, center);
+  border-radius: 16px;
+  border: 1px solid #efefef;
+  position: relative;
+  cursor: pointer;
 }
 .club-postlist-postitem-postimage {
+  width: 205px;
+  height: 205px;
   display: inline;
-  width: 42px;
-  height: 42px;
   border-radius: 6px;
-  margin-right: 12px;
+}
+.club-postlist-postitem-status {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  color: #fdfdfd;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19.6px;
+  letter-spacing: -0.35px;
+  border-radius: 8px;
+  background: #111;
+  padding: 4px 8px;
 }
 .club-postlist-postitem-postbox-titlebox {
   display: flex;
-  gap: 8px;
-  margin-bottom: 3px;
+  @include column-flexbox(start, start);
   width: 100%;
+  gap: 8px;
+  padding: 16px 12px;
 }
-
-.club-postlist-postitem-postbox-titlebox-tag {
-  background-color: #000000;
-  color: #ffffff;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.club-postlist-postitem-postbox-titlebox-title {
+.club-postlist-postitem-postbox-title {
   color: #111;
-  font-size: 16px;
+  font-family: Pretendard;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 22.4px;
-  letter-spacing: -0.4px;
+  font-weight: 700;
+  line-height: 25.2px;
+  letter-spacing: -0.45px;
 }
-
-.club-postlist-postitem-postbox-titlebox-comments {
-  color: #1ad2a6;
-  font-size: 16px;
+.club-postlist-postitem-postbox-date,
+.club-postlist-postitem-postbox-member,
+.club-postlist-postitem-postbox-location {
+  color: #111;
+  font-family: Pretendard;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 22.4px;
-  letter-spacing: -0.4px;
-  margin-left: 8px;
-}
-
-.club-postlist-postitem-infobox {
-  display: flex;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  letter-spacing: -0.35px;
   @include inline-flexbox(start, center);
-  font-size: 10px;
-  color: #888888;
-  gap: 4px;
 }
-
-.club-postlist-postitem-infobox-view-icon {
-  width: 10px;
-  height: 7px;
-}
-
-.club-postlist-postitem-infobox-like-icon {
+.club-postlist-postitem-postbox-date-icon,
+.club-postlist-postitem-postbox-location-icon {
   width: 14px;
   height: 14px;
-}
-.club-postlist-postitem-ad {
-  @include inline-flexbox(start, center);
-}
-
-.club-postlist-postitem-adimage {
-  display: block;
-  width: 42px;
-  height: 42px;
-  border-radius: 6px;
-  align-items: center;
-  object-fit: cover;
-  overflow: hidden;
-  margin-right: 12px;
-}
-.club-postlist-ad-adbox-titlebox {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 3px;
-  width: 100%;
-}
-.club-postlist-ad-adbox-titlebox-tag {
-  background-color: #000000;
-  color: #ffffff;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.club-postlist-ad-adbox-titlebox-title {
-  color: #111;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 22.4px;
-  letter-spacing: -0.4px;
-}
-.club-postlist-ad-adbox-infobox {
-  display: flex;
-  @include inline-flexbox(start, center);
-  font-size: 10px;
-  color: #888888;
-  gap: 16px;
-  margin-top: 0px;
-}
-.club-postlist-ad-adbox-infobox-nickname {
-  color: #888;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 14px;
-  letter-spacing: -0.25px;
-}
-.club-postlist-ad-adbox-infobox-link {
-  color: #555;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 16.8px;
-  letter-spacing: -0.3px;
-  text-decoration-line: underline;
-  cursor: pointer;
-}
-.club-postlist-divider {
-  border: 0;
-  border-top: 1px solid #d7d7d7;
-  margin: 15px 0;
+  text-align: center;
+  margin-right: 8px;
 }
 
-// pgaenation
+.club-postlist-postitem-postbox-member-icon {
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  margin-right: 6px;
+}
+// pagenation
 .club-pagination-container {
   display: flex;
   width: 100%;

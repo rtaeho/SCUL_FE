@@ -9,8 +9,13 @@ const Initial = lazy(() => import('../page/initial'));
 const Club = lazy(() => import('../page/club'));
 const Policy = lazy(() => import('../page/policy'));
 const CreatePost = lazy(() => import('../page/createPost'));
-const KakaoRedirect = lazy(() => import('../page/auth/KakaoRedirect'));
-const GoogleRedirect = lazy(() => import('../page/auth/GoogleRedirect'));
+const CreateInquiry = lazy(() => import('../page/createInquiry'));
+const Post = lazy(() => import('../page/post'));
+const ClubPost = lazy(() => import('../page/clubPost'));
+const CreateClub = lazy(() => import('../page/createClub'));
+const MyPage = lazy(() => import('../page/myPage'));
+const Inquiry = lazy(() => import('../page/inquiry'));
+const InquiryPost = lazy(() => import('../page/inquiryPost'));
 const Loading = () => <>로딩중입니다.</>;
 
 const router = createBrowserRouter([
@@ -34,10 +39,34 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'home',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Main />
+          </Suspense>
+        ),
+      },
+      {
         path: 'main/:sport',
         element: (
           <Suspense fallback={<Loading />}>
             <Main />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'createClub/:sport',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreateClub />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'createClub/:sport/:club_id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreateClub />
           </Suspense>
         ),
       },
@@ -58,10 +87,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'initial',
+        path: 'createPost/:sport/:post_id',
         element: (
           <Suspense fallback={<Loading />}>
-            <Initial />
+            <CreatePost />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'createInquiry',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreateInquiry />
           </Suspense>
         ),
       },
@@ -74,10 +111,27 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'policy',
+        path: 'clubPost/:sport/:id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ClubPost />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'policy/:id',
         element: (
           <Suspense fallback={<Loading />}>
             <Policy />
+          </Suspense>
+        ),
+      },
+
+      {
+        path: 'auth/kakao',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Auth />
           </Suspense>
         ),
       },
@@ -90,18 +144,50 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'oauth',
+        path: 'auth/google',
         element: (
           <Suspense fallback={<Loading />}>
-            <KakaoRedirect />
+            <Auth />
           </Suspense>
         ),
       },
       {
-        path: 'oauth2',
+        path: 'post/:board/:sport/:post_id',
         element: (
           <Suspense fallback={<Loading />}>
-            <GoogleRedirect />
+            <Post />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'initial',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Initial />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'mypage/:username',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <MyPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'inquiry',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Inquiry />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'inquiryPost/:id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <InquiryPost />
           </Suspense>
         ),
       },

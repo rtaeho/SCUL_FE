@@ -1,0 +1,557 @@
+.Post {
+  width: 66.7%;
+  min-width: 950px;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 40px;
+  background-color: #f1f1f5;
+}
+
+/*ㅡㅡㅡ게시글ㅡㅡㅡ*/
+.post-board-btn {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111111;
+  background-color: #fbfbfb;
+}
+
+.post-content-wrap {
+  position: relative;
+  background-color: #fbfbfb;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.post-title-wrap {
+  margin-top: 8px;
+  padding: 24px 0;
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.post-title-1 {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.post-title {
+  color: #111111;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.post-tag {
+  height: 28px;
+  text-align: center;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 4px 8px;
+  padding-top: 5.5px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.post-title-2 {
+  display: flex;
+  align-items: center;
+}
+
+.post-profileImg {
+  width: 38px;
+  height: 38px;
+  margin-right: 12px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-profile_btn {
+  background-color: #fbfbfb;
+  margin-right: 8px;
+}
+
+.post-nickname {
+  font-size: 16px;
+  font-weight: 500;
+  color: #555555;
+}
+
+.post-profileImg,
+.post-nickname {
+  vertical-align: middle;
+}
+
+.post-follow {
+  color: #fdfdfd;
+  font-size: 11px;
+  font-weight: 500;
+  margin-right: 20px;
+  padding: 4px 6px;
+  background-color: #74b0d9;
+  border-radius: 6px;
+}
+
+.post-time,
+.post-views {
+  font-size: 16px;
+  font-weight: 400ss;
+  margin-right: 6px;
+  color: #888888;
+}
+
+.post-content {
+  height: auto;
+  min-height: 200px;
+  margin-top: 32px;
+  margin-bottom: 60px;
+  gap: 50px;
+  @include column-flexbox(start, start);
+  img {
+    width: 200px;
+  }
+}
+
+.viewIcon {
+  margin-left: 2px;
+}
+
+.post-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post-btn1 {
+  display: flex;
+}
+
+.likes-redIcon,
+.likes1,
+.likes2,
+.chatIcon,
+.comments1,
+.comments2 {
+  vertical-align: middle;
+}
+
+.post-btn1,
+.post-btn2 {
+  display: flex;
+  align-items: center;
+}
+
+.post-likes {
+  background-color: #fbfbfb;
+  margin-right: 16px;
+}
+
+.likes-redIcon,
+.chatIcon {
+  margin-right: 4px;
+}
+
+.likes1,
+.comments1 {
+  font-size: 12px;
+  font-weight: 300;
+  margin-right: 4px;
+}
+
+.likes2,
+.comments2 {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.post-btn2,
+.post-btn2 > button {
+  background-color: #fbfbfb;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/*ㅡㅡㅡ 주소복사 모달 ㅡㅡㅡ*/
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.post-copy {
+  position: relative;
+}
+
+.modal-copyhref {
+  animation: fadeInOut 1.5s forwards;
+  position: absolute;
+  bottom: 65px;
+  right: 35px;
+  padding: 12px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 10;
+  max-width: 170px;
+  background: #888888;
+  color: #fdfdfd;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.modal-copyhref:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 13px 8px 0;
+  border-color: #888888 transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  bottom: -10px;
+  left: 119px;
+}
+
+/*ㅡㅡㅡ댓글ㅡㅡㅡ*/
+.post-comment {
+  background-color: #fbfbfb;
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 20px;
+}
+
+.post-comment > h1 {
+  color: #000000;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/*ㅡㅡㅡ댓글컴포ㅡㅡㅡ*/
+.post-comments,
+.create-post-comment {
+  padding: 12px;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.post-comment-header {
+  margin-bottom: 8px;
+}
+
+.post-comment-profileImg {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.post-comment-nickname {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.post-comment-profileImg,
+.post-comment-nickname {
+  vertical-align: middle;
+}
+
+.post-comment-content {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+
+.post-comment-content,
+.post-comment-footer {
+  margin-left: 36px;
+}
+
+.post-comment-footer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.post-comment-time {
+  color: #666666;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.post-comment-action {
+  background-color: #fbfbfb;
+  color: #888888;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.create-post-comment {
+  display: flex;
+  margin-bottom: 0;
+}
+
+.add-post-comment {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.post-comment-input {
+  width: 100%;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  background-color: #ececec;
+  border-radius: 6px;
+  border: 1px solid #efefef;
+  padding: 8px;
+  height: auto;
+  min-height: 116px;
+  overflow-y: auto;
+  resize: none;
+}
+
+.post-comment-input::placeholder {
+  color: #999999;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.post-comment-input::-webkit-scrollbar,
+.input-report::-webkit-scrollbar {
+  width: 5px;
+  cursor: pointer;
+}
+
+.post-comment-input::-webkit-scrollbar-track,
+.input-report::-webkit-scrollbar-track {
+  background: none;
+  margin: 5px 0;
+}
+
+.post-comment-input::-webkit-scrollbar-thumb,
+.input-report::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.post-comment-input::-webkit-scrollbar-thumb:hover
+  .input-report::-webkit-scrollbar-thumb:hover {
+  background: #999999;
+  cursor: pointer;
+}
+
+.post-comment-submit {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #fdfdfd;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: #111111;
+  border-radius: 8px;
+  padding: 6px 10px;
+  z-index: 10;
+}
+
+/*ㅡㅡㅡ게시글더보기ㅡㅡㅡ*/
+.more-post {
+  background-color: #fbfbfb;
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 60px;
+}
+
+.more-post-title {
+  color: #000000;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/*ㅡㅡㅡ게시글더보기 컴포넌트ㅡㅡㅡ*/
+.more-post-item {
+  padding: 8px 4px;
+  border-bottom: 1px solid #d7d7d7;
+  display: flex;
+  justify-content: space-between;
+}
+
+.more-post-item:last-child {
+  border-bottom: none;
+}
+
+.more-post-head,
+.more-post-foot {
+  display: flex;
+  align-items: center;
+}
+
+.more-post-tag {
+  background-color: #333333;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 14px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  margin-right: 8px;
+}
+
+.more-post-img,
+.more-post-tag,
+.more-post-title,
+.more-post-comments {
+  vertical-align: middle;
+}
+
+.more-post-img {
+  margin-right: 4px;
+}
+
+.more-post-intitle {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  margin-right: 12px;
+}
+
+.more-post-comments {
+  color: #1ad2a6;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.more-post-foot {
+  gap: 4px;
+  color: #888888;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.more-post-likesNum,
+.more-post-likesIcon {
+  vertical-align: middle;
+}
+
+/*ㅡㅡㅡ 신고 모달 ㅡㅡㅡ*/
+
+.modal-report {
+  width: 424px;
+  height: 425px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fdfdfd;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  padding: 32px;
+}
+
+.report-modal-back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+}
+
+.report-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.report-head > h1 {
+  color: #000000;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.report-head > button {
+  background-color: #fdfdfd;
+  transform: translateY(-17px);
+}
+
+.report-nickname > p,
+.report-content > p,
+.report-reason > p {
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 16px;
+}
+
+.report-content-in {
+  display: block;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  max-width: 300px;
+}
+
+.report-nickname,
+.report-content {
+  display: flex;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.input-report {
+  width: 100%;
+  background-color: #e9e9e9;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-top: 12px;
+  margin-bottom: 40px;
+  height: auto;
+  min-height: 116px;
+  overflow-y: auto;
+  resize: none;
+
+  color: #111111;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.input-report::placeholder {
+  color: #888888;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.submit-report {
+  color: #fdfdfd;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #74b0d9;
+  padding: 8px 16px;
+  text-align: center;
+  border-radius: 5px;
+  transform: translateX(138px);
+}
