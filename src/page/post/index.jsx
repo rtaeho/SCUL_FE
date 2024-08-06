@@ -9,6 +9,10 @@ import { ReactComponent as PostImg } from '../../assets/images/PostImg.svg';
 import { ReactComponent as PostNoImg } from '../../assets/images/PostNoImg.svg';
 import { ReactComponent as LikesIcon } from '../../assets/images/LikesIcon.svg';
 import { ReactComponent as GreenCheckIcon } from '../../assets/images/GreenCheckIcon.svg';
+import { ReactComponent as Ad1 } from '../../assets/images/Ad1.svg';
+import { ReactComponent as Ad2 } from '../../assets/images/Ad1.svg';
+import { ReactComponent as Ad3 } from '../../assets/images/Ad1.svg';
+import { ReactComponent as Ad4 } from '../../assets/images/Ad1.svg';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 const SafeHtml = ({ htmlString }) => {
@@ -365,6 +369,8 @@ const ReportModal = ({ toggleReportModal, nickname, content }) => {
   );
 };
 
+const ads = [Ad1, Ad2, Ad3, Ad4];
+
 const Post = () => {
   const nav = useNavigate();
   const { sport, board, post_id } = useParams(); // Extract parameters from URL에서 가져옵니다
@@ -374,6 +380,9 @@ const Post = () => {
   const [modal, setModal] = useState(false);
   const [modalReport, setModalReport] = useState(false);
   const [reportInfo, setReportInfo] = useState({ nickname: '', content: '' });
+  const randomIndex = Math.floor(Math.random() * ads.length);
+  const RandomAdComponent = ads[randomIndex];
+
   // Log post_id to check if it is being extracted correctly
 
   // Fetch post data
@@ -395,6 +404,8 @@ const Post = () => {
       console.error('Failed to fetch post data:', error);
     }
   };
+
+
 
   useEffect(() => {
     fetchPostData();
@@ -519,9 +530,8 @@ const Post = () => {
   //     : '정보';
   const handlePostReviseClick = () => {
     const baseUrl = window.location.origin;
-    window.location.href = `${baseUrl}/createpost/${sport.toLowerCase()}/${
-      postData.post_id
-    }`;
+    window.location.href = `${baseUrl}/createpost/${sport.toLowerCase()}/${postData.post_id
+      }`;
   };
   const handlePostDelete = async () => {
     const accessToken = localStorage.getItem('accessToken');
@@ -769,7 +779,7 @@ const Post = () => {
             ))}
           </div>
         </div>
-
+        <div className='post-ads'><RandomAdComponent /></div>
         {modal && <Modal />}
         {modalReport && (
           <ReportModal

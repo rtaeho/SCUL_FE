@@ -107,9 +107,15 @@
   margin-bottom: 60px;
   gap: 50px;
   @include column-flexbox(start, start);
+
   img {
     width: 200px;
   }
+}
+
+.post-ads {
+  width: 100%;
+  @include inline-flexbox(center);
 }
 
 .viewIcon {
@@ -165,7 +171,7 @@
 }
 
 .post-btn2,
-.post-btn2 > button {
+.post-btn2>button {
   background-color: #fbfbfb;
   font-size: 12px;
   font-weight: 400;
@@ -233,7 +239,7 @@
   margin-top: 20px;
 }
 
-.post-comment > h1 {
+.post-comment>h1 {
   color: #000000;
   font-size: 24px;
   font-weight: 700;
@@ -353,8 +359,7 @@
   border-radius: 2px;
 }
 
-.post-comment-input::-webkit-scrollbar-thumb:hover
-  .input-report::-webkit-scrollbar-thumb:hover {
+.post-comment-input::-webkit-scrollbar-thumb:hover .input-report::-webkit-scrollbar-thumb:hover {
   background: #999999;
   cursor: pointer;
 }
@@ -482,21 +487,21 @@
   justify-content: space-between;
 }
 
-.report-head > h1 {
+.report-head>h1 {
   color: #000000;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 32px;
 }
 
-.report-head > button {
+.report-head>button {
   background-color: #fdfdfd;
   transform: translateY(-17px);
 }
 
-.report-nickname > p,
-.report-content > p,
-.report-reason > p {
+.report-nickname>p,
+.report-content>p,
+.report-reason>p {
   font-size: 16px;
   font-weight: 600;
   margin-right: 16px;
