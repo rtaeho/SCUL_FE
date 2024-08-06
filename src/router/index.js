@@ -111,7 +111,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'clubPost/:sport/:id',
+        path: 'clubPost/:sport/:club_id',
         element: (
           <Suspense fallback={<Loading />}>
             <ClubPost />

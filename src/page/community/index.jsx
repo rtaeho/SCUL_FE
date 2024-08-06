@@ -379,7 +379,7 @@ const Community = () => {
     tag_name: '광고',
     post_title: '나랑 스껄할래?',
     nickname: '스컬스컬',
-    link: 'https://s-cul.com',
+    link: 'https://s-cul.vercel.app',
   };
 
   useEffect(() => {

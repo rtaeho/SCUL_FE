@@ -37,7 +37,7 @@ const CreatePost = () => {
   const [content, setContent] = useState('');
   const titleRef = useRef(null);
   const [files, setFiles] = useState([]);
-  const { sport, postId } = useParams();
+  const { sport, post_id } = useParams();
   const navigate = useNavigate();
 
   const handleFileChange = (event) => {
@@ -118,12 +118,12 @@ const CreatePost = () => {
     };
   }, []);
   useEffect(() => {
-    if (postId) {
+    if (post_id) {
       // Fetch existing post data for editing
       const fetchPostData = async () => {
         const accessToken = localStorage.getItem('accessToken');
         try {
-          const response = await axios.get(`/posts/${postId}`, {
+          const response = await axios.get(`/posts/${post_id}`, {
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${accessToken}`,
@@ -131,21 +131,22 @@ const CreatePost = () => {
           });
 
           // Set board, tag, title, content, and images
-          setSelectedBoard(response.data.boardName);
-          setSelectedOption(response.data.tagName);
+          setSelectedBoard(response.data.board_name);
+          setSelectedOption(response.data.tag_name);
           if (titleRef.current) {
-            titleRef.current.value = response.data.postTitle;
+            titleRef.current.value = response.data.post_title;
           }
-          setContent(response.data.postContent);
+          setContent(response.data.post_content);
+          console.log(response.data);
 
           // Set image URLs in state
-          const imageUrls = response.data.imageUrls.map((url) => ({
+          const imageUrls = response.data.image_urls.map((url) => ({
             url,
           }));
           setFiles(imageUrls);
 
           // Set options based on board name
-          const board = response.data.boardName;
+          const board = response.data.board_name;
           switch (board) {
             case '자유 게시판':
               setOptions(['자유']);
@@ -177,7 +178,7 @@ const CreatePost = () => {
 
       fetchPostData();
     }
-  }, [postId]);
+  }, [post_id]);
   const handleSubmit = async () => {
     if (selectedBoard === '게시판을 선택해 주세요') {
       alert('게시판을 선택해 주세요');
@@ -229,8 +230,8 @@ const CreatePost = () => {
     }
 
     try {
-      if (postId) {
-        await axios.put(`/posts/${postId}`, formData, {
+      if (post_id) {
+        await axios.put(`/posts/${post_id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${accessToken}`,
@@ -297,7 +298,7 @@ const CreatePost = () => {
   ];
   return (
     <div className="CreatePost">
-      <h1>{postId ? '글 수정하기' : '글 작성하기'}</h1>
+      <h1>{post_id ? '글 수정하기' : '글 작성하기'}</h1>
       <div className="postSetting">
         <div className="setDropdown">
           <div className="createBoardDropdown">
@@ -375,7 +376,7 @@ const CreatePost = () => {
       </div>
       <div className="createBtn">
         <button className="create" onClick={handleSubmit}>
-          {postId ? '글 수정' : '게시글 등록'}
+          {post_id ? '글 수정' : '게시글 등록'}
         </button>
       </div>
     </div>

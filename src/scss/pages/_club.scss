@@ -465,15 +465,17 @@
   letter-spacing: -0.3px;
 }
 
-// postlist
-.club-postlist-container {
+// clublist
+.club-clublist-container {
   display: flex;
   @include column-flexbox(center, center);
   border-radius: 8px;
   border: 1px solid #efefef;
   margin-top: 20px;
+  min-width: 906px;
+  min-height: 300px;
 }
-.club-postist {
+.club-clubist {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4개의 열을 생성 */
   grid-gap: 18px; /* 항목들 사이의 간격 (옵션) */
@@ -481,20 +483,20 @@
   z-index: 0;
 }
 
-.club-postlist-postitem-container {
+.club-clublist-clubitem-container {
   @include column-flexbox(center, center);
   border-radius: 16px;
   border: 1px solid #efefef;
   position: relative;
   cursor: pointer;
 }
-.club-postlist-postitem-postimage {
+.club-clublist-clubitem-clubimage {
   width: 205px;
   height: 205px;
   display: inline;
   border-radius: 6px;
 }
-.club-postlist-postitem-status {
+.club-clublist-clubitem-status {
   position: absolute;
   left: 12px;
   top: 12px;
@@ -509,14 +511,14 @@
   background: #111;
   padding: 4px 8px;
 }
-.club-postlist-postitem-postbox-titlebox {
+.club-clublist-clubitem-clubbox-titlebox {
   display: flex;
   @include column-flexbox(start, start);
   width: 100%;
   gap: 8px;
   padding: 16px 12px;
 }
-.club-postlist-postitem-postbox-title {
+.club-clublist-clubitem-clubbox-title {
   color: #111;
   font-family: Pretendard;
   font-size: 18px;
@@ -525,9 +527,9 @@
   line-height: 25.2px;
   letter-spacing: -0.45px;
 }
-.club-postlist-postitem-postbox-date,
-.club-postlist-postitem-postbox-member,
-.club-postlist-postitem-postbox-location {
+.club-clublist-clubitem-clubbox-date,
+.club-clublist-clubitem-clubbox-member,
+.club-clublist-clubitem-clubbox-location {
   color: #111;
   font-family: Pretendard;
   font-size: 14px;
@@ -537,15 +539,15 @@
   letter-spacing: -0.35px;
   @include inline-flexbox(start, center);
 }
-.club-postlist-postitem-postbox-date-icon,
-.club-postlist-postitem-postbox-location-icon {
+.club-clublist-clubitem-clubbox-date-icon,
+.club-clublist-clubitem-clubbox-location-icon {
   width: 14px;
   height: 14px;
   text-align: center;
   margin-right: 8px;
 }
 
-.club-postlist-postitem-postbox-member-icon {
+.club-clublist-clubitem-clubbox-member-icon {
   width: 16px;
   height: 16px;
   text-align: center;

@@ -15,7 +15,7 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   const [sortDropdownVisible, setSortDropdownVisible] = useState(false);
   const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState('');
   const calendarRef = useRef(null);
   const [selectedLocation, setSelectedLocation] = useState('전체');
   const [selectedSubLocation, setSelectedSubLocation] = useState('전체');
@@ -41,14 +41,17 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   const applyFilters = () => {
     const filterParams = {
       club_status: selectedSort ? selectedSort : '',
-      club_place: selectedLocation !== '전체' ? selectedLocation : '',
+      club_place:
+        selectedSubLocation !== '전체'
+          ? selectedLocation + ' ' + selectedSubLocation
+          : '',
       club_date: selectedTags.includes('날짜')
         ? formatingDate(selectedDate)
         : '',
       club_min_cost: minCost || '', // 필요시 상태 추가
       club_max_cost: maxCost || '', // 필요시 상태 추가
-      participants_min_count: minMember || '', // 필요시 상태 추가
-      participants_max_count: maxMember || '', // 필요시 상태 추가
+      total_min_count: minMember || '', // 필요시 상태 추가
+      total_max_count: maxMember || '', // 필요시 상태 추가
       search_condition: selectedSearchOption,
       search_text: searchKeyword,
     };
@@ -66,18 +69,36 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
     }
   };
 
-  // 필터링 값 변경 시 applyFilters 호출
   useEffect(() => {
     applyFilters();
-  }, [
-    selectedSort,
-    selectedLocation,
-    selectedDate,
-    minCost,
-    maxCost,
-    minMember,
-    maxMember,
-  ]);
+  }, [selectedSort]);
+  useEffect(() => {
+    applyFilters();
+  }, [selectedTags]);
+
+  useEffect(() => {
+    if (!calendarVisible) {
+      applyFilters();
+    }
+  }, [selectedDate, calendarVisible]);
+
+  useEffect(() => {
+    if (!locationDropdownVisible) {
+      applyFilters();
+    }
+  }, [selectedSubLocation, locationDropdownVisible]);
+
+  useEffect(() => {
+    if (!costDropdownVisible) {
+      applyFilters();
+    }
+  }, [minCost, maxCost, costDropdownVisible]);
+
+  useEffect(() => {
+    if (!memberDropdownVisible) {
+      applyFilters();
+    }
+  }, [minMember, maxMember, memberDropdownVisible]);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (locationRef.current && !locationRef.current.contains(event.target)) {
@@ -138,13 +159,36 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
   };
 
   const handleTagChange = (tag) => {
-    setSelectedTags((prevTags) =>
-      prevTags.includes(tag)
-        ? prevTags.filter((t) => t !== tag)
-        : [...prevTags, tag]
-    );
+    setSelectedTags((prevTags) => {
+      if (prevTags.includes(tag)) {
+        // 태그가 제거될 때 관련 상태 초기화
+        switch (tag) {
+          case '날짜':
+            setSelectedDate('');
+            break;
+          case '장소':
+            setSelectedLocation('전체');
+            setSelectedSubLocation('전체');
+            break;
+          case '비용':
+            setMinCost('');
+            setMaxCost('');
+            setSelectedCostOption('');
+            break;
+          case '모집인원':
+            setMinMember('');
+            setMaxMember('');
+            setSelectedMemberOption('');
+            break;
+          default:
+            break;
+        }
+        return prevTags.filter((t) => t !== tag);
+      } else {
+        return [...prevTags, tag];
+      }
+    });
   };
-
   const handleSortChange = (sort) => {
     setSelectedSort(sort);
     setSortDropdownVisible(false);
@@ -155,7 +199,9 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
       keyword: searchKeyword,
     });
   };
-
+  useEffect(() => {
+    console.log(selectedTags);
+  }, [selectedTags]);
   const handleSearchOptionChange = (searchOption) => {
     setSelectedSearchOption(searchOption);
     setSearchDropdownVisible(false);
