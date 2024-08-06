@@ -77,41 +77,6 @@ const MorePostList = ({ posts, board_name }) => {
   );
 };
 
-//게시글 mockdata
-// const mockPost = {
-//     id: 8,
-//     board: '정보',
-//     tag: '대회',
-//     title: '제목입니당',
-//     created_at: '2024-07-05T12:00:00Z',
-//     likes: 10,
-//     views: 100,
-//     comments: 5,
-//     content: '게시글내용입니다 게시글 내용 게시글 내용입니다',
-//     nickname: '도라산너구리',
-//     profile_img: '',
-//     comment: [
-//         {
-//             picture: '',
-//             nickname: '도라산너구리',
-//             content: '댓글내용입니다만여기까지가스무글자입니다여기부터오버',
-//             created_at: '2024-07-12T12:00:00Z',
-//         },
-//         {
-//             picture: '',
-//             nickname: '스트로베리',
-//             content: '비밀 댓글입니다',
-//             created_at: '2024-07-19T12:00:00Z',
-//         },
-//         {
-//             picture: '',
-//             nickname: '도라산너구리',
-//             content: '비밀 댓글입니다',
-//             created_at: '2024-07-29T12:00:00Z',
-//         },
-//     ],
-// };
-
 //게시글더보기용 mockdata
 const mockPosts = [
   {
@@ -410,11 +375,6 @@ const Post = () => {
   const [modalReport, setModalReport] = useState(false);
   const [reportInfo, setReportInfo] = useState({ nickname: '', content: '' });
   // Log post_id to check if it is being extracted correctly
-  useEffect(() => {
-    console.log('Board:', board);
-    console.log('Sport:', sport);
-    console.log('Post ID:', post_id);
-  }, [post_id]);
 
   // Fetch post data
   // Fetch post data including comments
@@ -429,6 +389,8 @@ const Post = () => {
       });
       console.log('Post data:', response.data); // 응답 데이터를 로그로 출력
       setPostData(response.data);
+      response.data.is_like ? setIsLike(true) : setIsLike(false);
+      response.data.is_following ? setIsFollow(true) : setIsFollow(false);
     } catch (error) {
       console.error('Failed to fetch post data:', error);
     }
@@ -470,7 +432,8 @@ const Post = () => {
       try {
         await axios.delete(`/comment/${comment_id}`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
           },
         });
         alert('댓글이 성공적으로 삭제되었습니다.');
@@ -565,12 +528,14 @@ const Post = () => {
     try {
       await axios.delete(`/posts/${post_id}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
         },
       });
       nav(-1); // 포스트 삭제 후 이전 화면으로 이동
       alert('게시글이 성공적으로 삭제되었습니다.');
     } catch (error) {
+      console.log(post_id);
       console.error('게시글 삭제 오류:', error);
       alert('게시글 삭제에 실패했습니다.');
     }
@@ -600,19 +565,23 @@ const Post = () => {
     const accessToken = localStorage.getItem('accessToken');
     try {
       if (isFollow) {
-        const response = await axios.delete(`/follow/${post_id}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
-          },
-        });
+        // 언팔로우 요청 (DELETE 요청)
+        const response = await axios.delete(
+          `/follow`, // URL
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`, // 인증 토큰 포함
+            },
+            data: { followed_nick_name: postData.nickname }, // 본문 데이터
+          }
+        );
         console.log('언팔로우 성공');
-        response.data.isFollw ? setIsFollow(true) : setIsFollow(false);
       } else {
         // 현재 팔로우 되어있지 않을 경우, 팔로우를 추가합니다 (POST 요청)
         const response = await axios.post(
-          `/follow/${post_id}`,
-          {},
+          `/follow`,
+          { followed_nick_name: postData.nickname },
           {
             headers: {
               'Content-Type': 'application/json',
@@ -621,7 +590,6 @@ const Post = () => {
           }
         );
         console.log('팔로우 성공');
-        response.data.is_like ? setIsFollow(true) : setIsFollow(false);
       }
       fetchPostData();
     } catch (error) {
@@ -632,7 +600,6 @@ const Post = () => {
   const toggleLikes = async () => {
     const accessToken = localStorage.getItem('accessToken');
     try {
-      console.log(isLike);
       if (isLike) {
         // 현재 좋아요가 되어있을 경우, 좋아요를 취소합니다 (DELETE 요청)
         const response = await axios.delete(`/like?post_id=${post_id}`, {
@@ -642,7 +609,6 @@ const Post = () => {
           },
         });
         console.log('좋아요 취소 성공');
-        response.data.is_like ? setIsLike(true) : setIsLike(false);
       } else {
         // 현재 좋아요가 되어있지 않을 경우, 좋아요를 추가합니다 (POST 요청)
         const response = await axios.post(
@@ -656,8 +622,8 @@ const Post = () => {
           }
         );
         console.log('좋아요 설정 성공');
-        response.data.is_like ? setIsLike(true) : setIsLike(false);
       }
+
       // 좋아요 상태를 UI에서 업데이트
       fetchPostData();
     } catch (error) {
@@ -712,7 +678,6 @@ const Post = () => {
   const filteredPosts = mockPosts
     .filter((post) => post.board === board_name)
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
 
   const className = `${modalReport ? 'report-modal-back' : ''}`;
   const [comments, setComments] = useState([]);
