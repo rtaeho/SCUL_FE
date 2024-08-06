@@ -199,9 +199,7 @@ const Filter = ({ tags, onFilterChange, onTagChange, onSearch }) => {
       keyword: searchKeyword,
     });
   };
-  useEffect(() => {
-    console.log(selectedTags);
-  }, [selectedTags]);
+  useEffect(() => {}, [selectedTags]);
   const handleSearchOptionChange = (searchOption) => {
     setSelectedSearchOption(searchOption);
     setSearchDropdownVisible(false);
