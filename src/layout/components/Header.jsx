@@ -102,7 +102,7 @@ const Header = () => {
   }, [token]);
 
   const goHome = () => {
-    navigate('/main');
+    navigate(`/main/${selectedSport.englishName.toLowerCase()}`);
   };
 
   const handleNavigate = (id) => {
@@ -117,7 +117,7 @@ const Header = () => {
     setLoggedIn(false);
     setProfileImage(null);
     setNotifications(false);
-    navigate('/main');
+    navigate(`/main/${selectedSport.englishName.toLowerCase()}`);
   };
 
   const toggleDropdown = () => {
